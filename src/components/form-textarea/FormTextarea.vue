@@ -132,6 +132,7 @@ export default {
             return this.id || `dr-textarea-${guid()}`
         },
         computedAriaInvalid() {
+            // eslint-disable-next-line
             if (!Boolean(this.ariaInvalid) || this.ariaInvalid === 'false') {
                 return this.computedState === false ? 'true' : null ;
             }

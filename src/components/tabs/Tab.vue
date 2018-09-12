@@ -95,9 +95,6 @@ export default {
         computedFade() {
             return this.$parent.fade
         },
-        computedLazy() {
-            this.$parent.lazy
-        },
         _isTab() {
             return true
         }

@@ -47,6 +47,7 @@ export default {
         return {
             currentTab: this.value,
             tabs: [],
+            // eslint-disable-next-line
             _tabsContainerID: null
         }
     },

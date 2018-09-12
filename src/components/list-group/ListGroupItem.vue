@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Link from '../link/Link.vue'
+import dLink from '../link/Link.vue'
 import createLinkProps from '../link/create-link-props'
 import { THEMECOLORS } from '../../utils/constants'
 
