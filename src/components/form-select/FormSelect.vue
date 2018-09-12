@@ -141,7 +141,7 @@ export default {
             this.localValue = newVal
         },
 
-        localValue(newVal) {
+        localValue() {
             this.$emit('input', this.localValue)
         }
     },

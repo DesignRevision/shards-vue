@@ -29,9 +29,11 @@ export default {
     },
     computed: {
         computedTag() {
+            // eslint-disable-next-line
             return Boolean(this.to || this.href) ? 'd-link' : this.tag
         },
         computedProps() {
+            // eslint-disable-next-line
             return Boolean(this.to || this.href) ? this.$props : {}
         }
     }

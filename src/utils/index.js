@@ -57,19 +57,19 @@ export const isArray = Array.isArray;
 
 // Element.matches polyfill
 // https://developer.mozilla.org/en-US/docs/Web/API/Element/matches#Polyfill
-if (!Element.prototype.matches) {
-    Element.prototype.matches = 
-        Element.prototype.matchesSelector || 
+if (typeof Element !== 'undefined' && !Element.prototype.matches) {
+    Element.prototype.matches =
+        Element.prototype.matchesSelector ||
         Element.prototype.mozMatchesSelector ||
-        Element.prototype.msMatchesSelector || 
-        Element.prototype.oMatchesSelector || 
+        Element.prototype.msMatchesSelector ||
+        Element.prototype.oMatchesSelector ||
         Element.prototype.webkitMatchesSelector ||
         function(s) {
             var matches = (this.document || this.ownerDocument).querySelectorAll(s),
                 i = matches.length;
             // eslint-disable-next-line
             while (--i >= 0 && matches.item(i) !== this) {}
-            return i > -1;            
+            return i > -1;
         };
 }
 
