@@ -29,8 +29,8 @@ Shards Vue is a free, beautiful and modern Vue.js UI kit <br /> based on <a href
 
 Getting started with Shards Vue is fairly simple. You can download Shards Vue via the official website, here on GitHub as a release package or by using a package manager such as Yarn or NPM.
 
-* [Official Website](https://designrevision.com/download/shards)
-* [Release Package](https://github.com/DesignRevision/shards-ui/releases)
+* [Official Website](https://designrevision.com/download/shards-vue)
+* [Release Package](https://github.com/DesignRevision/shards-vue/releases)
 
 <br />
 
