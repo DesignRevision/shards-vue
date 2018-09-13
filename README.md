@@ -20,7 +20,7 @@ Shards Vue is a free, beautiful and modern Vue.js UI kit <br /> based on <a href
 <br />
 
 <p align="center">
-  <a href="https://designrevision.com/docs/shards-vue/"><strong>Documentation</strong></a> •
+  <a href="https://designrevision.com/docs/shards-vue/"><strong>Documentation & Demo</strong></a> •
   <a href="https://designrevision.com/downloads/shards-vue/"><strong>Official Page</strong></a>
 </p>
 
