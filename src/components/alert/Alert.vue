@@ -147,3 +147,10 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.close {
+    min-height: 100%;
+    padding: 0.625rem 1.25rem 0.75rem 1.25rem;
+}
+</style>
