@@ -1,5 +1,5 @@
 /*
-* Shards Vue v1.0.1 (https://designrevision.com/downloads/shards-vue/)
+* Shards Vue v1.0.2 (https://designrevision.com/downloads/shards-vue/)
 * Based on: Bootstrap 4.0.0 (https://getbootstrap.com)
 * Based on: Shards ^2.0.3 (https://designrevision.com/downloads/shards/)
 * Copyright 2017-2018 DesignRevision (https://designrevision.com)
@@ -525,7 +525,7 @@ __vue_render__._withStripped = true;
     var component = (typeof script$$1 === 'function' ? script$$1.options : script$$1) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/button/ButtonClose.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/button/ButtonClose.vue";
     }
 
     if (!component.render) {
@@ -780,9 +780,13 @@ var __vue_staticRenderFns__$1 = [];
 __vue_render__$1._withStripped = true;
 
   /* style */
-  var __vue_inject_styles__$1 = undefined;
+  var __vue_inject_styles__$1 = function (inject) {
+    if (!inject) { return }
+    inject("data-v-2f1fe6cc_0", { source: "\n.close[data-v-2f1fe6cc] {\n    min-height: 100%;\n    padding: 0.625rem 1.25rem 0.75rem 1.25rem;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/alert/Alert.vue"],"names":[],"mappings":";AAuJA;IACA,iBAAA;IACA,0CAAA;CACA","file":"Alert.vue","sourcesContent":["<template>\n    <div v-if=\"computedShow\"\n        role=\"alert\"\n        aria-live=\"polite\"\n        aria-atomic=\"true\"\n        :class=\"[\n            'alert',\n            theme ? `alert-${theme}` : '',\n            dismissible ? `alert-dismissible` : ''\n        ]\">\n        <slot />\n        <d-button-close v-if=\"dismissible\"\n            :aria-label=\"dismissLabel\"\n            @click=\"dismiss\"\n            href=\"#\" />\n    </div>\n</template>\n\n<script>\nimport { THEMECOLORS, ALERT_EVENTS } from '../../utils/constants';\nimport dButtonClose from '../button/ButtonClose.vue';\n\nexport default {\n    name: 'd-alert',\n    components: {\n        dButtonClose\n    },\n    props: {\n        /**\n         * Alert color theme.\n         */\n        theme: {\n            type: String,\n            default: 'primary',\n            validator: v => THEMECOLORS.includes(v)\n        },\n        /**\n         * Whether the alert is dismissible, or not.\n         */\n        dismissible: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Dismiss button label.\n         */\n        dismissLabel: {\n            type: String,\n            default: 'Close'\n        },\n        /**\n         * Show state or duration.\n         */\n        show: {\n            type: [Boolean, Number, String],\n            default: false\n        }\n    },\n    model: {\n        prop: 'show',\n        event: 'input'\n    },\n    data() {\n        return {\n            timer: null,\n            dismissed: false\n        }\n    },\n    watch: {\n        show() {\n            this.showChanged();\n        }\n    },\n    mounted() {\n        this.showChanged();\n    },\n    destroyed() {\n        this.clearCounter();\n    },\n    computed: {\n        computedShow() {\n            return !this.dismissed && (this.timer || this.show);\n        }\n    },\n    methods: {\n        clearCounter() {\n            if (this.timer) {\n                clearInterval(this.timer);\n                this.timer = null;\n            }\n        },\n\n        dismiss() {\n            this.clearCounter();\n            this.dismissed = true;\n\n            /**\n             * Alert dismissed event.\n             *\n             * @event alert-dismissed\n             * @type {Boolean}\n             */\n            this.$emit(ALERT_EVENTS.DISMISSED);\n            this.$emit('input', false);\n\n            if (typeof this.show === 'boolean') {\n                this.$emit('input', false);\n                return;\n            }\n\n            /**\n             * Alert dismiss countdown event.\n             *\n             * @event alert-dismiss-countdown\n             * @type {Number}\n             */\n            this.$emit(ALERT_EVENTS.DISMISS_COUNTDOWN, 0);\n            this.$emit('input', 0);\n        },\n\n        showChanged() {\n            this.clearCounter();\n            this.dismissed = false;\n\n            if (typeof this.show === 'boolean' || this.show === null || this.show === 0)\n                return\n\n            let dismissTimer = this.show;\n            this.timer = setInterval(() => {\n                if (dismissTimer < 1) {\n                    this.dismiss();\n                    return;\n                }\n\n                dismissTimer--;\n\n                /**\n                 * Alert dismiss countdown event.\n                 *\n                 * @event alert-dismiss-countdown\n                 * @type {Number}\n                 */\n                this.$emit(ALERT_EVENTS.DISMISS_COUNTDOWN, dismissTimer);\n                this.$emit('input', dismissTimer);\n            }, 1000);\n        }\n    }\n}\n</script>\n\n<style scoped>\n.close {\n    min-height: 100%;\n    padding: 0.625rem 1.25rem 0.75rem 1.25rem;\n}\n</style>\n"]}, media: undefined });
+
+  };
   /* scoped */
-  var __vue_scope_id__$1 = undefined;
+  var __vue_scope_id__$1 = "data-v-2f1fe6cc";
   /* module identifier */
   var __vue_module_identifier__$1 = undefined;
   /* functional template */
@@ -796,7 +800,7 @@ __vue_render__$1._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/alert/Alert.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/alert/Alert.vue";
     }
 
     if (!component.render) {
@@ -808,6 +812,30 @@ __vue_render__$1._withStripped = true;
     }
 
     component._scopeId = scope;
+
+    {
+      var hook;
+      if (style) {
+        hook = function(context) {
+          style.call(this, createInjector(context));
+        };
+      }
+
+      if (hook !== undefined) {
+        if (component.functional) {
+          // register for functional component in vue file
+          var originalRender = component.render;
+          component.render = function renderWithStyleInjection(h, context) {
+            hook.call(context);
+            return originalRender(h, context)
+          };
+        } else {
+          // inject component registration as beforeCreate hook
+          var existing = component.beforeCreate;
+          component.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+        }
+      }
+    }
 
     return component
   }
@@ -911,6 +939,7 @@ vueUse(VuePlugin);
 //
 //
 //
+//
 
 var script$2 = {
     name: 'd-link',
@@ -990,7 +1019,7 @@ var script$2 = {
         computedTag: function computedTag() {
             return this.to
                 && !this.disabled
-                && Boolean(this.$parent.router) ? 'router-link' : 'a'
+                && Boolean(this.$parent.$router) ? 'router-link' : 'a'
         },
         computedRel: function computedRel() {
             return this.target === '_blank'
@@ -1066,6 +1095,7 @@ var __vue_render__$2 = function() {
         rel: _vm.computedRel,
         href: _vm.computedHref,
         target: _vm.target,
+        to: _vm.to,
         tabindex: _vm.computedTabindex,
         "aria-disabled": _vm.computedAriaDisabled
       },
@@ -1095,7 +1125,7 @@ __vue_render__$2._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/link/Link.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/link/Link.vue";
     }
 
     if (!component.render) {
@@ -1330,7 +1360,7 @@ __vue_render__$3._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/badge/Badge.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/badge/Badge.vue";
     }
 
     if (!component.render) {
@@ -1510,7 +1540,7 @@ __vue_render__$4._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/breadcrumb/BreadcrumbLink.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/breadcrumb/BreadcrumbLink.vue";
     }
 
     if (!component.render) {
@@ -1673,7 +1703,7 @@ __vue_render__$5._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/breadcrumb/BreadcrumbItem.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/breadcrumb/BreadcrumbItem.vue";
     }
 
     if (!component.render) {
@@ -1849,7 +1879,7 @@ __vue_render__$6._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/breadcrumb/Breadcrumb.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/breadcrumb/Breadcrumb.vue";
     }
 
     if (!component.render) {
@@ -2087,7 +2117,7 @@ __vue_render__$7._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/button/Button.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/button/Button.vue";
     }
 
     if (!component.render) {
@@ -2274,11 +2304,11 @@ __vue_render__$8._withStripped = true;
   /* style */
   var __vue_inject_styles__$8 = function (inject) {
     if (!inject) { return }
-    inject("data-v-25933e7a_0", { source: "\n.btn-group-vertical .btn + .btn[data-v-25933e7a] {\n  margin-left: 0 !important;\n}\n\n/*# sourceMappingURL=ButtonGroup.vue.map */", map: {"version":3,"sources":["/Users/hisk/shards-vue/src/components/button-group/ButtonGroup.vue","ButtonGroup.vue"],"names":[],"mappings":";AA6DA;EACA,0BAAA;CACA;;AC5DA,2CAA2C","file":"ButtonGroup.vue","sourcesContent":[null,".btn-group-vertical .btn + .btn {\n  margin-left: 0 !important; }\n\n/*# sourceMappingURL=ButtonGroup.vue.map */"]}, media: undefined });
+    inject("data-v-21cdf62c_0", { source: "\n.btn-group-vertical .btn + .btn[data-v-21cdf62c] {\n  margin-left: 0 !important;\n}\n\n/*# sourceMappingURL=ButtonGroup.vue.map */", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/button-group/ButtonGroup.vue","ButtonGroup.vue"],"names":[],"mappings":";AA6DA;EACA,0BAAA;CACA;;AC5DA,2CAA2C","file":"ButtonGroup.vue","sourcesContent":[null,".btn-group-vertical .btn + .btn {\n  margin-left: 0 !important; }\n\n/*# sourceMappingURL=ButtonGroup.vue.map */"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$8 = "data-v-25933e7a";
+  var __vue_scope_id__$8 = "data-v-21cdf62c";
   /* module identifier */
   var __vue_module_identifier__$8 = undefined;
   /* functional template */
@@ -2292,7 +2322,7 @@ __vue_render__$8._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/button-group/ButtonGroup.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/button-group/ButtonGroup.vue";
     }
 
     if (!component.render) {
@@ -2483,7 +2513,7 @@ __vue_render__$9._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/button-toolbar/ButtonToolbar.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/button-toolbar/ButtonToolbar.vue";
     }
 
     if (!component.render) {
@@ -2688,7 +2718,7 @@ __vue_render__$a._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/card/Card.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/card/Card.vue";
     }
 
     if (!component.render) {
@@ -2930,7 +2960,7 @@ __vue_render__$b._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/card/CardBody.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/card/CardBody.vue";
     }
 
     if (!component.render) {
@@ -3122,7 +3152,7 @@ __vue_render__$c._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/card/CardFooter.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/card/CardFooter.vue";
     }
 
     if (!component.render) {
@@ -3291,7 +3321,7 @@ __vue_render__$d._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/card/CardGroup.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/card/CardGroup.vue";
     }
 
     if (!component.render) {
@@ -3483,7 +3513,7 @@ __vue_render__$e._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/card/CardHeader.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/card/CardHeader.vue";
     }
 
     if (!component.render) {
@@ -3667,7 +3697,7 @@ __vue_render__$f._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/card/CardImg.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/card/CardImg.vue";
     }
 
     if (!component.render) {
@@ -4062,7 +4092,7 @@ __vue_render__$g._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/collapse/Collapse.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/collapse/Collapse.vue";
     }
 
     if (!component.render) {
@@ -4229,7 +4259,7 @@ __vue_render__$h._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/container/Container.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/container/Container.vue";
     }
 
     if (!component.render) {
@@ -4423,7 +4453,7 @@ __vue_render__$i._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/container/Row.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/container/Row.vue";
     }
 
     if (!component.render) {
@@ -4690,7 +4720,7 @@ __vue_render__$j._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/container/Col.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/container/Col.vue";
     }
 
     if (!component.render) {
@@ -4967,7 +4997,7 @@ __vue_render__$k._withStripped = true;
   /* style */
   var __vue_inject_styles__$k = function (inject) {
     if (!inject) { return }
-    inject("data-v-515d0e22_0", { source: "\n.vdp-datepicker__calendar {\n  color: #5a6169;\n  padding: 20px 22px;\n  min-width: 10rem;\n  font-size: 1rem;\n  font-weight: 300;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";\n  background-color: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.375rem;\n  box-shadow: 0 0.5rem 4rem rgba(0, 0, 0, 0.11), 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 3px rgba(0, 0, 0, 0.06);\n  border: 1px solid rgba(0, 0, 0, 0.15) !important;\n}\n.vdp-datepicker__calendar header {\n    display: flex;\n    padding-bottom: 10px;\n}\n.vdp-datepicker__calendar header span {\n      transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n      border-radius: 0.375rem;\n      font-weight: 500;\n}\n.vdp-datepicker__calendar header span.next:after {\n        border-left-color: #c3c7cc;\n}\n.vdp-datepicker__calendar header span.prev:after {\n        border-right-color: #c3c7cc;\n}\n.vdp-datepicker__calendar header span:hover,\n  .vdp-datepicker__calendar .cell.day:not(.disabled):not(.blank):hover, .vdp-datepicker__calendar .cell.month:hover, .vdp-datepicker__calendar .cell.year:hover {\n    background-color: #eceeef;\n    border-color: transparent !important;\n}\n.vdp-datepicker__calendar .cell {\n    line-height: 2;\n    font-size: 1rem;\n    border-radius: 0.375rem;\n    transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n    border-color: transparent;\n    height: auto;\n}\n.vdp-datepicker__calendar .cell.day-header {\n      font-weight: 500;\n}\n.vdp-datepicker__calendar .cell.day {\n      width: 36px;\n      height: 36px;\n      border-radius: 50%;\n}\n.vdp-datepicker__calendar .cell.month, .vdp-datepicker__calendar .cell.year {\n      height: 36px;\n      font-size: 12px;\n      line-height: 33px;\n}\n.vdp-datepicker__calendar .cell.selected, .vdp-datepicker__calendar .cell.highlighted.selected {\n      background: #007bff !important;\n      color: #fff;\n}\n.vdp-datepicker__calendar .cell.selected:hover, .vdp-datepicker__calendar .cell.highlighted.selected:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important;\n}\n.vdp-datepicker__calendar .cell.highlighted {\n      background: #e6f2ff !important;\n}\n.vdp-datepicker__calendar .cell.highlighted:hover {\n        border-color: transparent !important;\n}\n\n/*# sourceMappingURL=Datepicker.vue.map */", map: {"version":3,"sources":["/Users/hisk/shards-vue/src/components/datepicker/Datepicker.vue","Datepicker.vue"],"names":[],"mappings":";AAmMA;EACA,eA5BA;EA6BA,mBAhBA;EAiBA,iBArBA;EAsBA,gBAnBA;EAoBA,iBAjBA;EAkBA,kKA3BA;EA4BA,uBAvCA;EAwCA,sCAvCA;EAwCA,wBAhCA;EAiCA,8GAzCA;EA0CA,iDAAA;CA8EA;AAzFA;IAeA,cAAA;IACA,qBAAA;CAeA;AA/BA;MAmBA,2DAzCA;MA0CA,wBA3CA;MA4CA,iBAAA;CASA;AA9BA;QAwBA,2BArDA;CAsDA;AAzBA;QA4BA,4BAzDA;CA0DA;AA7BA;;IAqCA,0BA/DA;IAgEA,qCAAA;CACA;AAvCA;IA4CA,eA/CA;IAgDA,gBA/CA;IAgDA,wBArEA;IAsEA,2DArEA;IAsEA,0BAxEA;IAyEA,aAAA;CAuCA;AAxFA;MAqDA,iBAAA;CACA;AAtDA;MA0DA,YAhEA;MAiEA,aAhEA;MAiEA,mBAAA;CACA;AA7DA;MAkEA,aAvEA;MAwEA,gBAAA;MACA,kBAAA;CACA;AArEA;MA0EA,+BAAA;MACA,YA3GA;CAgHA;AAhFA;QA6EA,+BAAA;QACA,qCAAA;CACA;AA/EA;MAmFA,+BAAA;CAIA;AAvFA;QAqFA,qCAAA;CACA;;AClOA,0CAA0C","file":"Datepicker.vue","sourcesContent":[null,".vdp-datepicker__calendar {\n  color: #5a6169;\n  padding: 20px 22px;\n  min-width: 10rem;\n  font-size: 1rem;\n  font-weight: 300;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";\n  background-color: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.375rem;\n  box-shadow: 0 0.5rem 4rem rgba(0, 0, 0, 0.11), 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 3px rgba(0, 0, 0, 0.06);\n  border: 1px solid rgba(0, 0, 0, 0.15) !important; }\n  .vdp-datepicker__calendar header {\n    display: flex;\n    padding-bottom: 10px; }\n    .vdp-datepicker__calendar header span {\n      transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n      border-radius: 0.375rem;\n      font-weight: 500; }\n      .vdp-datepicker__calendar header span.next:after {\n        border-left-color: #c3c7cc; }\n      .vdp-datepicker__calendar header span.prev:after {\n        border-right-color: #c3c7cc; }\n  .vdp-datepicker__calendar header span:hover,\n  .vdp-datepicker__calendar .cell.day:not(.disabled):not(.blank):hover, .vdp-datepicker__calendar .cell.month:hover, .vdp-datepicker__calendar .cell.year:hover {\n    background-color: #eceeef;\n    border-color: transparent !important; }\n  .vdp-datepicker__calendar .cell {\n    line-height: 2;\n    font-size: 1rem;\n    border-radius: 0.375rem;\n    transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n    border-color: transparent;\n    height: auto; }\n    .vdp-datepicker__calendar .cell.day-header {\n      font-weight: 500; }\n    .vdp-datepicker__calendar .cell.day {\n      width: 36px;\n      height: 36px;\n      border-radius: 50%; }\n    .vdp-datepicker__calendar .cell.month, .vdp-datepicker__calendar .cell.year {\n      height: 36px;\n      font-size: 12px;\n      line-height: 33px; }\n    .vdp-datepicker__calendar .cell.selected, .vdp-datepicker__calendar .cell.highlighted.selected {\n      background: #007bff !important;\n      color: #fff; }\n      .vdp-datepicker__calendar .cell.selected:hover, .vdp-datepicker__calendar .cell.highlighted.selected:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important; }\n    .vdp-datepicker__calendar .cell.highlighted {\n      background: #e6f2ff !important; }\n      .vdp-datepicker__calendar .cell.highlighted:hover {\n        border-color: transparent !important; }\n\n/*# sourceMappingURL=Datepicker.vue.map */"]}, media: undefined });
+    inject("data-v-3cea6619_0", { source: "\n.vdp-datepicker__calendar {\n  color: #5a6169;\n  padding: 20px 22px;\n  min-width: 10rem;\n  font-size: 1rem;\n  font-weight: 300;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";\n  background-color: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.375rem;\n  box-shadow: 0 0.5rem 4rem rgba(0, 0, 0, 0.11), 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 3px rgba(0, 0, 0, 0.06);\n  border: 1px solid rgba(0, 0, 0, 0.15) !important;\n}\n.vdp-datepicker__calendar header {\n    display: flex;\n    padding-bottom: 10px;\n}\n.vdp-datepicker__calendar header span {\n      transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n      border-radius: 0.375rem;\n      font-weight: 500;\n}\n.vdp-datepicker__calendar header span.next:after {\n        border-left-color: #c3c7cc;\n}\n.vdp-datepicker__calendar header span.prev:after {\n        border-right-color: #c3c7cc;\n}\n.vdp-datepicker__calendar header span:hover,\n  .vdp-datepicker__calendar .cell.day:not(.disabled):not(.blank):hover, .vdp-datepicker__calendar .cell.month:hover, .vdp-datepicker__calendar .cell.year:hover {\n    background-color: #eceeef;\n    border-color: transparent !important;\n}\n.vdp-datepicker__calendar .cell {\n    line-height: 2;\n    font-size: 1rem;\n    border-radius: 0.375rem;\n    transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n    border-color: transparent;\n    height: auto;\n}\n.vdp-datepicker__calendar .cell.day-header {\n      font-weight: 500;\n}\n.vdp-datepicker__calendar .cell.day {\n      width: 36px;\n      height: 36px;\n      border-radius: 50%;\n}\n.vdp-datepicker__calendar .cell.month, .vdp-datepicker__calendar .cell.year {\n      height: 36px;\n      font-size: 12px;\n      line-height: 33px;\n}\n.vdp-datepicker__calendar .cell.selected, .vdp-datepicker__calendar .cell.highlighted.selected {\n      background: #007bff !important;\n      color: #fff;\n}\n.vdp-datepicker__calendar .cell.selected:hover, .vdp-datepicker__calendar .cell.highlighted.selected:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important;\n}\n.vdp-datepicker__calendar .cell.highlighted {\n      background: #e6f2ff !important;\n}\n.vdp-datepicker__calendar .cell.highlighted:hover {\n        border-color: transparent !important;\n}\n\n/*# sourceMappingURL=Datepicker.vue.map */", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/datepicker/Datepicker.vue","Datepicker.vue"],"names":[],"mappings":";AAmMA;EACA,eA5BA;EA6BA,mBAhBA;EAiBA,iBArBA;EAsBA,gBAnBA;EAoBA,iBAjBA;EAkBA,kKA3BA;EA4BA,uBAvCA;EAwCA,sCAvCA;EAwCA,wBAhCA;EAiCA,8GAzCA;EA0CA,iDAAA;CA8EA;AAzFA;IAeA,cAAA;IACA,qBAAA;CAeA;AA/BA;MAmBA,2DAzCA;MA0CA,wBA3CA;MA4CA,iBAAA;CASA;AA9BA;QAwBA,2BArDA;CAsDA;AAzBA;QA4BA,4BAzDA;CA0DA;AA7BA;;IAqCA,0BA/DA;IAgEA,qCAAA;CACA;AAvCA;IA4CA,eA/CA;IAgDA,gBA/CA;IAgDA,wBArEA;IAsEA,2DArEA;IAsEA,0BAxEA;IAyEA,aAAA;CAuCA;AAxFA;MAqDA,iBAAA;CACA;AAtDA;MA0DA,YAhEA;MAiEA,aAhEA;MAiEA,mBAAA;CACA;AA7DA;MAkEA,aAvEA;MAwEA,gBAAA;MACA,kBAAA;CACA;AArEA;MA0EA,+BAAA;MACA,YA3GA;CAgHA;AAhFA;QA6EA,+BAAA;QACA,qCAAA;CACA;AA/EA;MAmFA,+BAAA;CAIA;AAvFA;QAqFA,qCAAA;CACA;;AClOA,0CAA0C","file":"Datepicker.vue","sourcesContent":[null,".vdp-datepicker__calendar {\n  color: #5a6169;\n  padding: 20px 22px;\n  min-width: 10rem;\n  font-size: 1rem;\n  font-weight: 300;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";\n  background-color: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.375rem;\n  box-shadow: 0 0.5rem 4rem rgba(0, 0, 0, 0.11), 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 3px rgba(0, 0, 0, 0.06);\n  border: 1px solid rgba(0, 0, 0, 0.15) !important; }\n  .vdp-datepicker__calendar header {\n    display: flex;\n    padding-bottom: 10px; }\n    .vdp-datepicker__calendar header span {\n      transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n      border-radius: 0.375rem;\n      font-weight: 500; }\n      .vdp-datepicker__calendar header span.next:after {\n        border-left-color: #c3c7cc; }\n      .vdp-datepicker__calendar header span.prev:after {\n        border-right-color: #c3c7cc; }\n  .vdp-datepicker__calendar header span:hover,\n  .vdp-datepicker__calendar .cell.day:not(.disabled):not(.blank):hover, .vdp-datepicker__calendar .cell.month:hover, .vdp-datepicker__calendar .cell.year:hover {\n    background-color: #eceeef;\n    border-color: transparent !important; }\n  .vdp-datepicker__calendar .cell {\n    line-height: 2;\n    font-size: 1rem;\n    border-radius: 0.375rem;\n    transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n    border-color: transparent;\n    height: auto; }\n    .vdp-datepicker__calendar .cell.day-header {\n      font-weight: 500; }\n    .vdp-datepicker__calendar .cell.day {\n      width: 36px;\n      height: 36px;\n      border-radius: 50%; }\n    .vdp-datepicker__calendar .cell.month, .vdp-datepicker__calendar .cell.year {\n      height: 36px;\n      font-size: 12px;\n      line-height: 33px; }\n    .vdp-datepicker__calendar .cell.selected, .vdp-datepicker__calendar .cell.highlighted.selected {\n      background: #007bff !important;\n      color: #fff; }\n      .vdp-datepicker__calendar .cell.selected:hover, .vdp-datepicker__calendar .cell.highlighted.selected:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important; }\n    .vdp-datepicker__calendar .cell.highlighted {\n      background: #e6f2ff !important; }\n      .vdp-datepicker__calendar .cell.highlighted:hover {\n        border-color: transparent !important; }\n\n/*# sourceMappingURL=Datepicker.vue.map */"]}, media: undefined });
 
   };
   /* scoped */
@@ -4985,7 +5015,7 @@ __vue_render__$k._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/datepicker/Datepicker.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/datepicker/Datepicker.vue";
     }
 
     if (!component.render) {
@@ -8167,11 +8197,11 @@ __vue_render__$l._withStripped = true;
   /* style */
   var __vue_inject_styles__$l = function (inject) {
     if (!inject) { return }
-    inject("data-v-0d4b91ae_0", { source: "\n.nav-link[data-v-0d4b91ae]:hover {\n    cursor: pointer;\n}\n", map: {"version":3,"sources":["/Users/hisk/shards-vue/src/components/dropdown/Dropdown.vue"],"names":[],"mappings":";AAobA;IACA,gBAAA;CACA","file":"Dropdown.vue","sourcesContent":["<template>\n    <component :is=\"computedTag\" :id=\"computedID\"\n        v-on-clickaway=\"away\"\n        :class=\"[\n            'dropdown',\n            'd-dropdown',\n            !isNav ? 'btn-group' : '',\n            isNav ? 'nav-item' : '',\n            dropup ? 'dropup' : '',\n            visible ? 'show' : '',\n            (boundary !== 'scrollParent' || !boundary) ? 'position-static' : ''\n        ]\">\n\n        <!-- Dropdown Split -->\n        <d-button v-if=\"split && !isNav\"\n            ref=\"button\"\n            :disabled=\"disabled\"\n            :theme=\"theme\"\n            :size=\"size\"\n            :id=\"computedSplitID\"\n            @click=\"click\">\n            <slot name=\"button-content\">{{ text }}</slot>\n        </d-button>\n\n        <!-- Dropdown Toggle -->\n        <component :is=\"computedToggleTag\" ref=\"toggle\"\n            :id=\"computedToggleID\"\n            :class=\"[\n                isNav ? 'nav-link' : '',\n                !noCaret || split ? 'dropdown-toggle' : '',\n                split && !isNav ? 'dropdown-toggle-split' : '',\n                toggleClass\n            ]\"\n            :theme=\"theme\"\n            :size=\"size\"\n            :disabled=\"disabled\"\n            :aria-expanded=\"visible ? 'true' : 'false'\"\n            aria-haspopup=\"true\"\n            @click=\"toggle\"\n            @keydown=\"toggle\">\n            <span v-if=\"split\" class=\"sr-only\">{{ toggleText }}</span>\n            <slot v-else name=\"button-content\">{{ text }}</slot>\n        </component>\n\n        <!-- Dropdown Menu -->\n        <div ref=\"menu\"\n            role=\"menu\"\n            :class=\"[\n                'dropdown-menu',\n                right ? 'dropdown-menu-right' : '',\n                visible ? 'show' : '',\n                menuClass\n            ]\"\n            :id=\"computedMenuID\"\n            :aria-labeledby=\"computedMenuID\"\n            @mouseover=\"onMouseOver\">\n            <slot />\n        </div>\n    </component>\n</template>\n\n<script>\nimport Popper from 'popper.js'\nimport { guid, closest } from '../../utils'\nimport { THEMECOLORS, DROPDOWN_EVENTS, KEYCODES } from '../../utils/constants'\nimport { CancelableEvent } from '../../utils/events'\nimport { mixin as clickAwayMixin } from 'vue-clickaway';\nimport rootListenerMixin from '../../mixins/root-listener.mixin'\n\nexport default {\n    name: 'd-dropdown',\n    mixins: [\n        rootListenerMixin,\n        clickAwayMixin\n    ],\n    data() {\n        return {\n            visible: false,\n            isNavbar: null,\n            visibleChangePrevented: false\n        }\n    },\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown menu ID.\n         */\n        menuId: {\n            type: String,\n            default: null\n        },\n        /**\n         * The toggle ID.\n         */\n        toggleId: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown menu class(es).\n         */\n        menuClass: {\n            type: [String, Array],\n            default: null\n        },\n        /**\n         * The dropdown toggle class(es).\n         */\n        toggleClass: {\n            type: [String, Array],\n            default: null\n        },\n        /**\n         * Align the menu to the right.\n         */\n        right: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to display the caret, or not.\n         */\n        noCaret: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to split the dropdown, or not.\n         */\n        split: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The color theme.\n         */\n        theme: {\n            type: String,\n            default: 'primary',\n            validator: v => THEMECOLORS.includes(v)\n        },\n        /**\n         * The dropdown toggle's size.\n         */\n        size: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown's disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The dropdown toggle's text.\n         */\n        toggleText: {\n            type: String,\n            default: 'Toggle Dropdown'\n        },\n        /**\n         * The button label's text.\n         */\n        text: {\n            type: String,\n            default: ''\n        },\n        /**\n         * The dropdown's boundary.\n         */\n        boundary: {\n            type: String,\n            default: 'scrollParent',\n            validator: v => ['scrollParent', 'window', 'viewport'].includes(v)\n        },\n        /**\n         * The offset value.\n         */\n        offset: {\n            type: [Number, String],\n            default: null\n        },\n        /**\n         * Display on top.\n         */\n        dropup: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The Popper options.\n         */\n        popperOptions: {\n            type: Object,\n            default() {\n                return {}\n            }\n        },\n        /**\n         * Disable autoflipping.\n         */\n        noFlip: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether the dropdown is displayed inside a nav, or not.\n         */\n        isNav: {\n            type: Boolean,\n            default: false\n        }\n    },\n    watch: {\n        visible(newVal, oldVal) {\n            if (this.visibleChangePrevented) {\n                this.visibleChangePrevented = false\n                return\n            }\n\n            if (newVal === oldVal) {\n                return\n            }\n\n            const eventName = newVal ? 'show' : 'hide'\n            let _visibleChangeEvent = new CancelableEvent(eventName, {\n                cancelable: true,\n                vueTarget: this,\n                target: this.$refs.menu,\n                relatedTarget: null\n            })\n\n            this.$emit(_visibleChangeEvent.type, _visibleChangeEvent)\n            this.emitOnRoot(DROPDOWN_EVENTS[_visibleChangeEvent.type.toUpperCase()])\n\n            if (_visibleChangeEvent.defaultPrevented) {\n                this.visibleChangePrevented = true\n                this.visible = oldVal\n                return\n            }\n\n            if (eventName === 'show') {\n                this.showMenu()\n                return\n            }\n\n            this.hideMenu()\n        },\n        disabled(newVal, oldVal) {\n            if (newVal !== oldVal && newVal && this.visible) {\n                this.visible = false\n            }\n        }\n    },\n    computed: {\n        computedTag() {\n            return this.isNav ? 'li' : 'div'\n        },\n        computedToggleTag() {\n            return this.isNav ? 'a' : 'd-button'\n        },\n        computedID() {\n            return this.id || `d-dropdown-${guid()}`\n        },\n        computedMenuID() {\n            return this.menuId || `d-dropdown-menu-${guid()}`\n        },\n        computedToggleID() {\n            return this.toggleId || `d-dropdown-toggle-${guid()}`\n        },\n        computedSplitID() {\n            return this.splitId || `d-dropdown-split-${guid()}`\n        },\n        toggler() {\n            return this.$refs.toggle.$el || this.$refs.toggle\n        }\n    },\n    methods: {\n        onMouseOver(event) {\n            const item = event.target\n            if (\n                item.classList.contains('dropdown-item')\n                && !item.disabled\n                && !item.classList.contains('disabled')\n                && item.focus\n            ) {\n                item.focus()\n            }\n        },\n        toggle(event) {\n            event = event || {}\n\n            // Enter, Space or Down\n            const KEY_ESD = event.keyCode === KEYCODES.ENTER\n                            || event.keyCode === KEYCODES.SPACE\n                            || event.keyCode === KEYCODES.DOWN\n\n            if (event.type !== 'click' && !(event.type === 'keydown' && KEY_ESD)) {\n                return\n            }\n\n            if (this.disabled) {\n                this.visible = false\n                return\n            }\n\n            this.$emit('toggle', event)\n\n            if (event.defaultPrevented) {\n                return\n            }\n\n            event.preventDefault()\n            event.stopPropagation()\n\n            this.visible = !this.visible\n        },\n        click(event) {\n            if (this.disabled) {\n                this.visible = false\n                return\n            }\n            this.$emit('click', event)\n        },\n        createPopper(element) {\n            this.removePopper()\n\n            // Define placement\n            let placement = 'bottom-start'\n\n            if (this.dropup && this.right) {\n                placement = 'top-end'\n            } else if (this.dropup) {\n                placement = 'top-start'\n            } else if (this.right) {\n                placement = 'bottom-end'\n            }\n\n            // Build Popper config\n            const popperConfig = {\n                placement,\n                modifiers: {\n                    offset: {\n                        offset: this.offset || 0\n                    },\n                    flip: {\n                        enabled: !this.noFlip\n                    },\n                    computeStyle: {\n                        enabled: true\n                    }\n                }\n            }\n\n            // Define Popper boundaries\n            if (this.boundary) {\n                popperConfig.modifiers.preventOverflow = {\n                    boundariesElement: this.boundary\n                }\n            }\n\n            // Create Popper instance\n            this._popperInstance = new Popper(\n                element,\n                this.$refs.menu,\n                {\n                    ...popperConfig,\n                    ...this.popperOptions\n                }\n            )\n        },\n        removePopper() {\n            if (this._popper) {\n                this._popper.destroy()\n            }\n            this._popperInstance = null\n        },\n        showMenu() {\n            if (this.disabled) {\n                return\n            }\n\n            this.emitOnRoot(DROPDOWN_EVENTS.SHOWN, this)\n\n            if (this.inNavbar === null && this.isNav) {\n                this.inNavbar = Boolean(closest('.navbar', this.$el))\n            }\n\n            if (!this.inNavbar) {\n                let _element = ((this.dropup && this.right) || this.split) ? this.$el : this.$refs.toggle\n                _element = _element.$el || _element\n                this.createPopper(_element)\n            }\n\n            this.$emit('shown')\n            this.$nextTick(this.focusFirstItem)\n        },\n        hideMenu() {\n            this.emitOnRoot(DROPDOWN_EVENTS.HIDDEN, this)\n            this.$emit('hidden')\n            this.removePopper()\n        },\n        away() {\n            this.visible = false\n        }\n    },\n    created() {\n        this._popperInstance = null\n    },\n    mounted() {\n        this.listenOnRoot(DROPDOWN_EVENTS.SHOWN, function(vm) {\n            if (vm !== this) {\n                this.visible = false\n            }\n        })\n    },\n    deactivated() {\n        this.visible = false\n        this.removePopper()\n    },\n    beforeDestroy() {\n        this.visible = false\n        this.removePopper()\n    }\n}\n</script>\n\n<style scoped>\n.nav-link:hover {\n    cursor: pointer;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-44811c60_0", { source: "\n.nav-link[data-v-44811c60]:hover {\n    cursor: pointer;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/dropdown/Dropdown.vue"],"names":[],"mappings":";AAobA;IACA,gBAAA;CACA","file":"Dropdown.vue","sourcesContent":["<template>\n    <component :is=\"computedTag\" :id=\"computedID\"\n        v-on-clickaway=\"away\"\n        :class=\"[\n            'dropdown',\n            'd-dropdown',\n            !isNav ? 'btn-group' : '',\n            isNav ? 'nav-item' : '',\n            dropup ? 'dropup' : '',\n            visible ? 'show' : '',\n            (boundary !== 'scrollParent' || !boundary) ? 'position-static' : ''\n        ]\">\n\n        <!-- Dropdown Split -->\n        <d-button v-if=\"split && !isNav\"\n            ref=\"button\"\n            :disabled=\"disabled\"\n            :theme=\"theme\"\n            :size=\"size\"\n            :id=\"computedSplitID\"\n            @click=\"click\">\n            <slot name=\"button-content\">{{ text }}</slot>\n        </d-button>\n\n        <!-- Dropdown Toggle -->\n        <component :is=\"computedToggleTag\" ref=\"toggle\"\n            :id=\"computedToggleID\"\n            :class=\"[\n                isNav ? 'nav-link' : '',\n                !noCaret || split ? 'dropdown-toggle' : '',\n                split && !isNav ? 'dropdown-toggle-split' : '',\n                toggleClass\n            ]\"\n            :theme=\"theme\"\n            :size=\"size\"\n            :disabled=\"disabled\"\n            :aria-expanded=\"visible ? 'true' : 'false'\"\n            aria-haspopup=\"true\"\n            @click=\"toggle\"\n            @keydown=\"toggle\">\n            <span v-if=\"split\" class=\"sr-only\">{{ toggleText }}</span>\n            <slot v-else name=\"button-content\">{{ text }}</slot>\n        </component>\n\n        <!-- Dropdown Menu -->\n        <div ref=\"menu\"\n            role=\"menu\"\n            :class=\"[\n                'dropdown-menu',\n                right ? 'dropdown-menu-right' : '',\n                visible ? 'show' : '',\n                menuClass\n            ]\"\n            :id=\"computedMenuID\"\n            :aria-labeledby=\"computedMenuID\"\n            @mouseover=\"onMouseOver\">\n            <slot />\n        </div>\n    </component>\n</template>\n\n<script>\nimport Popper from 'popper.js'\nimport { guid, closest } from '../../utils'\nimport { THEMECOLORS, DROPDOWN_EVENTS, KEYCODES } from '../../utils/constants'\nimport { CancelableEvent } from '../../utils/events'\nimport { mixin as clickAwayMixin } from 'vue-clickaway';\nimport rootListenerMixin from '../../mixins/root-listener.mixin'\n\nexport default {\n    name: 'd-dropdown',\n    mixins: [\n        rootListenerMixin,\n        clickAwayMixin\n    ],\n    data() {\n        return {\n            visible: false,\n            isNavbar: null,\n            visibleChangePrevented: false\n        }\n    },\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown menu ID.\n         */\n        menuId: {\n            type: String,\n            default: null\n        },\n        /**\n         * The toggle ID.\n         */\n        toggleId: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown menu class(es).\n         */\n        menuClass: {\n            type: [String, Array],\n            default: null\n        },\n        /**\n         * The dropdown toggle class(es).\n         */\n        toggleClass: {\n            type: [String, Array],\n            default: null\n        },\n        /**\n         * Align the menu to the right.\n         */\n        right: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to display the caret, or not.\n         */\n        noCaret: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to split the dropdown, or not.\n         */\n        split: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The color theme.\n         */\n        theme: {\n            type: String,\n            default: 'primary',\n            validator: v => THEMECOLORS.includes(v)\n        },\n        /**\n         * The dropdown toggle's size.\n         */\n        size: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown's disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The dropdown toggle's text.\n         */\n        toggleText: {\n            type: String,\n            default: 'Toggle Dropdown'\n        },\n        /**\n         * The button label's text.\n         */\n        text: {\n            type: String,\n            default: ''\n        },\n        /**\n         * The dropdown's boundary.\n         */\n        boundary: {\n            type: String,\n            default: 'scrollParent',\n            validator: v => ['scrollParent', 'window', 'viewport'].includes(v)\n        },\n        /**\n         * The offset value.\n         */\n        offset: {\n            type: [Number, String],\n            default: null\n        },\n        /**\n         * Display on top.\n         */\n        dropup: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The Popper options.\n         */\n        popperOptions: {\n            type: Object,\n            default() {\n                return {}\n            }\n        },\n        /**\n         * Disable autoflipping.\n         */\n        noFlip: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether the dropdown is displayed inside a nav, or not.\n         */\n        isNav: {\n            type: Boolean,\n            default: false\n        }\n    },\n    watch: {\n        visible(newVal, oldVal) {\n            if (this.visibleChangePrevented) {\n                this.visibleChangePrevented = false\n                return\n            }\n\n            if (newVal === oldVal) {\n                return\n            }\n\n            const eventName = newVal ? 'show' : 'hide'\n            let _visibleChangeEvent = new CancelableEvent(eventName, {\n                cancelable: true,\n                vueTarget: this,\n                target: this.$refs.menu,\n                relatedTarget: null\n            })\n\n            this.$emit(_visibleChangeEvent.type, _visibleChangeEvent)\n            this.emitOnRoot(DROPDOWN_EVENTS[_visibleChangeEvent.type.toUpperCase()])\n\n            if (_visibleChangeEvent.defaultPrevented) {\n                this.visibleChangePrevented = true\n                this.visible = oldVal\n                return\n            }\n\n            if (eventName === 'show') {\n                this.showMenu()\n                return\n            }\n\n            this.hideMenu()\n        },\n        disabled(newVal, oldVal) {\n            if (newVal !== oldVal && newVal && this.visible) {\n                this.visible = false\n            }\n        }\n    },\n    computed: {\n        computedTag() {\n            return this.isNav ? 'li' : 'div'\n        },\n        computedToggleTag() {\n            return this.isNav ? 'a' : 'd-button'\n        },\n        computedID() {\n            return this.id || `d-dropdown-${guid()}`\n        },\n        computedMenuID() {\n            return this.menuId || `d-dropdown-menu-${guid()}`\n        },\n        computedToggleID() {\n            return this.toggleId || `d-dropdown-toggle-${guid()}`\n        },\n        computedSplitID() {\n            return this.splitId || `d-dropdown-split-${guid()}`\n        },\n        toggler() {\n            return this.$refs.toggle.$el || this.$refs.toggle\n        }\n    },\n    methods: {\n        onMouseOver(event) {\n            const item = event.target\n            if (\n                item.classList.contains('dropdown-item')\n                && !item.disabled\n                && !item.classList.contains('disabled')\n                && item.focus\n            ) {\n                item.focus()\n            }\n        },\n        toggle(event) {\n            event = event || {}\n\n            // Enter, Space or Down\n            const KEY_ESD = event.keyCode === KEYCODES.ENTER\n                            || event.keyCode === KEYCODES.SPACE\n                            || event.keyCode === KEYCODES.DOWN\n\n            if (event.type !== 'click' && !(event.type === 'keydown' && KEY_ESD)) {\n                return\n            }\n\n            if (this.disabled) {\n                this.visible = false\n                return\n            }\n\n            this.$emit('toggle', event)\n\n            if (event.defaultPrevented) {\n                return\n            }\n\n            event.preventDefault()\n            event.stopPropagation()\n\n            this.visible = !this.visible\n        },\n        click(event) {\n            if (this.disabled) {\n                this.visible = false\n                return\n            }\n            this.$emit('click', event)\n        },\n        createPopper(element) {\n            this.removePopper()\n\n            // Define placement\n            let placement = 'bottom-start'\n\n            if (this.dropup && this.right) {\n                placement = 'top-end'\n            } else if (this.dropup) {\n                placement = 'top-start'\n            } else if (this.right) {\n                placement = 'bottom-end'\n            }\n\n            // Build Popper config\n            const popperConfig = {\n                placement,\n                modifiers: {\n                    offset: {\n                        offset: this.offset || 0\n                    },\n                    flip: {\n                        enabled: !this.noFlip\n                    },\n                    computeStyle: {\n                        enabled: true\n                    }\n                }\n            }\n\n            // Define Popper boundaries\n            if (this.boundary) {\n                popperConfig.modifiers.preventOverflow = {\n                    boundariesElement: this.boundary\n                }\n            }\n\n            // Create Popper instance\n            this._popperInstance = new Popper(\n                element,\n                this.$refs.menu,\n                {\n                    ...popperConfig,\n                    ...this.popperOptions\n                }\n            )\n        },\n        removePopper() {\n            if (this._popper) {\n                this._popper.destroy()\n            }\n            this._popperInstance = null\n        },\n        showMenu() {\n            if (this.disabled) {\n                return\n            }\n\n            this.emitOnRoot(DROPDOWN_EVENTS.SHOWN, this)\n\n            if (this.inNavbar === null && this.isNav) {\n                this.inNavbar = Boolean(closest('.navbar', this.$el))\n            }\n\n            if (!this.inNavbar) {\n                let _element = ((this.dropup && this.right) || this.split) ? this.$el : this.$refs.toggle\n                _element = _element.$el || _element\n                this.createPopper(_element)\n            }\n\n            this.$emit('shown')\n            this.$nextTick(this.focusFirstItem)\n        },\n        hideMenu() {\n            this.emitOnRoot(DROPDOWN_EVENTS.HIDDEN, this)\n            this.$emit('hidden')\n            this.removePopper()\n        },\n        away() {\n            this.visible = false\n        }\n    },\n    created() {\n        this._popperInstance = null\n    },\n    mounted() {\n        this.listenOnRoot(DROPDOWN_EVENTS.SHOWN, function(vm) {\n            if (vm !== this) {\n                this.visible = false\n            }\n        })\n    },\n    deactivated() {\n        this.visible = false\n        this.removePopper()\n    },\n    beforeDestroy() {\n        this.visible = false\n        this.removePopper()\n    }\n}\n</script>\n\n<style scoped>\n.nav-link:hover {\n    cursor: pointer;\n}\n</style>\n"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$l = "data-v-0d4b91ae";
+  var __vue_scope_id__$l = "data-v-44811c60";
   /* module identifier */
   var __vue_module_identifier__$l = undefined;
   /* functional template */
@@ -8185,7 +8215,7 @@ __vue_render__$l._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/dropdown/Dropdown.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/dropdown/Dropdown.vue";
     }
 
     if (!component.render) {
@@ -8327,11 +8357,11 @@ __vue_render__$m._withStripped = true;
   /* style */
   var __vue_inject_styles__$m = function (inject) {
     if (!inject) { return }
-    inject("data-v-2809a9cf_0", { source: "\n.dropdown-item[data-v-2809a9cf]:focus {\n    outline: 0;\n}\n", map: {"version":3,"sources":["/Users/hisk/shards-vue/src/components/dropdown/DropdownItem.vue"],"names":[],"mappings":";AAqBA;IACA,WAAA;CACA","file":"DropdownItem.vue","sourcesContent":["<template>\n    <d-link class=\"dropdown-item\" role=\"menuitem\">\n        <slot />\n    </d-link>\n</template>\n\n<script>\nimport createLinkProps from '../link/create-link-props'\n\n/**\n * This subcomponent is inheriting <a href=\"/docs/components/link\">Link</a> component's props.\n */\nexport default {\n    name: 'd-dropdown-item',\n    props: {\n        ...createLinkProps()\n    }\n}\n</script>\n\n<style scoped>\n.dropdown-item:focus {\n    outline: 0;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-6220f7b8_0", { source: "\n.dropdown-item[data-v-6220f7b8]:focus {\n    outline: 0;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/dropdown/DropdownItem.vue"],"names":[],"mappings":";AAqBA;IACA,WAAA;CACA","file":"DropdownItem.vue","sourcesContent":["<template>\n    <d-link class=\"dropdown-item\" role=\"menuitem\">\n        <slot />\n    </d-link>\n</template>\n\n<script>\nimport createLinkProps from '../link/create-link-props'\n\n/**\n * This subcomponent is inheriting <a href=\"/docs/components/link\">Link</a> component's props.\n */\nexport default {\n    name: 'd-dropdown-item',\n    props: {\n        ...createLinkProps()\n    }\n}\n</script>\n\n<style scoped>\n.dropdown-item:focus {\n    outline: 0;\n}\n</style>\n"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$m = "data-v-2809a9cf";
+  var __vue_scope_id__$m = "data-v-6220f7b8";
   /* module identifier */
   var __vue_module_identifier__$m = undefined;
   /* functional template */
@@ -8345,7 +8375,7 @@ __vue_render__$m._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/dropdown/DropdownItem.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/dropdown/DropdownItem.vue";
     }
 
     if (!component.render) {
@@ -8520,7 +8550,7 @@ __vue_render__$n._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/dropdown/DropdownHeader.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/dropdown/DropdownHeader.vue";
     }
 
     if (!component.render) {
@@ -8668,7 +8698,7 @@ __vue_render__$o._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/dropdown/DropdownDivider.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/dropdown/DropdownDivider.vue";
     }
 
     if (!component.render) {
@@ -8851,7 +8881,7 @@ __vue_render__$p._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/embed/Embed.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/embed/Embed.vue";
     }
 
     if (!component.render) {
@@ -9039,7 +9069,7 @@ __vue_render__$q._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/form/Form.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/form/Form.vue";
     }
 
     if (!component.render) {
@@ -9181,7 +9211,7 @@ __vue_render__$r._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/form/FormRow.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/form/FormRow.vue";
     }
 
     if (!component.render) {
@@ -9339,7 +9369,7 @@ __vue_render__$s._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/form/FormText.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/form/FormText.vue";
     }
 
     if (!component.render) {
@@ -9503,7 +9533,7 @@ __vue_render__$t._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/form/FormFeedback.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/form/FormFeedback.vue";
     }
 
     if (!component.render) {
@@ -9668,7 +9698,7 @@ __vue_render__$u._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/form/FormValidFeedback.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/form/FormValidFeedback.vue";
     }
 
     if (!component.render) {
@@ -9833,7 +9863,7 @@ __vue_render__$v._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/form/FormInvalidFeedback.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/form/FormInvalidFeedback.vue";
     }
 
     if (!component.render) {
@@ -10218,7 +10248,7 @@ __vue_render__$w._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/form-checkbox/FormCheckbox.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/form-checkbox/FormCheckbox.vue";
     }
 
     if (!component.render) {
@@ -10528,7 +10558,7 @@ __vue_render__$x._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/form-input/FormInput.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/form-input/FormInput.vue";
     }
 
     if (!component.render) {
@@ -10844,7 +10874,7 @@ __vue_render__$y._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/form-radio/FormRadio.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/form-radio/FormRadio.vue";
     }
 
     if (!component.render) {
@@ -11232,11 +11262,11 @@ __vue_render__$z._withStripped = true;
   /* style */
   var __vue_inject_styles__$z = function (inject) {
     if (!inject) { return }
-    inject("data-v-09618a4a_0", { source: "\n.custom-select[data-v-09618a4a] {\n    -webkit-appearance: none;\n    -moz-appearance: none;\n    appearance: none;\n}\n", map: {"version":3,"sources":["/Users/hisk/shards-vue/src/components/form-select/FormSelect.vue"],"names":[],"mappings":";AAgPA;IACA,yBAAA;IACA,sBAAA;IACA,iBAAA;CACA","file":"FormSelect.vue","sourcesContent":["<template>\n    <select ref=\"input\"\n        :class=\"[\n            'form-control',\n            stateClass,\n            size ? `form-control-${size}` : null,\n            !multiple && selectSize > 1 ? null : 'custom-select'\n        ]\"\n        v-model=\"localValue\"\n        :id=\"computedID\"\n        :name=\"name\"\n        :multiple=\"multiple || null\"\n        :size=\"(multiple || selectSize > 1) ? selectSize : null\"\n        :disabled=\"disabled\"\n        :required=\"required\"\n        :aria-required=\"required ? true : null\"\n        :aria-invalid=\"computedAriaInvalid\"\n        @change=\"handleChange\" >\n        <option v-for=\"(option, idx) in formOptions\"\n            :key=\"`dr-opt-${idx}`\"\n            :value=\"option.value\"\n            :disabled=\"Boolean(option.disabled)\">\n                {{ option.text }}\n        </option>\n        <slot />\n    </select>\n</template>\n\n<script>\nimport { guid } from '../../utils'\n\nexport default {\n    name: 'd-form-select',\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The element name.\n         */\n        name: {\n            type: String\n        },\n        /**\n         * The select options.\n         */\n        options: {\n            type: [Array, Object],\n            default() {\n                return []\n            }\n        },\n        /**\n         * The select value.\n         */\n        value: {},\n        /**\n         * Whether it should allow multiple selections, or not.\n         */\n        multiple: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * How many options should be visible.\n         */\n        selectSize: {\n            type: Number,\n            default: 0\n        },\n        /**\n         * Controls the `aria-invalid` attribute.\n         */\n        ariaInvalid: {\n            type: [Boolean, String],\n            default: false\n        },\n        /**\n         * The value field.\n         */\n        valueField: {\n            type: String,\n            default: 'value'\n        },\n        /**\n         * The disabled field.\n         */\n        disabledField: {\n            type: String,\n            default: 'disabled'\n        },\n        /**\n         * The text field.\n         */\n        textField: {\n            type: String,\n            default: 'text'\n        },\n        /**\n         * The disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The required state.\n         */\n        required: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The validity state (invalid, valid, true, false).\n         */\n        state: {\n            type: [Boolean, String],\n            default: null,\n            validator: v => ['valid', 'invalid', true, false, null].includes(v)\n        },\n        /**\n         * The form control size (sm, lg).\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: v => ['sm', 'lg', null].includes(v)\n        }\n    },\n    data() {\n        return {\n            localValue: this.value\n        }\n    },\n    watch: {\n        value(newVal) {\n            this.localValue = newVal\n        },\n\n        localValue() {\n            this.$emit('input', this.localValue)\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `dr-select-${guid()}`\n        },\n\n        computedState() {\n            if (this.state === true || this.state === 'valid') {\n                return true\n            }\n\n            if (this.state === false || this.state === 'invalid') {\n                return false\n            }\n\n            return null\n        },\n\n        stateClass() {\n            if (this.computedState === true) {\n                return 'is-valid'\n            } else if (this.computedState === false) {\n                return 'is-invalid'\n            }\n\n            return null\n        },\n\n        computedAriaInvalid() {\n            if (this.ariaInvalid === true || this.ariaInvalid === 'true') {\n                return 'true';\n            }\n\n            return this.stateClass == 'is-invalid' ? 'true' : null;\n        },\n\n        formOptions() {\n            let options = this.options || {}\n            const valueField = this.valueField || 'value'\n            const textField = this.textField || 'text'\n            const disabledField = this.disabledField || 'disabled'\n\n            // Parse array options\n            if (Array.isArray(options)) {\n                return options.map(option => {\n                    if (typeof option === 'object') {\n                        return {\n                            value: option[valueField],\n                            text: String(option[textField]),\n                            disabled: option[disabledField] || false\n                        }\n                    }\n\n                    return { text: String(option), value: option, disabled: false }\n                })\n\n            // Parse object options\n            } else if (typeof options === 'object') {\n                return Object.keys(options).map(key => {\n                    let option = options[key] || {}\n\n                    if (typeof option === 'object') {\n                        const value = option[valueField]\n                        const text = option[textField]\n\n                        return {\n                            text: typeof text === 'undefined' ? key : String(text),\n                            value: typeof value === 'undefined' ? key : value,\n                            disabled: option[disabledField] || false\n                        }\n                    }\n\n                    return { text: String(option), value: key, disabled: false }\n                })\n            }\n\n            return []\n        }\n    },\n    methods: {\n        handleChange(evt) {\n            const target = evt.target;\n            const selectedVal = Array.from(target.options)\n                                    .filter(opt => opt.selected)\n                                    .map(opt => '_value' in opt ? opt._value : opt.value)\n\n            this.localValue = target.multiple ? selectedVal : selectedVal[0];\n            this.$emit('change', this.localValue);\n        }\n    }\n}\n</script>\n\n<style scoped>\n    .custom-select {\n        -webkit-appearance: none;\n        -moz-appearance: none;\n        appearance: none;\n    }\n</style>\n"]}, media: undefined });
+    inject("data-v-4a425c73_0", { source: "\n.custom-select[data-v-4a425c73] {\n    -webkit-appearance: none;\n    -moz-appearance: none;\n    appearance: none;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/form-select/FormSelect.vue"],"names":[],"mappings":";AAgPA;IACA,yBAAA;IACA,sBAAA;IACA,iBAAA;CACA","file":"FormSelect.vue","sourcesContent":["<template>\n    <select ref=\"input\"\n        :class=\"[\n            'form-control',\n            stateClass,\n            size ? `form-control-${size}` : null,\n            !multiple && selectSize > 1 ? null : 'custom-select'\n        ]\"\n        v-model=\"localValue\"\n        :id=\"computedID\"\n        :name=\"name\"\n        :multiple=\"multiple || null\"\n        :size=\"(multiple || selectSize > 1) ? selectSize : null\"\n        :disabled=\"disabled\"\n        :required=\"required\"\n        :aria-required=\"required ? true : null\"\n        :aria-invalid=\"computedAriaInvalid\"\n        @change=\"handleChange\" >\n        <option v-for=\"(option, idx) in formOptions\"\n            :key=\"`dr-opt-${idx}`\"\n            :value=\"option.value\"\n            :disabled=\"Boolean(option.disabled)\">\n                {{ option.text }}\n        </option>\n        <slot />\n    </select>\n</template>\n\n<script>\nimport { guid } from '../../utils'\n\nexport default {\n    name: 'd-form-select',\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The element name.\n         */\n        name: {\n            type: String\n        },\n        /**\n         * The select options.\n         */\n        options: {\n            type: [Array, Object],\n            default() {\n                return []\n            }\n        },\n        /**\n         * The select value.\n         */\n        value: {},\n        /**\n         * Whether it should allow multiple selections, or not.\n         */\n        multiple: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * How many options should be visible.\n         */\n        selectSize: {\n            type: Number,\n            default: 0\n        },\n        /**\n         * Controls the `aria-invalid` attribute.\n         */\n        ariaInvalid: {\n            type: [Boolean, String],\n            default: false\n        },\n        /**\n         * The value field.\n         */\n        valueField: {\n            type: String,\n            default: 'value'\n        },\n        /**\n         * The disabled field.\n         */\n        disabledField: {\n            type: String,\n            default: 'disabled'\n        },\n        /**\n         * The text field.\n         */\n        textField: {\n            type: String,\n            default: 'text'\n        },\n        /**\n         * The disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The required state.\n         */\n        required: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The validity state (invalid, valid, true, false).\n         */\n        state: {\n            type: [Boolean, String],\n            default: null,\n            validator: v => ['valid', 'invalid', true, false, null].includes(v)\n        },\n        /**\n         * The form control size (sm, lg).\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: v => ['sm', 'lg', null].includes(v)\n        }\n    },\n    data() {\n        return {\n            localValue: this.value\n        }\n    },\n    watch: {\n        value(newVal) {\n            this.localValue = newVal\n        },\n\n        localValue() {\n            this.$emit('input', this.localValue)\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `dr-select-${guid()}`\n        },\n\n        computedState() {\n            if (this.state === true || this.state === 'valid') {\n                return true\n            }\n\n            if (this.state === false || this.state === 'invalid') {\n                return false\n            }\n\n            return null\n        },\n\n        stateClass() {\n            if (this.computedState === true) {\n                return 'is-valid'\n            } else if (this.computedState === false) {\n                return 'is-invalid'\n            }\n\n            return null\n        },\n\n        computedAriaInvalid() {\n            if (this.ariaInvalid === true || this.ariaInvalid === 'true') {\n                return 'true';\n            }\n\n            return this.stateClass == 'is-invalid' ? 'true' : null;\n        },\n\n        formOptions() {\n            let options = this.options || {}\n            const valueField = this.valueField || 'value'\n            const textField = this.textField || 'text'\n            const disabledField = this.disabledField || 'disabled'\n\n            // Parse array options\n            if (Array.isArray(options)) {\n                return options.map(option => {\n                    if (typeof option === 'object') {\n                        return {\n                            value: option[valueField],\n                            text: String(option[textField]),\n                            disabled: option[disabledField] || false\n                        }\n                    }\n\n                    return { text: String(option), value: option, disabled: false }\n                })\n\n            // Parse object options\n            } else if (typeof options === 'object') {\n                return Object.keys(options).map(key => {\n                    let option = options[key] || {}\n\n                    if (typeof option === 'object') {\n                        const value = option[valueField]\n                        const text = option[textField]\n\n                        return {\n                            text: typeof text === 'undefined' ? key : String(text),\n                            value: typeof value === 'undefined' ? key : value,\n                            disabled: option[disabledField] || false\n                        }\n                    }\n\n                    return { text: String(option), value: key, disabled: false }\n                })\n            }\n\n            return []\n        }\n    },\n    methods: {\n        handleChange(evt) {\n            const target = evt.target;\n            const selectedVal = Array.from(target.options)\n                                    .filter(opt => opt.selected)\n                                    .map(opt => '_value' in opt ? opt._value : opt.value)\n\n            this.localValue = target.multiple ? selectedVal : selectedVal[0];\n            this.$emit('change', this.localValue);\n        }\n    }\n}\n</script>\n\n<style scoped>\n    .custom-select {\n        -webkit-appearance: none;\n        -moz-appearance: none;\n        appearance: none;\n    }\n</style>\n"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$z = "data-v-09618a4a";
+  var __vue_scope_id__$z = "data-v-4a425c73";
   /* module identifier */
   var __vue_module_identifier__$z = undefined;
   /* functional template */
@@ -11250,7 +11280,7 @@ __vue_render__$z._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/form-select/FormSelect.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/form-select/FormSelect.vue";
     }
 
     if (!component.render) {
@@ -11593,7 +11623,7 @@ __vue_render__$A._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/form-textarea/FormTextarea.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/form-textarea/FormTextarea.vue";
     }
 
     if (!component.render) {
@@ -11859,7 +11889,7 @@ __vue_render__$B._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/image/Image.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/image/Image.vue";
     }
 
     if (!component.render) {
@@ -12014,7 +12044,7 @@ __vue_render__$C._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/input-group/InputGroupText.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/input-group/InputGroupText.vue";
     }
 
     if (!component.render) {
@@ -12190,7 +12220,7 @@ __vue_render__$D._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/input-group/InputGroupAddon.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/input-group/InputGroupAddon.vue";
     }
 
     if (!component.render) {
@@ -12405,7 +12435,7 @@ __vue_render__$E._withStripped = true;
   /* style */
   var __vue_inject_styles__$E = function (inject) {
     if (!inject) { return }
-    inject("data-v-3186133d_0", { source: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Adjust dropdowns inside input groups. */\n.input-group > .input-group-prepend > .d-dropdown > .btn {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n.input-group > .input-group-append > .d-dropdown > .btn {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n", map: {"version":3,"sources":["/Users/hisk/shards-vue/src/components/input-group/InputGroup.vue"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAwFA,2CAAA;AACA;IACA,2BAAA;IACA,8BAAA;CACA;AAEA;IACA,0BAAA;IACA,6BAAA;CACA","file":"InputGroup.vue","sourcesContent":["<template>\n    <component :is=\"tag\"\n        role=\"group\"\n        :id=\"id\"\n        :class=\"[\n            'input-group',\n            this.size ? `input-group-${this.size}` : '',\n            this.seamless ? 'input-group-seamless' : ''\n        ]\">\n        <InputGroupAddon v-if=\"prependIsUsed\" :prepend=\"Boolean(prepend || prependIsUsed)\">\n            <InputGroupText v-if=\"Boolean(prepend)\" v-html=\"prepend\"  />\n            <slot name=\"prepend\" />\n        </InputGroupAddon>\n        <slot />\n        <InputGroupAddon v-if=\"appendIsUsed\" :append=\"Boolean(append || appendIsUsed)\">\n            <InputGroupText v-if=\"Boolean(append)\" v-html=\"append\" />\n            <slot name=\"append\" />\n        </InputGroupAddon>\n    </component>\n</template>\n\n<script>\nimport InputGroupAddon from './InputGroupAddon.vue'\nimport InputGroupText from './InputGroupText.vue'\n\nexport default {\n    name: 'd-input-group',\n    components: {\n        InputGroupAddon,\n        InputGroupText\n    },\n    props: {\n        /**\n         * The element id.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The input group size.\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: v => ['sm', 'lg', null].includes(v)\n        },\n        /**\n         * The prepend value.\n         */\n        prepend: {\n            type: String,\n            default: null\n        },\n        /**\n         * The append value.\n         */\n        append: {\n            type: String,\n            default: null\n        },\n        /**\n         * Whether it should be seamless, or not.\n         */\n        seamless: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The element tag.\n         */\n        tag: {\n            type: String,\n            default: 'div'\n        }\n    },\n    computed: {\n        appendIsUsed() {\n            return !!this.$slots['append'] || this.append\n        },\n        prependIsUsed() {\n            return !!this.$slots['prepend'] || this.prepend\n        }\n    }\n}\n</script>\n\n<style>\n/* Adjust dropdowns inside input groups. */\n.input-group > .input-group-prepend > .d-dropdown > .btn {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n\n.input-group > .input-group-append > .d-dropdown > .btn {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-49133bf4_0", { source: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Adjust dropdowns inside input groups. */\n.input-group > .input-group-prepend > .d-dropdown > .btn {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n.input-group > .input-group-append > .d-dropdown > .btn {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/input-group/InputGroup.vue"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAwFA,2CAAA;AACA;IACA,2BAAA;IACA,8BAAA;CACA;AAEA;IACA,0BAAA;IACA,6BAAA;CACA","file":"InputGroup.vue","sourcesContent":["<template>\n    <component :is=\"tag\"\n        role=\"group\"\n        :id=\"id\"\n        :class=\"[\n            'input-group',\n            this.size ? `input-group-${this.size}` : '',\n            this.seamless ? 'input-group-seamless' : ''\n        ]\">\n        <InputGroupAddon v-if=\"prependIsUsed\" :prepend=\"Boolean(prepend || prependIsUsed)\">\n            <InputGroupText v-if=\"Boolean(prepend)\" v-html=\"prepend\"  />\n            <slot name=\"prepend\" />\n        </InputGroupAddon>\n        <slot />\n        <InputGroupAddon v-if=\"appendIsUsed\" :append=\"Boolean(append || appendIsUsed)\">\n            <InputGroupText v-if=\"Boolean(append)\" v-html=\"append\" />\n            <slot name=\"append\" />\n        </InputGroupAddon>\n    </component>\n</template>\n\n<script>\nimport InputGroupAddon from './InputGroupAddon.vue'\nimport InputGroupText from './InputGroupText.vue'\n\nexport default {\n    name: 'd-input-group',\n    components: {\n        InputGroupAddon,\n        InputGroupText\n    },\n    props: {\n        /**\n         * The element id.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The input group size.\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: v => ['sm', 'lg', null].includes(v)\n        },\n        /**\n         * The prepend value.\n         */\n        prepend: {\n            type: String,\n            default: null\n        },\n        /**\n         * The append value.\n         */\n        append: {\n            type: String,\n            default: null\n        },\n        /**\n         * Whether it should be seamless, or not.\n         */\n        seamless: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The element tag.\n         */\n        tag: {\n            type: String,\n            default: 'div'\n        }\n    },\n    computed: {\n        appendIsUsed() {\n            return !!this.$slots['append'] || this.append\n        },\n        prependIsUsed() {\n            return !!this.$slots['prepend'] || this.prepend\n        }\n    }\n}\n</script>\n\n<style>\n/* Adjust dropdowns inside input groups. */\n.input-group > .input-group-prepend > .d-dropdown > .btn {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n\n.input-group > .input-group-append > .d-dropdown > .btn {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n</style>\n"]}, media: undefined });
 
   };
   /* scoped */
@@ -12423,7 +12453,7 @@ __vue_render__$E._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/input-group/InputGroup.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/input-group/InputGroup.vue";
     }
 
     if (!component.render) {
@@ -12628,7 +12658,7 @@ __vue_render__$F._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/list-group/ListGroup.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/list-group/ListGroup.vue";
     }
 
     if (!component.render) {
@@ -12830,7 +12860,7 @@ __vue_render__$G._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/list-group/ListGroupItem.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/list-group/ListGroupItem.vue";
     }
 
     if (!component.render) {
@@ -13047,11 +13077,11 @@ __vue_render__$H._withStripped = true;
   /* style */
   var __vue_inject_styles__$H = function (inject) {
     if (!inject) { return }
-    inject("data-v-5068c594_0", { source: "\n.modal[data-v-5068c594] {\n    display: block;\n    background-color: rgba(0,0,0,0.5);\n    transition: .3s;\n    overflow-y: auto;\n}\n.modal-dialog[data-v-5068c594] {\n    transition: .3s;\n}\n.modal--no-backdrop[data-v-5068c594] {\n    background: none;\n    pointer-events: none;\n}\n.fade-enter[data-v-5068c594] {\n    transform: translate(0,0);\n    opacity: 1;\n}\n.fade-leave-active[data-v-5068c594] {\n    transform: translate(0,0);\n    opacity: 1;\n}\n.fade-enter[data-v-5068c594], .fade-leave-active[data-v-5068c594] {\n    opacity: 0;\n}\n.fade-enter .modal-dialog[data-v-5068c594],\n.fade-leave-active .modal-dialog[data-v-5068c594] {\n    -webkit-transform: translate(0,-25%);\n    transform: translate(0,-25%);\n}\n", map: {"version":3,"sources":["/Users/hisk/shards-vue/src/components/modal/Modal.vue"],"names":[],"mappings":";AAqFA;IACA,eAAA;IACA,kCAAA;IACA,gBAAA;IACA,iBAAA;CACA;AAEA;IACA,gBAAA;CACA;AAEA;IACA,iBAAA;IACA,qBAAA;CACA;AAEA;IACA,0BAAA;IACA,WAAA;CACA;AAEA;IACA,0BAAA;IACA,WAAA;CACA;AAEA;IACA,WAAA;CACA;AAEA;;IAEA,qCAAA;IACA,6BAAA;CACA","file":"Modal.vue","sourcesContent":["<template>\n  <transition name=\"fade\">\n    <component :is=\"tag\"\n        :class=\"[\n            'modal',\n            this.noBackdrop ? 'modal--no-backdrop' : ''\n        ]\">\n      <div :class=\"[\n            'modal-dialog',\n            size ? `modal-${size}` : '',\n            centered ? `modal-dialog-centered` : '',\n        ]\"\n        role=\"document\"\n        v-on-clickaway=\"away\">\n        <div class=\"modal-content\">\n            <slot />\n        </div>\n      </div>\n    </component>\n  </transition>\n</template>\n\n<script>\nimport { mixin as clickAwayMixin } from 'vue-clickaway';\nimport { MODAL_EVENTS } from '../../utils/constants';\n\nexport default {\n    name: 'd-modal',\n    mixins: [clickAwayMixin],\n    props: {\n        /**\n         * The component tag.\n         */\n        tag: {\n            type: String,\n            default: \"div\"\n        },\n        /**\n         * The size (sm, lg).\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: v => ['sm', 'lg'].includes(v)\n        },\n        /**\n         * Hides the backdrop overlay.\n         */\n        noBackdrop: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether it is centered, or not.\n         */\n        centered: {\n            type: Boolean,\n            default: false\n        }\n    },\n  methods: {\n    away() {\n        if (this.noBackdrop) {\n            return;\n        }\n\n        /**\n         * @event close\n         *\n         * Triggered when the modal is closed.\n         */\n        this.$emit('close');\n\n        /**\n         * @event hidden\n         *\n         * Triggered when the modal is hidden.\n         */\n        this.$root.$emit(MODAL_EVENTS.HIDDEN)\n    }\n  },\n};\n</script>\n\n<style scoped>\n.modal {\n    display: block;\n    background-color: rgba(0,0,0,0.5);\n    transition: .3s;\n    overflow-y: auto;\n}\n\n.modal-dialog {\n    transition: .3s;\n}\n\n.modal--no-backdrop {\n    background: none;\n    pointer-events: none;\n}\n\n.fade-enter {\n    transform: translate(0,0);\n    opacity: 1;\n}\n\n.fade-leave-active {\n    transform: translate(0,0);\n    opacity: 1;\n}\n\n.fade-enter, .fade-leave-active {\n    opacity: 0;\n}\n\n.fade-enter .modal-dialog,\n.fade-leave-active .modal-dialog {\n    -webkit-transform: translate(0,-25%);\n    transform: translate(0,-25%);\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-7ca94a1f_0", { source: "\n.modal[data-v-7ca94a1f] {\n    display: block;\n    background-color: rgba(0,0,0,0.5);\n    transition: .3s;\n    overflow-y: auto;\n}\n.modal-dialog[data-v-7ca94a1f] {\n    transition: .3s;\n}\n.modal--no-backdrop[data-v-7ca94a1f] {\n    background: none;\n    pointer-events: none;\n}\n.fade-enter[data-v-7ca94a1f] {\n    transform: translate(0,0);\n    opacity: 1;\n}\n.fade-leave-active[data-v-7ca94a1f] {\n    transform: translate(0,0);\n    opacity: 1;\n}\n.fade-enter[data-v-7ca94a1f], .fade-leave-active[data-v-7ca94a1f] {\n    opacity: 0;\n}\n.fade-enter .modal-dialog[data-v-7ca94a1f],\n.fade-leave-active .modal-dialog[data-v-7ca94a1f] {\n    -webkit-transform: translate(0,-25%);\n    transform: translate(0,-25%);\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/modal/Modal.vue"],"names":[],"mappings":";AAqFA;IACA,eAAA;IACA,kCAAA;IACA,gBAAA;IACA,iBAAA;CACA;AAEA;IACA,gBAAA;CACA;AAEA;IACA,iBAAA;IACA,qBAAA;CACA;AAEA;IACA,0BAAA;IACA,WAAA;CACA;AAEA;IACA,0BAAA;IACA,WAAA;CACA;AAEA;IACA,WAAA;CACA;AAEA;;IAEA,qCAAA;IACA,6BAAA;CACA","file":"Modal.vue","sourcesContent":["<template>\n  <transition name=\"fade\">\n    <component :is=\"tag\"\n        :class=\"[\n            'modal',\n            this.noBackdrop ? 'modal--no-backdrop' : ''\n        ]\">\n      <div :class=\"[\n            'modal-dialog',\n            size ? `modal-${size}` : '',\n            centered ? `modal-dialog-centered` : '',\n        ]\"\n        role=\"document\"\n        v-on-clickaway=\"away\">\n        <div class=\"modal-content\">\n            <slot />\n        </div>\n      </div>\n    </component>\n  </transition>\n</template>\n\n<script>\nimport { mixin as clickAwayMixin } from 'vue-clickaway';\nimport { MODAL_EVENTS } from '../../utils/constants';\n\nexport default {\n    name: 'd-modal',\n    mixins: [clickAwayMixin],\n    props: {\n        /**\n         * The component tag.\n         */\n        tag: {\n            type: String,\n            default: \"div\"\n        },\n        /**\n         * The size (sm, lg).\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: v => ['sm', 'lg'].includes(v)\n        },\n        /**\n         * Hides the backdrop overlay.\n         */\n        noBackdrop: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether it is centered, or not.\n         */\n        centered: {\n            type: Boolean,\n            default: false\n        }\n    },\n  methods: {\n    away() {\n        if (this.noBackdrop) {\n            return;\n        }\n\n        /**\n         * @event close\n         *\n         * Triggered when the modal is closed.\n         */\n        this.$emit('close');\n\n        /**\n         * @event hidden\n         *\n         * Triggered when the modal is hidden.\n         */\n        this.$root.$emit(MODAL_EVENTS.HIDDEN)\n    }\n  },\n};\n</script>\n\n<style scoped>\n.modal {\n    display: block;\n    background-color: rgba(0,0,0,0.5);\n    transition: .3s;\n    overflow-y: auto;\n}\n\n.modal-dialog {\n    transition: .3s;\n}\n\n.modal--no-backdrop {\n    background: none;\n    pointer-events: none;\n}\n\n.fade-enter {\n    transform: translate(0,0);\n    opacity: 1;\n}\n\n.fade-leave-active {\n    transform: translate(0,0);\n    opacity: 1;\n}\n\n.fade-enter, .fade-leave-active {\n    opacity: 0;\n}\n\n.fade-enter .modal-dialog,\n.fade-leave-active .modal-dialog {\n    -webkit-transform: translate(0,-25%);\n    transform: translate(0,-25%);\n}\n</style>\n"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$H = "data-v-5068c594";
+  var __vue_scope_id__$H = "data-v-7ca94a1f";
   /* module identifier */
   var __vue_module_identifier__$H = undefined;
   /* functional template */
@@ -13065,7 +13095,7 @@ __vue_render__$H._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/modal/Modal.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/modal/Modal.vue";
     }
 
     if (!component.render) {
@@ -13254,7 +13284,7 @@ __vue_render__$I._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/modal/ModalHeader.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/modal/ModalHeader.vue";
     }
 
     if (!component.render) {
@@ -13396,7 +13426,7 @@ __vue_render__$J._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/modal/ModalTitle.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/modal/ModalTitle.vue";
     }
 
     if (!component.render) {
@@ -13538,7 +13568,7 @@ __vue_render__$K._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/modal/ModalBody.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/modal/ModalBody.vue";
     }
 
     if (!component.render) {
@@ -13680,7 +13710,7 @@ __vue_render__$L._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/modal/ModalFooter.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/modal/ModalFooter.vue";
     }
 
     if (!component.render) {
@@ -13890,7 +13920,7 @@ __vue_render__$M._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/nav/Nav.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/nav/Nav.vue";
     }
 
     if (!component.render) {
@@ -14032,7 +14062,7 @@ __vue_render__$N._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/nav/NavItem.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/nav/NavItem.vue";
     }
 
     if (!component.render) {
@@ -14229,7 +14259,7 @@ __vue_render__$O._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/navbar/Navbar.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/navbar/Navbar.vue";
     }
 
     if (!component.render) {
@@ -14382,7 +14412,7 @@ __vue_render__$P._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/navbar/NavbarBrand.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/navbar/NavbarBrand.vue";
     }
 
     if (!component.render) {
@@ -14549,7 +14579,7 @@ __vue_render__$Q._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/navbar/NavbarNav.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/navbar/NavbarNav.vue";
     }
 
     if (!component.render) {
@@ -14720,7 +14750,7 @@ __vue_render__$R._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/navbar/NavbarToggle.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/navbar/NavbarToggle.vue";
     }
 
     if (!component.render) {
@@ -16176,7 +16206,7 @@ __vue_render__$S._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/popover/Popover.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/popover/Popover.vue";
     }
 
     if (!component.render) {
@@ -16392,7 +16422,7 @@ __vue_render__$T._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/progress/Progress.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/progress/Progress.vue";
     }
 
     if (!component.render) {
@@ -16653,11 +16683,11 @@ __vue_render__$U._withStripped = true;
   /* style */
   var __vue_inject_styles__$U = function (inject) {
     if (!inject) { return }
-    inject("data-v-bb2fdbde_0", { source: "\n.progress-bar[data-v-bb2fdbde] {\n    height: 100%;\n}\n", map: {"version":3,"sources":["/Users/hisk/shards-vue/src/components/progress/ProgressBar.vue"],"names":[],"mappings":";AAuHA;IACA,aAAA;CACA","file":"ProgressBar.vue","sourcesContent":["<template>\n    <div :class=\"[\n        'progress-bar',\n        computedTheme ? `bg-${computedTheme}` : '',\n        (computedStriped || computedAnimated) ? 'progress-bar-striped' : '',\n        computedAnimated ? 'progress-bar-animated' : ''\n    ]\"\n    :style=\"{ width: (100 * (value / computedMax)) + '%' }\"\n    role=\"progressbar\"\n    :aria-valuemin=\"0\"\n    :aria-valuemax=\"computedMax.toString()\"\n    :aria-valuenow=\"value.toFixed(computedPrecision)\">\n        <slot>\n            <span v-if=\"label\" v-html=\"label\"></span>\n            <span v-if=\"computedShowProgress\">{{ computedProgress.toFixed(computedPrecision) }}</span>\n            <span v-if=\"computedShowValue\">{{ value.toFixed(computedPrecision) }}</span>\n        </slot>\n    </div>\n</template>\n\n<script>\nexport default {\n    name: 'd-progress-bar',\n    props: {\n        /**\n         * The value.\n         */\n        value: {\n            type: Number,\n            default: 0\n        },\n        /**\n         * The label.\n         */\n        label: {\n            type: String,\n            value: null\n        },\n        /**\n         * The max value.\n         */\n        max: {\n            type: Number,\n            default: null\n        },\n        /**\n         * Precision number of digits.\n         */\n        precision: {\n            type: Number,\n            default: null\n        },\n        /**\n         * Theme color.\n         */\n        theme: {\n            type: String,\n            default: null\n        },\n        /**\n         * Whether it should be striped, or not.\n         */\n        striped: {\n            type: Boolean,\n            default: null\n        },\n        /**\n         * Whether it should be animated, or not.\n         */\n        animated: {\n            type: Boolean,\n            default: null\n        },\n        /**\n         * Whether it should show the progress, or not.\n         */\n        showProgress: {\n            type: Boolean,\n            default: null\n        },\n        /**\n         * Whether it should show the value, or not.\n         */\n        showValue: {\n            type: Boolean,\n            default: null\n        }\n    },\n    computed: {\n        computedTheme() {\n            return this.theme || this.$parent.theme\n        },\n        computedStriped() {\n            return typeof this.striped === 'boolean' ? this.striped : (this.$parent.striped || false)\n        },\n        computedAnimated() {\n            return typeof this.animated === 'boolean' ? this.animated : (this.$parent.animated || false)\n        },\n        computedMax() {\n            return typeof this.max === 'number' ? this.max : (this.$parent.max || 100)\n        },\n        computedPrecision() {\n            return typeof this.precision === 'number' ? this.precision : (this.$parent.precision || 0)\n        },\n        computedShowProgress() {\n            return typeof this.showProgress === 'boolean' ? this.showProgress : (this.$parent.showProgress || false)\n        },\n        computedShowValue() {\n            return typeof this.showValue === 'boolean' ? this.showValue : (this.$parent.showValue || false)\n        },\n        computedProgress() {\n            const p = Math.pow(10, this.computedPrecision)\n            return Math.round((100 * p * this.value) / this.computedMax) / p\n        }\n    }\n}\n</script>\n\n<style scoped>\n.progress-bar {\n    height: 100%;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-53e6a27a_0", { source: "\n.progress-bar[data-v-53e6a27a] {\n    height: 100%;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/progress/ProgressBar.vue"],"names":[],"mappings":";AAuHA;IACA,aAAA;CACA","file":"ProgressBar.vue","sourcesContent":["<template>\n    <div :class=\"[\n        'progress-bar',\n        computedTheme ? `bg-${computedTheme}` : '',\n        (computedStriped || computedAnimated) ? 'progress-bar-striped' : '',\n        computedAnimated ? 'progress-bar-animated' : ''\n    ]\"\n    :style=\"{ width: (100 * (value / computedMax)) + '%' }\"\n    role=\"progressbar\"\n    :aria-valuemin=\"0\"\n    :aria-valuemax=\"computedMax.toString()\"\n    :aria-valuenow=\"value.toFixed(computedPrecision)\">\n        <slot>\n            <span v-if=\"label\" v-html=\"label\"></span>\n            <span v-if=\"computedShowProgress\">{{ computedProgress.toFixed(computedPrecision) }}</span>\n            <span v-if=\"computedShowValue\">{{ value.toFixed(computedPrecision) }}</span>\n        </slot>\n    </div>\n</template>\n\n<script>\nexport default {\n    name: 'd-progress-bar',\n    props: {\n        /**\n         * The value.\n         */\n        value: {\n            type: Number,\n            default: 0\n        },\n        /**\n         * The label.\n         */\n        label: {\n            type: String,\n            value: null\n        },\n        /**\n         * The max value.\n         */\n        max: {\n            type: Number,\n            default: null\n        },\n        /**\n         * Precision number of digits.\n         */\n        precision: {\n            type: Number,\n            default: null\n        },\n        /**\n         * Theme color.\n         */\n        theme: {\n            type: String,\n            default: null\n        },\n        /**\n         * Whether it should be striped, or not.\n         */\n        striped: {\n            type: Boolean,\n            default: null\n        },\n        /**\n         * Whether it should be animated, or not.\n         */\n        animated: {\n            type: Boolean,\n            default: null\n        },\n        /**\n         * Whether it should show the progress, or not.\n         */\n        showProgress: {\n            type: Boolean,\n            default: null\n        },\n        /**\n         * Whether it should show the value, or not.\n         */\n        showValue: {\n            type: Boolean,\n            default: null\n        }\n    },\n    computed: {\n        computedTheme() {\n            return this.theme || this.$parent.theme\n        },\n        computedStriped() {\n            return typeof this.striped === 'boolean' ? this.striped : (this.$parent.striped || false)\n        },\n        computedAnimated() {\n            return typeof this.animated === 'boolean' ? this.animated : (this.$parent.animated || false)\n        },\n        computedMax() {\n            return typeof this.max === 'number' ? this.max : (this.$parent.max || 100)\n        },\n        computedPrecision() {\n            return typeof this.precision === 'number' ? this.precision : (this.$parent.precision || 0)\n        },\n        computedShowProgress() {\n            return typeof this.showProgress === 'boolean' ? this.showProgress : (this.$parent.showProgress || false)\n        },\n        computedShowValue() {\n            return typeof this.showValue === 'boolean' ? this.showValue : (this.$parent.showValue || false)\n        },\n        computedProgress() {\n            const p = Math.pow(10, this.computedPrecision)\n            return Math.round((100 * p * this.value) / this.computedMax) / p\n        }\n    }\n}\n</script>\n\n<style scoped>\n.progress-bar {\n    height: 100%;\n}\n</style>\n"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$U = "data-v-bb2fdbde";
+  var __vue_scope_id__$U = "data-v-53e6a27a";
   /* module identifier */
   var __vue_module_identifier__$U = undefined;
   /* functional template */
@@ -16671,7 +16701,7 @@ __vue_render__$U._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/progress/ProgressBar.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/progress/ProgressBar.vue";
     }
 
     if (!component.render) {
@@ -16926,7 +16956,7 @@ __vue_render__$V._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/slider/Slider.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/slider/Slider.vue";
     }
 
     if (!component.render) {
@@ -17158,11 +17188,11 @@ __vue_render__$W._withStripped = true;
   /* style */
   var __vue_inject_styles__$W = function (inject) {
     if (!inject) { return }
-    inject("data-v-0734e6f2_0", { source: "\n.nav-link.active[data-v-0734e6f2] {\n    border-bottom: 1px solid transparent;\n}\n.nav-link[data-v-0734e6f2]:hover {\n    cursor: pointer;\n}\n.nav-link.disabled[data-v-0734e6f2]:hover {\n    cursor: not-allowed;\n}\n", map: {"version":3,"sources":["/Users/hisk/shards-vue/src/components/tabs/_TabButton.vue"],"names":[],"mappings":";AAsHA;IACA,qCAAA;CACA;AAEA;IACA,gBAAA;CACA;AAEA;IACA,oBAAA;CACA","file":"_TabButton.vue","sourcesContent":["<template>\n    <li :class=\"['nav-item', itemClass]\" role=\"presentation\">\n        <a :class=\"[\n            'nav-link',\n            active ? 'active' : '',\n            disabled ? 'disabled' : '',\n            linkClass\n        ]\"\n        role=\"tab\"\n        tabindex=\"-1\"\n        :id=\"computedID\"\n        :disabled=\"disabled\"\n        :aria-selected=\"active ? 'true' : 'false'\"\n        :aria-setsize=\"setSize\"\n        :aria-posinset=\"posInSet\"\n        :aria-controls=\"controls\"\n        v-html=\"content\"\n        @click=\"handleClick\"\n        @keydown=\"handleClick\" />\n    </li>\n</template>\n\n<script>\nimport { guid } from '../../utils'\nimport { KEYCODES } from '../../utils/constants';\n\nexport default {\n    name: 'd-tab-button',\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The active state.\n         */\n        active: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The link class.\n         */\n        linkClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The item class.\n         */\n        itemClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The aria-setsize value.\n         */\n        setSize: {\n            type: Number,\n            default: 0,\n        },\n        /**\n         * The position in set value (aria-posinset).\n         */\n        posInSet: {\n            type: Number,\n            default: 0,\n        },\n        /**\n         * The aria-controls value.\n         */\n        controls: {\n            type: String,\n            default: null\n        },\n        /**\n         * The content.\n         */\n        content: {\n            type: String,\n            default: null\n        }\n    },\n    methods: {\n        handleClick(e) {\n            if (this.disabled) {\n                e.preventDefault()\n                e.stopPropagation()\n            }\n\n            if (e.type === 'click'\n                || e.keyCode === KEYCODES.ENTER\n                || e.keyCode === KEYCODES.SPACE) {\n                e.preventDefault()\n                e.stopPropagation()\n                this.$emit('click', e)\n            }\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `d-tab-btn-${guid()}`\n        }\n    }\n}\n</script>\n\n<style scoped>\n.nav-link.active {\n    border-bottom: 1px solid transparent;\n}\n\n.nav-link:hover {\n    cursor: pointer;\n}\n\n.nav-link.disabled:hover {\n    cursor: not-allowed;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-dae5182e_0", { source: "\n.nav-link.active[data-v-dae5182e] {\n    border-bottom: 1px solid transparent;\n}\n.nav-link[data-v-dae5182e]:hover {\n    cursor: pointer;\n}\n.nav-link.disabled[data-v-dae5182e]:hover {\n    cursor: not-allowed;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/tabs/_TabButton.vue"],"names":[],"mappings":";AAsHA;IACA,qCAAA;CACA;AAEA;IACA,gBAAA;CACA;AAEA;IACA,oBAAA;CACA","file":"_TabButton.vue","sourcesContent":["<template>\n    <li :class=\"['nav-item', itemClass]\" role=\"presentation\">\n        <a :class=\"[\n            'nav-link',\n            active ? 'active' : '',\n            disabled ? 'disabled' : '',\n            linkClass\n        ]\"\n        role=\"tab\"\n        tabindex=\"-1\"\n        :id=\"computedID\"\n        :disabled=\"disabled\"\n        :aria-selected=\"active ? 'true' : 'false'\"\n        :aria-setsize=\"setSize\"\n        :aria-posinset=\"posInSet\"\n        :aria-controls=\"controls\"\n        v-html=\"content\"\n        @click=\"handleClick\"\n        @keydown=\"handleClick\" />\n    </li>\n</template>\n\n<script>\nimport { guid } from '../../utils'\nimport { KEYCODES } from '../../utils/constants';\n\nexport default {\n    name: 'd-tab-button',\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The active state.\n         */\n        active: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The link class.\n         */\n        linkClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The item class.\n         */\n        itemClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The aria-setsize value.\n         */\n        setSize: {\n            type: Number,\n            default: 0,\n        },\n        /**\n         * The position in set value (aria-posinset).\n         */\n        posInSet: {\n            type: Number,\n            default: 0,\n        },\n        /**\n         * The aria-controls value.\n         */\n        controls: {\n            type: String,\n            default: null\n        },\n        /**\n         * The content.\n         */\n        content: {\n            type: String,\n            default: null\n        }\n    },\n    methods: {\n        handleClick(e) {\n            if (this.disabled) {\n                e.preventDefault()\n                e.stopPropagation()\n            }\n\n            if (e.type === 'click'\n                || e.keyCode === KEYCODES.ENTER\n                || e.keyCode === KEYCODES.SPACE) {\n                e.preventDefault()\n                e.stopPropagation()\n                this.$emit('click', e)\n            }\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `d-tab-btn-${guid()}`\n        }\n    }\n}\n</script>\n\n<style scoped>\n.nav-link.active {\n    border-bottom: 1px solid transparent;\n}\n\n.nav-link:hover {\n    cursor: pointer;\n}\n\n.nav-link.disabled:hover {\n    cursor: not-allowed;\n}\n</style>\n"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$W = "data-v-0734e6f2";
+  var __vue_scope_id__$W = "data-v-dae5182e";
   /* module identifier */
   var __vue_module_identifier__$W = undefined;
   /* functional template */
@@ -17176,7 +17206,7 @@ __vue_render__$W._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/tabs/_TabButton.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/tabs/_TabButton.vue";
     }
 
     if (!component.render) {
@@ -17611,11 +17641,11 @@ __vue_render__$X._withStripped = true;
   /* style */
   var __vue_inject_styles__$X = function (inject) {
     if (!inject) { return }
-    inject("data-v-bdeec540_0", { source: "\n.d-tabs-vertical-nav[data-v-bdeec540]:hover {\n    background: rgba(90, 97, 105, 0.06);\n}\n", map: {"version":3,"sources":["/Users/hisk/shards-vue/src/components/tabs/Tabs.vue"],"names":[],"mappings":";AA8RA;IACA,oCAAA;CACA","file":"Tabs.vue","sourcesContent":["<template>\n    <component :is=\"tag\"\n        :id=\"computedID\"\n        :class=\"computedTabsClasses\">\n\n        <div :class=\"computedNavListWrapperClasses\">\n            <ul :class=\"computedNavListClasses\"\n            role=\"tablist\"\n            tabindex='0'\n            :id=\"computedTabControlsID\"\n            @keydown=\"handleOnKeynav\">\n                <d-tab-button v-for=\"(tab, index) in tabs\" :key=\"index\"\n                    :content=\"tab.headHtml || tab.title\"\n                    :href=\"tab.href\"\n                    :id=\"computedTabButtonID\"\n                    :active=\"tab.localActiveState\"\n                    :disabled=\"tab.disabled\"\n                    :setSize=\"tabs.length\"\n                    :posInSet=\"index + 1\"\n                    :controls=\"_tabsContainerID\"\n                    :linkClass=\"tab.titleLinkClass\"\n                    :itemClass=\"tab.titleItemClass\"\n                    @click=\"setTab(index)\" />\n                <slot name=\"tabs\" />\n            </ul>\n        </div>\n\n        <div ref=\"tabsContainer\"\n            :class=\"computedTabsContainerClasses\"\n            :id=\"_tabsContainerID\">\n            <slot />\n        </div>\n    </component>\n</template>\n\n<script>\nimport { guid } from '../../utils'\nimport { KEYCODES } from '../../utils/constants'\nimport dTabButton from './_TabButton.vue'\n\nexport default {\n    name: 'd-tabs',\n    components: {\n        dTabButton\n    },\n    data() {\n        return {\n            currentTab: this.value,\n            tabs: [],\n            // eslint-disable-next-line\n            _tabsContainerID: null\n        }\n    },\n    watch: {\n        currentTab (newVal, oldVal) {\n            if (newVal === oldVal) {\n                return\n            }\n\n            this.$emit('input', newVal)\n            this.tabs[newVal].$emit('click')\n        },\n        value (newVal, oldVal) {\n            if (newVal === oldVal) {\n                return\n            }\n\n            if (typeof oldVal !== 'number') {\n                oldVal = 0\n            }\n\n            const direction = newVal < oldVal ? -1 : 1\n            this.setTab(newVal, false, direction)\n        }\n    },\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The element tag.\n         */\n        tag: {\n            type: String,\n            default: 'div'\n        },\n        /**\n         * Whether it should be displayed as a card, or not.\n         */\n        card: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The value used to set the current tab.\n         */\n        value: {\n            type: Number,\n            default: null\n        },\n        /**\n         * Whether the tab controls should be displayed as pills, or not.\n         */\n        pills: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether the tab controls should be displayed vertically, or not.\n         */\n        vertical: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The content class.\n         */\n        contentClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The nav class.\n         */\n        navClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The nav wrapper class.\n         */\n        navWrapperClass: {\n            type: String,\n            default: null\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `dr-tabs-${guid()}`\n        },\n        computedTabControlsID() {\n            return `dr-tab-controls-${guid()}`\n        },\n        computedTabButtonID() {\n            return `dr-tabs-tab-${guid()}`\n        },\n        navStyle() {\n            return this.pills ? 'pills' : 'tabs'\n        },\n        computedTabsClasses() {\n            return [\n                'tabs',\n                this.vertical ? 'row' : '',\n                (this.vertical && this.card) ? 'no-gutters' : '',\n            ]\n        },\n        computedNavListClasses() {\n            return [\n                'nav',\n                `nav-${this.navStyle}`,\n                (this.card && !this.vertical) ? `card-header-${this.navStyle}` : '',\n                (this.card && this.vertical) ? 'card-header' : '',\n                (this.card && this.vertical) ? 'h-100' : '',\n                this.vertical ? 'flex-column' : '',\n                this.vertical ? 'border-bottom-0' : '',\n                this.vertical ? 'rounded-0' : '',\n                this.vertical ? 'd-tabs-vertical-nav' : '',\n                this.navClass\n            ]\n        },\n        computedNavListWrapperClasses() {\n            return [\n                this.card && !this.vertical ? 'card-header' : '',\n                this.vertical ? 'col-auto' : '',\n                this.navWrapperClass\n            ]\n        },\n        computedTabsContainerClasses() {\n            return [\n                'tab-content',\n                this.vertical ? 'col' : '',\n                this.contentClass\n            ]\n        }\n    },\n    created() {\n        this._tabsContainerID = `tabs-container-${guid()}`\n    },\n    methods: {\n        handleOnKeynav(e) {\n            if (Object.keys(KEYCODES).some((k) => KEYCODES[k] === e.keyCode)) {\n                e.preventDefault()\n                e.stopPropagation()\n            }\n\n            if (e.keyCode === KEYCODES.UP || e.keyCode === KEYCODES.LEFT ) {\n                this.previousTab()\n            }\n\n            if (e.keyCode === KEYCODES.DOWN || e.keyCode === KEYCODES.RIGHT) {\n                this.nextTab()\n            }\n        },\n        nextTab() {\n            this.setTab(this.currentTab + 1, false, 1)\n        },\n        previousTab() {\n            this.setTab(this.currentTab - 1, false, -1)\n        },\n        setTab(index, force, direction) {\n            direction = direction || 0\n            index = index || 0\n\n            direction = direction === 0 ? 0 : (direction > 0 ? 1 : -1)\n\n            if (!force && index === this.currentTab) {\n                return\n            }\n\n            const tab = this.tabs[index]\n\n            if (!tab) {\n                this.$emit('input', this.currentTab)\n                return\n            }\n\n            if (tab.disabled) {\n                if (direction) {\n                    this.setTab(index + direction, force, direction)\n                }\n\n                return\n            }\n\n            this.tabs.forEach(_tab => {\n                if (_tab === tab) {\n                    this.$set(_tab, 'localActiveState', true)\n                    return\n                }\n\n                this.$set(_tab, 'localActiveState', false)\n            })\n\n            this.currentTab = index\n        },\n        updateTabs() {\n            this.tabs = this.$children.filter(child => child._isTab)\n            let tabIndex = null\n\n            this.tabs.forEach((tab, index) => {\n                if (tab.localActiveState && !tab.disabled) {\n                    tabIndex = index\n                }\n            })\n\n            if (tabIndex === null) {\n                if (this.currentTab >= this.tabs.length) {\n                    this.setTab(this.tabs.length - 1, true, -1)\n                    return\n                }\n\n                if (this.tabs[this.currentTab] && !this.tabs[this.currentTab].disabled) {\n                    tabIndex = this.currentTab\n                }\n\n                this.tabs.forEach((tab, index) => {\n                    if (!tab.disabled && tabIndex === null) {\n                        tabIndex = index\n                    }\n                })\n            }\n\n            this.setTab(tabIndex || 0, true, 0)\n        }\n    },\n    mounted() {\n        this.updateTabs()\n    }\n}\n</script>\n\n<style scoped>\n.d-tabs-vertical-nav:hover {\n    background: rgba(90, 97, 105, 0.06);\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-0153e352_0", { source: "\n.d-tabs-vertical-nav[data-v-0153e352]:hover {\n    background: rgba(90, 97, 105, 0.06);\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/tabs/Tabs.vue"],"names":[],"mappings":";AA8RA;IACA,oCAAA;CACA","file":"Tabs.vue","sourcesContent":["<template>\n    <component :is=\"tag\"\n        :id=\"computedID\"\n        :class=\"computedTabsClasses\">\n\n        <div :class=\"computedNavListWrapperClasses\">\n            <ul :class=\"computedNavListClasses\"\n            role=\"tablist\"\n            tabindex='0'\n            :id=\"computedTabControlsID\"\n            @keydown=\"handleOnKeynav\">\n                <d-tab-button v-for=\"(tab, index) in tabs\" :key=\"index\"\n                    :content=\"tab.headHtml || tab.title\"\n                    :href=\"tab.href\"\n                    :id=\"computedTabButtonID\"\n                    :active=\"tab.localActiveState\"\n                    :disabled=\"tab.disabled\"\n                    :setSize=\"tabs.length\"\n                    :posInSet=\"index + 1\"\n                    :controls=\"_tabsContainerID\"\n                    :linkClass=\"tab.titleLinkClass\"\n                    :itemClass=\"tab.titleItemClass\"\n                    @click=\"setTab(index)\" />\n                <slot name=\"tabs\" />\n            </ul>\n        </div>\n\n        <div ref=\"tabsContainer\"\n            :class=\"computedTabsContainerClasses\"\n            :id=\"_tabsContainerID\">\n            <slot />\n        </div>\n    </component>\n</template>\n\n<script>\nimport { guid } from '../../utils'\nimport { KEYCODES } from '../../utils/constants'\nimport dTabButton from './_TabButton.vue'\n\nexport default {\n    name: 'd-tabs',\n    components: {\n        dTabButton\n    },\n    data() {\n        return {\n            currentTab: this.value,\n            tabs: [],\n            // eslint-disable-next-line\n            _tabsContainerID: null\n        }\n    },\n    watch: {\n        currentTab (newVal, oldVal) {\n            if (newVal === oldVal) {\n                return\n            }\n\n            this.$emit('input', newVal)\n            this.tabs[newVal].$emit('click')\n        },\n        value (newVal, oldVal) {\n            if (newVal === oldVal) {\n                return\n            }\n\n            if (typeof oldVal !== 'number') {\n                oldVal = 0\n            }\n\n            const direction = newVal < oldVal ? -1 : 1\n            this.setTab(newVal, false, direction)\n        }\n    },\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The element tag.\n         */\n        tag: {\n            type: String,\n            default: 'div'\n        },\n        /**\n         * Whether it should be displayed as a card, or not.\n         */\n        card: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The value used to set the current tab.\n         */\n        value: {\n            type: Number,\n            default: null\n        },\n        /**\n         * Whether the tab controls should be displayed as pills, or not.\n         */\n        pills: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether the tab controls should be displayed vertically, or not.\n         */\n        vertical: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The content class.\n         */\n        contentClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The nav class.\n         */\n        navClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The nav wrapper class.\n         */\n        navWrapperClass: {\n            type: String,\n            default: null\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `dr-tabs-${guid()}`\n        },\n        computedTabControlsID() {\n            return `dr-tab-controls-${guid()}`\n        },\n        computedTabButtonID() {\n            return `dr-tabs-tab-${guid()}`\n        },\n        navStyle() {\n            return this.pills ? 'pills' : 'tabs'\n        },\n        computedTabsClasses() {\n            return [\n                'tabs',\n                this.vertical ? 'row' : '',\n                (this.vertical && this.card) ? 'no-gutters' : '',\n            ]\n        },\n        computedNavListClasses() {\n            return [\n                'nav',\n                `nav-${this.navStyle}`,\n                (this.card && !this.vertical) ? `card-header-${this.navStyle}` : '',\n                (this.card && this.vertical) ? 'card-header' : '',\n                (this.card && this.vertical) ? 'h-100' : '',\n                this.vertical ? 'flex-column' : '',\n                this.vertical ? 'border-bottom-0' : '',\n                this.vertical ? 'rounded-0' : '',\n                this.vertical ? 'd-tabs-vertical-nav' : '',\n                this.navClass\n            ]\n        },\n        computedNavListWrapperClasses() {\n            return [\n                this.card && !this.vertical ? 'card-header' : '',\n                this.vertical ? 'col-auto' : '',\n                this.navWrapperClass\n            ]\n        },\n        computedTabsContainerClasses() {\n            return [\n                'tab-content',\n                this.vertical ? 'col' : '',\n                this.contentClass\n            ]\n        }\n    },\n    created() {\n        this._tabsContainerID = `tabs-container-${guid()}`\n    },\n    methods: {\n        handleOnKeynav(e) {\n            if (Object.keys(KEYCODES).some((k) => KEYCODES[k] === e.keyCode)) {\n                e.preventDefault()\n                e.stopPropagation()\n            }\n\n            if (e.keyCode === KEYCODES.UP || e.keyCode === KEYCODES.LEFT ) {\n                this.previousTab()\n            }\n\n            if (e.keyCode === KEYCODES.DOWN || e.keyCode === KEYCODES.RIGHT) {\n                this.nextTab()\n            }\n        },\n        nextTab() {\n            this.setTab(this.currentTab + 1, false, 1)\n        },\n        previousTab() {\n            this.setTab(this.currentTab - 1, false, -1)\n        },\n        setTab(index, force, direction) {\n            direction = direction || 0\n            index = index || 0\n\n            direction = direction === 0 ? 0 : (direction > 0 ? 1 : -1)\n\n            if (!force && index === this.currentTab) {\n                return\n            }\n\n            const tab = this.tabs[index]\n\n            if (!tab) {\n                this.$emit('input', this.currentTab)\n                return\n            }\n\n            if (tab.disabled) {\n                if (direction) {\n                    this.setTab(index + direction, force, direction)\n                }\n\n                return\n            }\n\n            this.tabs.forEach(_tab => {\n                if (_tab === tab) {\n                    this.$set(_tab, 'localActiveState', true)\n                    return\n                }\n\n                this.$set(_tab, 'localActiveState', false)\n            })\n\n            this.currentTab = index\n        },\n        updateTabs() {\n            this.tabs = this.$children.filter(child => child._isTab)\n            let tabIndex = null\n\n            this.tabs.forEach((tab, index) => {\n                if (tab.localActiveState && !tab.disabled) {\n                    tabIndex = index\n                }\n            })\n\n            if (tabIndex === null) {\n                if (this.currentTab >= this.tabs.length) {\n                    this.setTab(this.tabs.length - 1, true, -1)\n                    return\n                }\n\n                if (this.tabs[this.currentTab] && !this.tabs[this.currentTab].disabled) {\n                    tabIndex = this.currentTab\n                }\n\n                this.tabs.forEach((tab, index) => {\n                    if (!tab.disabled && tabIndex === null) {\n                        tabIndex = index\n                    }\n                })\n            }\n\n            this.setTab(tabIndex || 0, true, 0)\n        }\n    },\n    mounted() {\n        this.updateTabs()\n    }\n}\n</script>\n\n<style scoped>\n.d-tabs-vertical-nav:hover {\n    background: rgba(90, 97, 105, 0.06);\n}\n</style>\n"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$X = "data-v-bdeec540";
+  var __vue_scope_id__$X = "data-v-0153e352";
   /* module identifier */
   var __vue_module_identifier__$X = undefined;
   /* functional template */
@@ -17629,7 +17659,7 @@ __vue_render__$X._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/tabs/Tabs.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/tabs/Tabs.vue";
     }
 
     if (!component.render) {
@@ -17891,11 +17921,11 @@ __vue_render__$Y._withStripped = true;
   /* style */
   var __vue_inject_styles__$Y = function (inject) {
     if (!inject) { return }
-    inject("data-v-65e89e9b_0", { source: "\n.fade-enter-active[data-v-65e89e9b] {\n  transition: opacity .25s ease-in-out;\n}\n.fade-leave-active[data-v-65e89e9b] {\n  transition: opacity .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.fade-enter[data-v-65e89e9b],\n.fade-leave-to[data-v-65e89e9b] {\n  opacity: 0;\n}\n", map: {"version":3,"sources":["/Users/hisk/shards-vue/src/components/tabs/Tab.vue"],"names":[],"mappings":";AAuHA;EACA,qCAAA;CACA;AAEA;EACA,0DAAA;CACA;AAEA;;EAEA,WAAA;CACA","file":"Tab.vue","sourcesContent":["<template>\n    <transition mode=\"out-in\" name=\"fade\"\n        @beforeEnter=\"handleBeforeEnter\"\n        @afterEnter=\"handleAfterEnter\"\n        @afterLeave=\"handleAfterLeave\">\n        <component :is=\"tag\"\n            ref=\"panel\"\n            v-show=\"localActiveState\"\n            role=\"tabpanel\"\n            :id=\"computedID\"\n            :aria-hidden=\"localActiveState ? 'false' : 'true'\"\n            :aria-expanded=\"localActiveState ? 'true' : 'false'\"\n            :aria-labelledby=\"controlledBy || null\"\n            :class=\"[\n                'tab-pane',\n                ($parent && $parent.card && !noBody) ? 'card-body' : '',\n                show ? 'show' : '',\n                disabled ? 'disabled' : '',\n                localActiveState ? 'active' : ''\n            ]\">\n            <slot />\n        </component>\n    </transition>\n</template>\n\n<script>\nimport { guid } from '../../utils';\n\nexport default {\n    name: 'd-tab',\n    data() {\n        return {\n            localActiveState: this.active && !this.disabled,\n            show: false\n        }\n    },\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The active state.\n         */\n        active: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The element tag.\n         */\n        tag: {\n            type: String,\n            default: 'div'\n        },\n        /**\n         * The button ID.\n         */\n        buttonId: {\n            type: String,\n            default: ''\n        },\n        /**\n         * The title.\n         */\n        title: {\n            type: String,\n            default: ''\n        },\n        /**\n         * The disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether the card should display the body, or not.\n         */\n        noBody: {\n            type: Boolean,\n            default: false\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `dr-tab-${guid()}`\n        },\n        controlledBy() {\n            return this.buttonId || `dr-tab-button-${guid()}`\n        },\n        computedFade() {\n            return this.$parent.fade\n        },\n        _isTab() {\n            return true\n        }\n    },\n    methods: {\n        handleBeforeEnter() {\n            this.show = false\n        },\n        handleAfterEnter() {\n            this.show = true\n        },\n        handleAfterLeave() {\n            this.show = false\n        }\n    },\n    mounted() {\n        this.show = this.localActiveState\n    }\n}\n</script>\n\n<style scoped>\n.fade-enter-active {\n  transition: opacity .25s ease-in-out;\n}\n\n.fade-leave-active {\n  transition: opacity .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-353eba78_0", { source: "\n.fade-enter-active[data-v-353eba78] {\n  transition: opacity .25s ease-in-out;\n}\n.fade-leave-active[data-v-353eba78] {\n  transition: opacity .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.fade-enter[data-v-353eba78],\n.fade-leave-to[data-v-353eba78] {\n  opacity: 0;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/tabs/Tab.vue"],"names":[],"mappings":";AAuHA;EACA,qCAAA;CACA;AAEA;EACA,0DAAA;CACA;AAEA;;EAEA,WAAA;CACA","file":"Tab.vue","sourcesContent":["<template>\n    <transition mode=\"out-in\" name=\"fade\"\n        @beforeEnter=\"handleBeforeEnter\"\n        @afterEnter=\"handleAfterEnter\"\n        @afterLeave=\"handleAfterLeave\">\n        <component :is=\"tag\"\n            ref=\"panel\"\n            v-show=\"localActiveState\"\n            role=\"tabpanel\"\n            :id=\"computedID\"\n            :aria-hidden=\"localActiveState ? 'false' : 'true'\"\n            :aria-expanded=\"localActiveState ? 'true' : 'false'\"\n            :aria-labelledby=\"controlledBy || null\"\n            :class=\"[\n                'tab-pane',\n                ($parent && $parent.card && !noBody) ? 'card-body' : '',\n                show ? 'show' : '',\n                disabled ? 'disabled' : '',\n                localActiveState ? 'active' : ''\n            ]\">\n            <slot />\n        </component>\n    </transition>\n</template>\n\n<script>\nimport { guid } from '../../utils';\n\nexport default {\n    name: 'd-tab',\n    data() {\n        return {\n            localActiveState: this.active && !this.disabled,\n            show: false\n        }\n    },\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The active state.\n         */\n        active: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The element tag.\n         */\n        tag: {\n            type: String,\n            default: 'div'\n        },\n        /**\n         * The button ID.\n         */\n        buttonId: {\n            type: String,\n            default: ''\n        },\n        /**\n         * The title.\n         */\n        title: {\n            type: String,\n            default: ''\n        },\n        /**\n         * The disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether the card should display the body, or not.\n         */\n        noBody: {\n            type: Boolean,\n            default: false\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `dr-tab-${guid()}`\n        },\n        controlledBy() {\n            return this.buttonId || `dr-tab-button-${guid()}`\n        },\n        computedFade() {\n            return this.$parent.fade\n        },\n        _isTab() {\n            return true\n        }\n    },\n    methods: {\n        handleBeforeEnter() {\n            this.show = false\n        },\n        handleAfterEnter() {\n            this.show = true\n        },\n        handleAfterLeave() {\n            this.show = false\n        }\n    },\n    mounted() {\n        this.show = this.localActiveState\n    }\n}\n</script>\n\n<style scoped>\n.fade-enter-active {\n  transition: opacity .25s ease-in-out;\n}\n\n.fade-leave-active {\n  transition: opacity .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n</style>\n"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$Y = "data-v-65e89e9b";
+  var __vue_scope_id__$Y = "data-v-353eba78";
   /* module identifier */
   var __vue_module_identifier__$Y = undefined;
   /* functional template */
@@ -17909,7 +17939,7 @@ __vue_render__$Y._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/tabs/Tab.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/tabs/Tab.vue";
     }
 
     if (!component.render) {
@@ -18244,7 +18274,7 @@ __vue_render__$Z._withStripped = true;
     var component = (typeof script === 'function' ? script.options : script) || {};
 
     {
-      component.__file = "/Users/hisk/shards-vue/src/components/tooltip/Tooltip.vue";
+      component.__file = "/Users/hisk/Projects/shards-vue/src/components/tooltip/Tooltip.vue";
     }
 
     if (!component.render) {
