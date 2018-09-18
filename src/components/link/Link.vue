@@ -3,6 +3,7 @@
         :rel="computedRel"
         :href="computedHref"
         :target="target"
+        :to="to"
         :tabindex="computedTabindex"
         :class="[
             active ? (exact ? exactActiveClass : activeClass) : '',
@@ -93,7 +94,7 @@ export default {
         computedTag() {
             return this.to
                 && !this.disabled
-                && Boolean(this.$parent.router) ? 'router-link' : 'a'
+                && Boolean(this.$parent.$router) ? 'router-link' : 'a'
         },
         computedRel() {
             return this.target === '_blank'
