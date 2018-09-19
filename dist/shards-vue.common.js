@@ -1,7 +1,7 @@
 /*
-* Shards Vue v1.0.2 (https://designrevision.com/downloads/shards-vue/)
-* Based on: Bootstrap 4.0.0 (https://getbootstrap.com)
-* Based on: Shards ^2.0.3 (https://designrevision.com/downloads/shards/)
+* Shards Vue v1.0.3 (https://designrevision.com/downloads/shards-vue/)
+* Based on: Bootstrap ^4.1.3 (https://getbootstrap.com)
+* Based on: Shards ^2.1.0 (https://designrevision.com/downloads/shards/)
 * Copyright 2017-2018 DesignRevision (https://designrevision.com)
 * Copyright 2017-2018 Catalin Vasile (http://catalin.me)
 */
