@@ -1,6 +1,33 @@
 <template>
     <VueDatepicker
-        v-bind="$props"
+        :value="value"
+        :name="name"
+        :id="id"
+        :format="format"
+        :language="language"
+        :open-date="openDate"
+        :day-cell-content="dayCellContent"
+        :full-month-name="fullMonthName"
+        :disabled-dates="disabledDates"
+        :highlighted="highlighted"
+        :placeholder="placeholder"
+        :inline="inline"
+        :calendar-class="computedCalendarClass"
+        :input-class="inputClass"
+        :wrapper-class="wrapperClass"
+        :monday-first="mondayFirst"
+        :clear-button="clearButton"
+        :clear-button-icon="clearButtonIcon"
+        :calendar-button="calendarButton"
+        :calendar-button-icon="calendarButtonIcon"
+        :calendar-button-icon-content="calendarButtonIconContent"
+        :initial-view="initialView"
+        :disabled="disabled"
+        :required="required"
+        :typeable="typeable"
+        :use-utc="useUtc"
+        :minimum-view="minimumView"
+        :maximum-view="maximumView"
         v-on="$listeners">
             <slot name="beforeCalendarHeader" slot="beforeCalendarHeader" />
             <slot name="afterDateInput" slot="afterDateInput" />
@@ -86,7 +113,10 @@ export default {
         /**
          * The CSS class applied to the calendar element.
          */
-        calendarClass: [String, Object, Array],
+        calendarClass: {
+            type: [String, Object, Array],
+            default: ''
+        },
         /**
          * The CSS Class applied to the input element.
          */
@@ -155,6 +185,20 @@ export default {
         maximumView: {
             type: String,
             default: 'year'
+        },
+        /**
+         * Whether the datepicker should be small, or not.
+         */
+        small: {
+            type: Boolean,
+            default: false
+        }
+    },
+    computed: {
+        computedCalendarClass() {
+            let _calendarClass = this.small ? 'vdp-datepicker__small' : ''
+
+            return _calendarClass += this.calendarClass
         }
     }
 }
@@ -193,109 +237,150 @@ export default {
     $datepicker-cell-line-height: 2;
     $datepicker-cell-font-size: 1rem;
 
-    .vdp-datepicker__calendar {
-        color: $datepicker-color;
-        padding: $datepicker-padding-y $datepicker-padding-x;
-        min-width: $datepicker-min-width;
-        font-size: $datepicker-font-size;
-        font-weight: $datepicker-font-weight;
-        font-family: $font-system;
-        background-color: $datepicker-background-color;
-        border: $datepicker-border;
-        border-radius: $datepicker-border-radius;
-        box-shadow: $datepicker-drop-shadows;
-        border: 1px solid rgba($black,.15) !important;
+    $datepicker-small-padding-y: .625rem;
+    $datepicker-small-padding-x: .625rem;
+    $datepicker-small-font-size: .75rem;
+    $datepicker-small-max-width: 235px;
 
-        // Header
-        header {
-            display: flex;
-            padding-bottom: 10px;
+    $datepicker-small-day-font-size: 12px;
+    $datepicker-small-day-font-weight: 500;
+    $datepicker-small-day-width: 1.875rem;
+    $datepicker-small-day-height: 1.875rem;
+    $datepicker-small-day-line-height: 2.25;
 
-            span {
-                transition: $transition-default;
+    $datepicker-small-day-header-font-size: 100%;
+
+    div.vdp-datepicker {
+        &__calendar {
+            color: $datepicker-color;
+            padding: $datepicker-padding-y $datepicker-padding-x;
+            min-width: $datepicker-min-width;
+            font-size: $datepicker-font-size;
+            font-weight: $datepicker-font-weight;
+            font-family: $font-system;
+            background-color: $datepicker-background-color;
+            border: $datepicker-border;
+            border-radius: $datepicker-border-radius;
+            box-shadow: $datepicker-drop-shadows;
+            border: 1px solid rgba($black,.15) !important;
+
+            // Header
+            header {
+                display: flex;
+                padding-bottom: 10px;
+
+                span {
+                    transition: $transition-default;
+                    border-radius: $border-radius-default;
+                    font-weight: 500;
+
+                    &.next:after {
+                        border-left-color: $color-silver-sand;
+                    }
+
+                    &.prev:after {
+                        border-right-color: $color-silver-sand;
+                    }
+                }
+            }
+
+            // Header elements and specific calendar cells.
+            header span,
+            .cell.day:not(.disabled):not(.blank), .cell.month, .cell.year {
+                &:hover {
+                    background-color: $datepicker-cell-hover-color;
+                    border-color: $border-color !important;
+                }
+            }
+
+            // Cells
+            .cell {
+                line-height: $datepicker-cell-line-height;
+                font-size: $datepicker-cell-font-size;
                 border-radius: $border-radius-default;
-                font-weight: 500;
+                transition: $transition-default;
+                border-color: $border-color;
+                height: auto;
 
-                &.next:after {
-                    border-left-color: $color-silver-sand;
+                // Day headers
+                &.day-header {
+                    font-weight: 500;
                 }
 
-                &.prev:after {
-                    border-right-color: $color-silver-sand;
+                // Days
+                &.day {
+                    width: $datepicker-cell-width;
+                    height: $datepicker-cell-height;
+                    border-radius: 50%;
+                }
+
+                // Months
+                &.month,
+                &.year {
+                    height: $datepicker-cell-height;
+                    font-size: 12px;
+                    line-height: 33px;
+                }
+
+                // Selected
+                &.selected,
+                &.highlighted.selected {
+                    background: $color-primary !important;
+                    color: $white;
+                    &:hover {
+                        background: darken($color-primary, 5) !important;
+                        border-color: $border-color !important;
+                    }
+                }
+
+                &.highlighted {
+                    background: $color-primary;
+                    color: $white;
+
+                    &:hover {
+                        background: darken($color-primary, 5) !important;
+                        border-color: $border-color !important;
+                    }
+
+                    &:not(.highlight-start):not(.highlight-end) {
+                        border-radius: 0;
+                    }
+
+                    &.highlight-start {
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
+                    }
+
+                    &.highlight-end {
+                        border-top-left-radius: 0;
+                        border-bottom-left-radius: 0;
+                    }
                 }
             }
         }
 
-        // Header elements and specific calendar cells.
-        header span,
-        .cell.day:not(.disabled):not(.blank), .cell.month, .cell.year {
-            &:hover {
-                background-color: $datepicker-cell-hover-color;
-                border-color: $border-color !important;
-            }
-        }
+        // Small Datepicker modifier.
+        &__small {
+            padding: $datepicker-small-padding-y $datepicker-small-padding-x;
+            font-size: $datepicker-small-font-size;
+            max-width: $datepicker-small-max-width;
 
-        // Cells
-        .cell {
-            line-height: $datepicker-cell-line-height;
-            font-size: $datepicker-cell-font-size;
-            border-radius: $border-radius-default;
-            transition: $transition-default;
-            border-color: $border-color;
-            height: auto;
-
-            // Day headers
-            &.day-header {
-                font-weight: 500;
-            }
-
-            // Days
-            &.day {
-                width: $datepicker-cell-width;
-                height: $datepicker-cell-height;
-                border-radius: 50%;
-            }
-
-            // Months
-            &.month,
-            &.year {
-                height: $datepicker-cell-height;
-                font-size: 12px;
-                line-height: 33px;
-            }
-
-            // Selected
-            &.selected,
-            &.highlighted.selected {
-                background: $color-primary !important;
-                color: $white;
-                &:hover {
-                    background: darken($color-primary, 5) !important;
-                    border-color: $border-color !important;
-                }
-            }
-
-            &.highlighted {
-                background: $color-primary;
-                color: $white;
-
-                &:hover {
-                    background: darken($color-primary, 5) !important;
-                    border-color: $border-color !important;
+            .cell {
+                &.day {
+                    width: $datepicker-small-day-width;
+                    height: $datepicker-small-day-height;
+                    line-height: $datepicker-small-day-line-height;
                 }
 
-                &:not(.highlight-start):not(.highlight-end) {
-                    border-radius: 0;
+                &.day,
+                &.month,
+                &.year {
+                    font-size: $datepicker-small-day-font-size;
+                    font-weight: $datepicker-small-day-font-weight;
                 }
 
-                &.highlight-start {
-                    border-top-right-radius: 0;
-                    border-bottom-right-radius: 0;
-                }
-
-                &.highlight-end {
-                    border-top-left-radius: 0;
-                    border-bottom-left-radius: 0;
+                &.day-header {
+                    font-size: $datepicker-small-day-header-font-size;
                 }
             }
         }
