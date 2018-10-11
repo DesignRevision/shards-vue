@@ -276,9 +276,26 @@ export default {
             }
 
             &.highlighted {
-                background: lighten($color-primary, 45) !important;
+                background: $color-primary;
+                color: $white;
+
                 &:hover {
+                    background: darken($color-primary, 5) !important;
                     border-color: $border-color !important;
+                }
+
+                &:not(.highlight-start):not(.highlight-end) {
+                    border-radius: 0;
+                }
+
+                &.highlight-start {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+
+                &.highlight-end {
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
                 }
             }
         }
