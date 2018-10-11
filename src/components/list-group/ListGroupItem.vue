@@ -81,7 +81,7 @@ export default {
                 || this.to
                 || this.action
                 || this.button
-                || Array.includes(_actionTags, this.tag)
+                || _actionTags.includes(this.tag)
             )
         }
     }
