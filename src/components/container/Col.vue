@@ -24,8 +24,9 @@ export const createBreakpointClass = (type, breakpoint, val) => {
 
     let className = type
 
-    if (breakpoint) // -md ?
-        className += `-${breakpoint}`
+    if (breakpoint) {
+        className += `-${breakpoint.replace(type, '')}` // -md ?
+    }
 
     if (type === 'col' && (val === '' || val === true)) {
         return className.toLowerCase() // .col-md

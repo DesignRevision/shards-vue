@@ -1,5 +1,5 @@
 <template>
-    <d-link class="dropdown-item" role="menuitem">
+    <d-link class="dropdown-item" role="menuitem" v-bind="$props">
         <slot />
     </d-link>
 </template>

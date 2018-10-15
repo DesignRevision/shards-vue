@@ -138,7 +138,7 @@ If you'd like to fix a bug or work on a feature, make sure to follow the steps b
 
 1. Clone the repository.
 2. Run `yarn` to install all required dependencies.
-3. Install Vue CLI and the CLI service globally by running: `npm i -g @vue/cli @vue/cli-service-global`.
+3. Install Vue CLI and the CLI service globally by running: `npm i -g @vue/cli @vue/cli-service-global` or `yarn global add @vue/cli-service-global`.
 4. Run `yarn watch` in order to kickstart the server and run the sandbox with hot reloading.
 5. Refer to the `sandbox/Sandbox.vue` file for more details.
 

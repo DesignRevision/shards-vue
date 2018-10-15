@@ -86,6 +86,11 @@ export default {
 </script>
 
 <style>
+.input-group input:focus {
+    position: relative;
+    z-index: 3;
+}
+
 /* Adjust dropdowns inside input groups. */
 .input-group > .input-group-prepend > .d-dropdown > .btn {
     border-top-right-radius: 0;
@@ -95,5 +100,26 @@ export default {
 .input-group > .input-group-append > .d-dropdown > .btn {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+/* Datepickers */
+.vdp-datepicker:not(:last-child) input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.vdp-datepicker:not(:first-child) input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.vdp-datepicker + .vdp-datepicker {
+    margin-left: -1px;
+}
+
+.input-group-sm .vdp-datepicker input {
+    height: 1.9375rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
 }
 </style>

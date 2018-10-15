@@ -150,7 +150,8 @@ export const TOOLTIP_HOVER_STATE_CLASSES = {
      'datetime',
      'datetime-local',
      'month',
-     'week'
+     'week',
+     'file'
  ]
 
  /**

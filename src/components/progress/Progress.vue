@@ -1,5 +1,5 @@
 <template>
-    <div class="progress" :style="{ height: height || null }">
+    <div :class="['progress', size ? `progress-${size}` : '']" :style="{ height: height || null }">
         <slot>
             <d-progress-bar v-bind="$props"/>
         </slot>
@@ -72,7 +72,22 @@ export default {
         value: {
             type: Number,
             default: 0
+        },
+        /**
+         * The size.
+         */
+        size: {
+            type: String,
+            default: null,
+            validator: (v) => ['sm', 'lg'].includes(v)
         }
     }
 }
 </script>
+
+<style>
+    /* Hide labels for small progress bars */
+    .progress-sm span {
+        color: transparent;
+    }
+</style>
