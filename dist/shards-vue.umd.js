@@ -1,5 +1,5 @@
 /*
-* Shards Vue v1.0.3 (https://designrevision.com/downloads/shards-vue/)
+* Shards Vue v1.0.4 (https://designrevision.com/downloads/shards-vue/)
 * Based on: Bootstrap ^4.1.3 (https://getbootstrap.com)
 * Based on: Shards ^2.1.0 (https://designrevision.com/downloads/shards/)
 * Copyright 2017-2018 DesignRevision (https://designrevision.com)
@@ -411,7 +411,8 @@
          'datetime',
          'datetime-local',
          'month',
-         'week'
+         'week',
+         'file'
      ];
 
      /**
@@ -2632,6 +2633,7 @@
     //
     //
     //
+    //
 
     var script$a = {
         name: 'd-card',
@@ -2684,20 +2686,23 @@
       var _c = _vm._self._c || _h;
       return _c(
         _vm.tag,
-        _vm._b(
-          {
-            tag: "component",
-            class: [
-              "card",
-              Boolean(_vm.align) ? "text-" + _vm.align : "",
-              Boolean(_vm.bgTheme) ? "bg-" + _vm.bgTheme : "",
-              Boolean(_vm.borderTheme) ? "border-" + _vm.borderTheme : "",
-              Boolean(_vm.textTheme) ? "text-" + _vm.textTheme : ""
-            ]
-          },
-          "component",
-          _vm.$attrs,
-          false
+        _vm._g(
+          _vm._b(
+            {
+              tag: "component",
+              class: [
+                "card",
+                Boolean(_vm.align) ? "text-" + _vm.align : "",
+                Boolean(_vm.bgTheme) ? "bg-" + _vm.bgTheme : "",
+                Boolean(_vm.borderTheme) ? "border-" + _vm.borderTheme : "",
+                Boolean(_vm.textTheme) ? "text-" + _vm.textTheme : ""
+              ]
+            },
+            "component",
+            _vm.$attrs,
+            false
+          ),
+          _vm.$listeners
         ),
         [_vm._t("default")],
         2
@@ -4571,8 +4576,9 @@
 
         var className = type;
 
-        if (breakpoint) // -md ?
-            { className += "-" + breakpoint; }
+        if (breakpoint) {
+            className += "-" + (breakpoint.replace(type, '')); // -md ?
+        }
 
         if (type === 'col' && (val === '' || val === true)) {
             return className.toLowerCase() // .col-md
@@ -4904,7 +4910,10 @@
             /**
              * The CSS class applied to the calendar element.
              */
-            calendarClass: [String, Object, Array],
+            calendarClass: {
+                type: [String, Object, Array],
+                default: ''
+            },
             /**
              * The CSS Class applied to the input element.
              */
@@ -4973,6 +4982,20 @@
             maximumView: {
                 type: String,
                 default: 'year'
+            },
+            /**
+             * Whether the datepicker should be small, or not.
+             */
+            small: {
+                type: Boolean,
+                default: false
+            }
+        },
+        computed: {
+            computedCalendarClass: function computedCalendarClass() {
+                var _calendarClass = this.small ? 'vdp-datepicker__small' : '';
+
+                return _calendarClass += this.calendarClass
             }
         }
     };
@@ -4987,7 +5010,41 @@
       var _c = _vm._self._c || _h;
       return _c(
         "VueDatepicker",
-        _vm._g(_vm._b({}, "VueDatepicker", _vm.$props, false), _vm.$listeners),
+        _vm._g(
+          {
+            attrs: {
+              value: _vm.value,
+              name: _vm.name,
+              id: _vm.id,
+              format: _vm.format,
+              language: _vm.language,
+              "open-date": _vm.openDate,
+              "day-cell-content": _vm.dayCellContent,
+              "full-month-name": _vm.fullMonthName,
+              "disabled-dates": _vm.disabledDates,
+              highlighted: _vm.highlighted,
+              placeholder: _vm.placeholder,
+              inline: _vm.inline,
+              "calendar-class": _vm.computedCalendarClass,
+              "input-class": _vm.inputClass,
+              "wrapper-class": _vm.wrapperClass,
+              "monday-first": _vm.mondayFirst,
+              "clear-button": _vm.clearButton,
+              "clear-button-icon": _vm.clearButtonIcon,
+              "calendar-button": _vm.calendarButton,
+              "calendar-button-icon": _vm.calendarButtonIcon,
+              "calendar-button-icon-content": _vm.calendarButtonIconContent,
+              "initial-view": _vm.initialView,
+              disabled: _vm.disabled,
+              required: _vm.required,
+              typeable: _vm.typeable,
+              "use-utc": _vm.useUtc,
+              "minimum-view": _vm.minimumView,
+              "maximum-view": _vm.maximumView
+            }
+          },
+          _vm.$listeners
+        ),
         [
           _vm._t("beforeCalendarHeader", null, { slot: "beforeCalendarHeader" }),
           _vm._v(" "),
@@ -5002,7 +5059,7 @@
       /* style */
       var __vue_inject_styles__$k = function (inject) {
         if (!inject) { return }
-        inject("data-v-3cea6619_0", { source: "\n.vdp-datepicker__calendar {\n  color: #5a6169;\n  padding: 20px 22px;\n  min-width: 10rem;\n  font-size: 1rem;\n  font-weight: 300;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";\n  background-color: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.375rem;\n  box-shadow: 0 0.5rem 4rem rgba(0, 0, 0, 0.11), 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 3px rgba(0, 0, 0, 0.06);\n  border: 1px solid rgba(0, 0, 0, 0.15) !important;\n}\n.vdp-datepicker__calendar header {\n    display: flex;\n    padding-bottom: 10px;\n}\n.vdp-datepicker__calendar header span {\n      transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n      border-radius: 0.375rem;\n      font-weight: 500;\n}\n.vdp-datepicker__calendar header span.next:after {\n        border-left-color: #c3c7cc;\n}\n.vdp-datepicker__calendar header span.prev:after {\n        border-right-color: #c3c7cc;\n}\n.vdp-datepicker__calendar header span:hover,\n  .vdp-datepicker__calendar .cell.day:not(.disabled):not(.blank):hover, .vdp-datepicker__calendar .cell.month:hover, .vdp-datepicker__calendar .cell.year:hover {\n    background-color: #eceeef;\n    border-color: transparent !important;\n}\n.vdp-datepicker__calendar .cell {\n    line-height: 2;\n    font-size: 1rem;\n    border-radius: 0.375rem;\n    transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n    border-color: transparent;\n    height: auto;\n}\n.vdp-datepicker__calendar .cell.day-header {\n      font-weight: 500;\n}\n.vdp-datepicker__calendar .cell.day {\n      width: 36px;\n      height: 36px;\n      border-radius: 50%;\n}\n.vdp-datepicker__calendar .cell.month, .vdp-datepicker__calendar .cell.year {\n      height: 36px;\n      font-size: 12px;\n      line-height: 33px;\n}\n.vdp-datepicker__calendar .cell.selected, .vdp-datepicker__calendar .cell.highlighted.selected {\n      background: #007bff !important;\n      color: #fff;\n}\n.vdp-datepicker__calendar .cell.selected:hover, .vdp-datepicker__calendar .cell.highlighted.selected:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important;\n}\n.vdp-datepicker__calendar .cell.highlighted {\n      background: #e6f2ff !important;\n}\n.vdp-datepicker__calendar .cell.highlighted:hover {\n        border-color: transparent !important;\n}\n\n/*# sourceMappingURL=Datepicker.vue.map */", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/datepicker/Datepicker.vue","Datepicker.vue"],"names":[],"mappings":";AAmMA;EACA,eA5BA;EA6BA,mBAhBA;EAiBA,iBArBA;EAsBA,gBAnBA;EAoBA,iBAjBA;EAkBA,kKA3BA;EA4BA,uBAvCA;EAwCA,sCAvCA;EAwCA,wBAhCA;EAiCA,8GAzCA;EA0CA,iDAAA;CA8EA;AAzFA;IAeA,cAAA;IACA,qBAAA;CAeA;AA/BA;MAmBA,2DAzCA;MA0CA,wBA3CA;MA4CA,iBAAA;CASA;AA9BA;QAwBA,2BArDA;CAsDA;AAzBA;QA4BA,4BAzDA;CA0DA;AA7BA;;IAqCA,0BA/DA;IAgEA,qCAAA;CACA;AAvCA;IA4CA,eA/CA;IAgDA,gBA/CA;IAgDA,wBArEA;IAsEA,2DArEA;IAsEA,0BAxEA;IAyEA,aAAA;CAuCA;AAxFA;MAqDA,iBAAA;CACA;AAtDA;MA0DA,YAhEA;MAiEA,aAhEA;MAiEA,mBAAA;CACA;AA7DA;MAkEA,aAvEA;MAwEA,gBAAA;MACA,kBAAA;CACA;AArEA;MA0EA,+BAAA;MACA,YA3GA;CAgHA;AAhFA;QA6EA,+BAAA;QACA,qCAAA;CACA;AA/EA;MAmFA,+BAAA;CAIA;AAvFA;QAqFA,qCAAA;CACA;;AClOA,0CAA0C","file":"Datepicker.vue","sourcesContent":[null,".vdp-datepicker__calendar {\n  color: #5a6169;\n  padding: 20px 22px;\n  min-width: 10rem;\n  font-size: 1rem;\n  font-weight: 300;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";\n  background-color: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.375rem;\n  box-shadow: 0 0.5rem 4rem rgba(0, 0, 0, 0.11), 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 3px rgba(0, 0, 0, 0.06);\n  border: 1px solid rgba(0, 0, 0, 0.15) !important; }\n  .vdp-datepicker__calendar header {\n    display: flex;\n    padding-bottom: 10px; }\n    .vdp-datepicker__calendar header span {\n      transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n      border-radius: 0.375rem;\n      font-weight: 500; }\n      .vdp-datepicker__calendar header span.next:after {\n        border-left-color: #c3c7cc; }\n      .vdp-datepicker__calendar header span.prev:after {\n        border-right-color: #c3c7cc; }\n  .vdp-datepicker__calendar header span:hover,\n  .vdp-datepicker__calendar .cell.day:not(.disabled):not(.blank):hover, .vdp-datepicker__calendar .cell.month:hover, .vdp-datepicker__calendar .cell.year:hover {\n    background-color: #eceeef;\n    border-color: transparent !important; }\n  .vdp-datepicker__calendar .cell {\n    line-height: 2;\n    font-size: 1rem;\n    border-radius: 0.375rem;\n    transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n    border-color: transparent;\n    height: auto; }\n    .vdp-datepicker__calendar .cell.day-header {\n      font-weight: 500; }\n    .vdp-datepicker__calendar .cell.day {\n      width: 36px;\n      height: 36px;\n      border-radius: 50%; }\n    .vdp-datepicker__calendar .cell.month, .vdp-datepicker__calendar .cell.year {\n      height: 36px;\n      font-size: 12px;\n      line-height: 33px; }\n    .vdp-datepicker__calendar .cell.selected, .vdp-datepicker__calendar .cell.highlighted.selected {\n      background: #007bff !important;\n      color: #fff; }\n      .vdp-datepicker__calendar .cell.selected:hover, .vdp-datepicker__calendar .cell.highlighted.selected:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important; }\n    .vdp-datepicker__calendar .cell.highlighted {\n      background: #e6f2ff !important; }\n      .vdp-datepicker__calendar .cell.highlighted:hover {\n        border-color: transparent !important; }\n\n/*# sourceMappingURL=Datepicker.vue.map */"]}, media: undefined });
+        inject("data-v-6f4f3dd9_0", { source: "\ndiv.vdp-datepicker__calendar {\n  color: #5a6169;\n  padding: 20px 22px;\n  min-width: 10rem;\n  font-size: 1rem;\n  font-weight: 300;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";\n  background-color: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.375rem;\n  box-shadow: 0 0.5rem 4rem rgba(0, 0, 0, 0.11), 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 3px rgba(0, 0, 0, 0.06);\n  border: 1px solid rgba(0, 0, 0, 0.15) !important;\n}\ndiv.vdp-datepicker__calendar header {\n    display: flex;\n    padding-bottom: 10px;\n}\ndiv.vdp-datepicker__calendar header span {\n      transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n      border-radius: 0.375rem;\n      font-weight: 500;\n}\ndiv.vdp-datepicker__calendar header span.next:after {\n        border-left-color: #c3c7cc;\n}\ndiv.vdp-datepicker__calendar header span.prev:after {\n        border-right-color: #c3c7cc;\n}\ndiv.vdp-datepicker__calendar header span:hover,\n  div.vdp-datepicker__calendar .cell.day:not(.disabled):not(.blank):hover, div.vdp-datepicker__calendar .cell.month:hover, div.vdp-datepicker__calendar .cell.year:hover {\n    background-color: #eceeef;\n    border-color: transparent !important;\n}\ndiv.vdp-datepicker__calendar .cell {\n    line-height: 2;\n    font-size: 1rem;\n    border-radius: 0.375rem;\n    transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n    border-color: transparent;\n    height: auto;\n}\ndiv.vdp-datepicker__calendar .cell.day-header {\n      font-weight: 500;\n}\ndiv.vdp-datepicker__calendar .cell.day {\n      width: 36px;\n      height: 36px;\n      border-radius: 50%;\n}\ndiv.vdp-datepicker__calendar .cell.month, div.vdp-datepicker__calendar .cell.year {\n      height: 36px;\n      font-size: 12px;\n      line-height: 33px;\n}\ndiv.vdp-datepicker__calendar .cell.selected, div.vdp-datepicker__calendar .cell.highlighted.selected {\n      background: #007bff !important;\n      color: #fff;\n}\ndiv.vdp-datepicker__calendar .cell.selected:hover, div.vdp-datepicker__calendar .cell.highlighted.selected:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important;\n}\ndiv.vdp-datepicker__calendar .cell.highlighted {\n      background: #007bff;\n      color: #fff;\n}\ndiv.vdp-datepicker__calendar .cell.highlighted:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important;\n}\ndiv.vdp-datepicker__calendar .cell.highlighted:not(.highlight-start):not(.highlight-end) {\n        border-radius: 0;\n}\ndiv.vdp-datepicker__calendar .cell.highlighted.highlight-start {\n        border-top-right-radius: 0;\n        border-bottom-right-radius: 0;\n}\ndiv.vdp-datepicker__calendar .cell.highlighted.highlight-end {\n        border-top-left-radius: 0;\n        border-bottom-left-radius: 0;\n}\ndiv.vdp-datepicker__small {\n  padding: 0.625rem 0.625rem;\n  font-size: 0.75rem;\n  max-width: 235px;\n}\ndiv.vdp-datepicker__small .cell.day {\n    width: 1.875rem;\n    height: 1.875rem;\n    line-height: 2.25;\n}\ndiv.vdp-datepicker__small .cell.day, div.vdp-datepicker__small .cell.month, div.vdp-datepicker__small .cell.year {\n    font-size: 12px;\n    font-weight: 500;\n}\ndiv.vdp-datepicker__small .cell.day-header {\n    font-size: 100%;\n}\n\n/*# sourceMappingURL=Datepicker.vue.map */", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/datepicker/Datepicker.vue","Datepicker.vue"],"names":[],"mappings":";AA4PA;EAEA,eA1CA;EA2CA,mBA9BA;EA+BA,iBAnCA;EAoCA,gBAjCA;EAkCA,iBA/BA;EAgCA,kKAzCA;EA0CA,uBArDA;EAsDA,sCArDA;EAsDA,wBA9CA;EA+CA,8GAvDA;EAwDA,iDAAA;CA+FA;AA3GA;IAgBA,cAAA;IACA,qBAAA;CAeA;AAhCA;MAoBA,2DAvDA;MAwDA,wBAzDA;MA0DA,iBAAA;CASA;AA/BA;QAyBA,2BAnEA;CAoEA;AA1BA;QA6BA,4BAvEA;CAwEA;AA9BA;;IAsCA,0BA7EA;IA8EA,qCAAA;CACA;AAxCA;IA6CA,eA7DA;IA8DA,gBA7DA;IA8DA,wBAnFA;IAoFA,2DAnFA;IAoFA,0BAtFA;IAuFA,aAAA;CAwDA;AA1GA;MAsDA,iBAAA;CACA;AAvDA;MA2DA,YA9EA;MA+EA,aA9EA;MA+EA,mBAAA;CACA;AA9DA;MAmEA,aArFA;MAsFA,gBAAA;MACA,kBAAA;CACA;AAtEA;MA2EA,+BAAA;MACA,YAzHA;CA8HA;AAjFA;QA8EA,+BAAA;QACA,qCAAA;CACA;AAhFA;MAoFA,oBA7HA;MA8HA,YAlIA;CAsJA;AAzGA;QAwFA,+BAAA;QACA,qCAAA;CACA;AA1FA;QA6FA,iBAAA;CACA;AA9FA;QAiGA,2BAAA;QACA,8BAAA;CACA;AAnGA;QAsGA,0BAAA;QACA,6BAAA;CACA;AAxGA;EA+GA,2BA3HA;EA4HA,mBA3HA;EA4HA,iBA3HA;CA+IA;AArIA;IAqHA,gBA3HA;IA4HA,iBA3HA;IA4HA,kBA3HA;CA4HA;AAxHA;IA6HA,gBArIA;IAsIA,iBArIA;CAsIA;AA/HA;IAkIA,gBApIA;CAqIA;;AChTA,0CAA0C","file":"Datepicker.vue","sourcesContent":[null,"div.vdp-datepicker__calendar {\n  color: #5a6169;\n  padding: 20px 22px;\n  min-width: 10rem;\n  font-size: 1rem;\n  font-weight: 300;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";\n  background-color: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.375rem;\n  box-shadow: 0 0.5rem 4rem rgba(0, 0, 0, 0.11), 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 3px rgba(0, 0, 0, 0.06);\n  border: 1px solid rgba(0, 0, 0, 0.15) !important; }\n  div.vdp-datepicker__calendar header {\n    display: flex;\n    padding-bottom: 10px; }\n    div.vdp-datepicker__calendar header span {\n      transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n      border-radius: 0.375rem;\n      font-weight: 500; }\n      div.vdp-datepicker__calendar header span.next:after {\n        border-left-color: #c3c7cc; }\n      div.vdp-datepicker__calendar header span.prev:after {\n        border-right-color: #c3c7cc; }\n  div.vdp-datepicker__calendar header span:hover,\n  div.vdp-datepicker__calendar .cell.day:not(.disabled):not(.blank):hover, div.vdp-datepicker__calendar .cell.month:hover, div.vdp-datepicker__calendar .cell.year:hover {\n    background-color: #eceeef;\n    border-color: transparent !important; }\n  div.vdp-datepicker__calendar .cell {\n    line-height: 2;\n    font-size: 1rem;\n    border-radius: 0.375rem;\n    transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n    border-color: transparent;\n    height: auto; }\n    div.vdp-datepicker__calendar .cell.day-header {\n      font-weight: 500; }\n    div.vdp-datepicker__calendar .cell.day {\n      width: 36px;\n      height: 36px;\n      border-radius: 50%; }\n    div.vdp-datepicker__calendar .cell.month, div.vdp-datepicker__calendar .cell.year {\n      height: 36px;\n      font-size: 12px;\n      line-height: 33px; }\n    div.vdp-datepicker__calendar .cell.selected, div.vdp-datepicker__calendar .cell.highlighted.selected {\n      background: #007bff !important;\n      color: #fff; }\n      div.vdp-datepicker__calendar .cell.selected:hover, div.vdp-datepicker__calendar .cell.highlighted.selected:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important; }\n    div.vdp-datepicker__calendar .cell.highlighted {\n      background: #007bff;\n      color: #fff; }\n      div.vdp-datepicker__calendar .cell.highlighted:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important; }\n      div.vdp-datepicker__calendar .cell.highlighted:not(.highlight-start):not(.highlight-end) {\n        border-radius: 0; }\n      div.vdp-datepicker__calendar .cell.highlighted.highlight-start {\n        border-top-right-radius: 0;\n        border-bottom-right-radius: 0; }\n      div.vdp-datepicker__calendar .cell.highlighted.highlight-end {\n        border-top-left-radius: 0;\n        border-bottom-left-radius: 0; }\n\ndiv.vdp-datepicker__small {\n  padding: 0.625rem 0.625rem;\n  font-size: 0.75rem;\n  max-width: 235px; }\n  div.vdp-datepicker__small .cell.day {\n    width: 1.875rem;\n    height: 1.875rem;\n    line-height: 2.25; }\n  div.vdp-datepicker__small .cell.day, div.vdp-datepicker__small .cell.month, div.vdp-datepicker__small .cell.year {\n    font-size: 12px;\n    font-weight: 500; }\n  div.vdp-datepicker__small .cell.day-header {\n    font-size: 100%; }\n\n/*# sourceMappingURL=Datepicker.vue.map */"]}, media: undefined });
 
       };
       /* scoped */
@@ -8351,7 +8408,12 @@
       var _c = _vm._self._c || _h;
       return _c(
         "d-link",
-        { staticClass: "dropdown-item", attrs: { role: "menuitem" } },
+        _vm._b(
+          { staticClass: "dropdown-item", attrs: { role: "menuitem" } },
+          "d-link",
+          _vm.$props,
+          false
+        ),
         [_vm._t("default")],
         2
       )
@@ -8362,11 +8424,11 @@
       /* style */
       var __vue_inject_styles__$m = function (inject) {
         if (!inject) { return }
-        inject("data-v-6220f7b8_0", { source: "\n.dropdown-item[data-v-6220f7b8]:focus {\n    outline: 0;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/dropdown/DropdownItem.vue"],"names":[],"mappings":";AAqBA;IACA,WAAA;CACA","file":"DropdownItem.vue","sourcesContent":["<template>\n    <d-link class=\"dropdown-item\" role=\"menuitem\">\n        <slot />\n    </d-link>\n</template>\n\n<script>\nimport createLinkProps from '../link/create-link-props'\n\n/**\n * This subcomponent is inheriting <a href=\"/docs/components/link\">Link</a> component's props.\n */\nexport default {\n    name: 'd-dropdown-item',\n    props: {\n        ...createLinkProps()\n    }\n}\n</script>\n\n<style scoped>\n.dropdown-item:focus {\n    outline: 0;\n}\n</style>\n"]}, media: undefined });
+        inject("data-v-5b1004bb_0", { source: "\n.dropdown-item[data-v-5b1004bb]:focus {\n    outline: 0;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/dropdown/DropdownItem.vue"],"names":[],"mappings":";AAqBA;IACA,WAAA;CACA","file":"DropdownItem.vue","sourcesContent":["<template>\n    <d-link class=\"dropdown-item\" role=\"menuitem\" v-bind=\"$props\">\n        <slot />\n    </d-link>\n</template>\n\n<script>\nimport createLinkProps from '../link/create-link-props'\n\n/**\n * This subcomponent is inheriting <a href=\"/docs/components/link\">Link</a> component's props.\n */\nexport default {\n    name: 'd-dropdown-item',\n    props: {\n        ...createLinkProps()\n    }\n}\n</script>\n\n<style scoped>\n.dropdown-item:focus {\n    outline: 0;\n}\n</style>\n"]}, media: undefined });
 
       };
       /* scoped */
-      var __vue_scope_id__$m = "data-v-6220f7b8";
+      var __vue_scope_id__$m = "data-v-5b1004bb";
       /* module identifier */
       var __vue_module_identifier__$m = undefined;
       /* functional template */
@@ -12440,7 +12502,7 @@
       /* style */
       var __vue_inject_styles__$E = function (inject) {
         if (!inject) { return }
-        inject("data-v-49133bf4_0", { source: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Adjust dropdowns inside input groups. */\n.input-group > .input-group-prepend > .d-dropdown > .btn {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n.input-group > .input-group-append > .d-dropdown > .btn {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/input-group/InputGroup.vue"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAwFA,2CAAA;AACA;IACA,2BAAA;IACA,8BAAA;CACA;AAEA;IACA,0BAAA;IACA,6BAAA;CACA","file":"InputGroup.vue","sourcesContent":["<template>\n    <component :is=\"tag\"\n        role=\"group\"\n        :id=\"id\"\n        :class=\"[\n            'input-group',\n            this.size ? `input-group-${this.size}` : '',\n            this.seamless ? 'input-group-seamless' : ''\n        ]\">\n        <InputGroupAddon v-if=\"prependIsUsed\" :prepend=\"Boolean(prepend || prependIsUsed)\">\n            <InputGroupText v-if=\"Boolean(prepend)\" v-html=\"prepend\"  />\n            <slot name=\"prepend\" />\n        </InputGroupAddon>\n        <slot />\n        <InputGroupAddon v-if=\"appendIsUsed\" :append=\"Boolean(append || appendIsUsed)\">\n            <InputGroupText v-if=\"Boolean(append)\" v-html=\"append\" />\n            <slot name=\"append\" />\n        </InputGroupAddon>\n    </component>\n</template>\n\n<script>\nimport InputGroupAddon from './InputGroupAddon.vue'\nimport InputGroupText from './InputGroupText.vue'\n\nexport default {\n    name: 'd-input-group',\n    components: {\n        InputGroupAddon,\n        InputGroupText\n    },\n    props: {\n        /**\n         * The element id.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The input group size.\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: v => ['sm', 'lg', null].includes(v)\n        },\n        /**\n         * The prepend value.\n         */\n        prepend: {\n            type: String,\n            default: null\n        },\n        /**\n         * The append value.\n         */\n        append: {\n            type: String,\n            default: null\n        },\n        /**\n         * Whether it should be seamless, or not.\n         */\n        seamless: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The element tag.\n         */\n        tag: {\n            type: String,\n            default: 'div'\n        }\n    },\n    computed: {\n        appendIsUsed() {\n            return !!this.$slots['append'] || this.append\n        },\n        prependIsUsed() {\n            return !!this.$slots['prepend'] || this.prepend\n        }\n    }\n}\n</script>\n\n<style>\n/* Adjust dropdowns inside input groups. */\n.input-group > .input-group-prepend > .d-dropdown > .btn {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n\n.input-group > .input-group-append > .d-dropdown > .btn {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n</style>\n"]}, media: undefined });
+        inject("data-v-dfbc83dc_0", { source: "\n.input-group input:focus {\n    position: relative;\n    z-index: 3;\n}\n\n/* Adjust dropdowns inside input groups. */\n.input-group > .input-group-prepend > .d-dropdown > .btn {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n.input-group > .input-group-append > .d-dropdown > .btn {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n\n/* Datepickers */\n.vdp-datepicker:not(:last-child) input {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n.vdp-datepicker:not(:first-child) input {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n.vdp-datepicker + .vdp-datepicker {\n    margin-left: -1px;\n}\n.input-group-sm .vdp-datepicker input {\n    height: 1.9375rem;\n    font-size: 0.875rem;\n    line-height: 1.5;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/input-group/InputGroup.vue"],"names":[],"mappings":";AAwFA;IACA,mBAAA;IACA,WAAA;CACA;;AAEA,2CAAA;AACA;IACA,2BAAA;IACA,8BAAA;CACA;AAEA;IACA,0BAAA;IACA,6BAAA;CACA;;AAEA,iBAAA;AACA;IACA,2BAAA;IACA,8BAAA;CACA;AAEA;IACA,0BAAA;IACA,6BAAA;CACA;AAEA;IACA,kBAAA;CACA;AAEA;IACA,kBAAA;IACA,oBAAA;IACA,iBAAA;CACA","file":"InputGroup.vue","sourcesContent":["<template>\n    <component :is=\"tag\"\n        role=\"group\"\n        :id=\"id\"\n        :class=\"[\n            'input-group',\n            this.size ? `input-group-${this.size}` : '',\n            this.seamless ? 'input-group-seamless' : ''\n        ]\">\n        <InputGroupAddon v-if=\"prependIsUsed\" :prepend=\"Boolean(prepend || prependIsUsed)\">\n            <InputGroupText v-if=\"Boolean(prepend)\" v-html=\"prepend\"  />\n            <slot name=\"prepend\" />\n        </InputGroupAddon>\n        <slot />\n        <InputGroupAddon v-if=\"appendIsUsed\" :append=\"Boolean(append || appendIsUsed)\">\n            <InputGroupText v-if=\"Boolean(append)\" v-html=\"append\" />\n            <slot name=\"append\" />\n        </InputGroupAddon>\n    </component>\n</template>\n\n<script>\nimport InputGroupAddon from './InputGroupAddon.vue'\nimport InputGroupText from './InputGroupText.vue'\n\nexport default {\n    name: 'd-input-group',\n    components: {\n        InputGroupAddon,\n        InputGroupText\n    },\n    props: {\n        /**\n         * The element id.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The input group size.\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: v => ['sm', 'lg', null].includes(v)\n        },\n        /**\n         * The prepend value.\n         */\n        prepend: {\n            type: String,\n            default: null\n        },\n        /**\n         * The append value.\n         */\n        append: {\n            type: String,\n            default: null\n        },\n        /**\n         * Whether it should be seamless, or not.\n         */\n        seamless: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The element tag.\n         */\n        tag: {\n            type: String,\n            default: 'div'\n        }\n    },\n    computed: {\n        appendIsUsed() {\n            return !!this.$slots['append'] || this.append\n        },\n        prependIsUsed() {\n            return !!this.$slots['prepend'] || this.prepend\n        }\n    }\n}\n</script>\n\n<style>\n.input-group input:focus {\n    position: relative;\n    z-index: 3;\n}\n\n/* Adjust dropdowns inside input groups. */\n.input-group > .input-group-prepend > .d-dropdown > .btn {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n\n.input-group > .input-group-append > .d-dropdown > .btn {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n\n/* Datepickers */\n.vdp-datepicker:not(:last-child) input {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n\n.vdp-datepicker:not(:first-child) input {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n\n.vdp-datepicker + .vdp-datepicker {\n    margin-left: -1px;\n}\n\n.input-group-sm .vdp-datepicker input {\n    height: 1.9375rem;\n    font-size: 0.875rem;\n    line-height: 1.5;\n}\n</style>\n"]}, media: undefined });
 
       };
       /* scoped */
@@ -12814,7 +12876,7 @@
                     || this.to
                     || this.action
                     || this.button
-                    || Array.includes(_actionTags, this.tag)
+                    || _actionTags.includes(this.tag)
                 )
             }
         }
@@ -16384,6 +16446,14 @@
             value: {
                 type: Number,
                 default: 0
+            },
+            /**
+             * The size.
+             */
+            size: {
+                type: String,
+                default: null,
+                validator: function (v) { return ['sm', 'lg'].includes(v); }
             }
         }
     };
@@ -16398,7 +16468,10 @@
       var _c = _vm._self._c || _h;
       return _c(
         "div",
-        { staticClass: "progress", style: { height: _vm.height || null } },
+        {
+          class: ["progress", _vm.size ? "progress-" + _vm.size : ""],
+          style: { height: _vm.height || null }
+        },
         [
           _vm._t("default", [
             _c("d-progress-bar", _vm._b({}, "d-progress-bar", _vm.$props, false))
@@ -16411,7 +16484,11 @@
     __vue_render__$T._withStripped = true;
 
       /* style */
-      var __vue_inject_styles__$T = undefined;
+      var __vue_inject_styles__$T = function (inject) {
+        if (!inject) { return }
+        inject("data-v-71eeaaad_0", { source: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Hide labels for small progress bars */\n.progress-sm span {\n    color: transparent;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/progress/Progress.vue"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAwFA,yCAAA;AACA;IACA,mBAAA;CACA","file":"Progress.vue","sourcesContent":["<template>\n    <div :class=\"['progress', size ? `progress-${size}` : '']\" :style=\"{ height: height || null }\">\n        <slot>\n            <d-progress-bar v-bind=\"$props\"/>\n        </slot>\n    </div>\n</template>\n\n<script>\nexport default {\n    name: 'd-progress',\n    props: {\n        /**\n         * Theme color.\n         */\n        theme: {\n            type: String,\n            default: 'primary'\n        },\n        /**\n         * Whether it should be striped, or not.\n         */\n        striped: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether it should be animated, or not.\n         */\n        animated: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Height value.\n         */\n        height: {\n            type: String,\n            default: null\n        },\n        /**\n         * Precision number of digits.\n         */\n        precision: {\n            type: Number,\n            default: 0\n        },\n        /**\n         * Whether to show progress, or not.\n         */\n        showProgress: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to show the value, or not.\n         */\n        showValue: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The maximum value.\n         */\n        max: {\n            type: Number,\n            default: 100\n        },\n        /**\n         * The value.\n         */\n        value: {\n            type: Number,\n            default: 0\n        },\n        /**\n         * The size.\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: (v) => ['sm', 'lg'].includes(v)\n        }\n    }\n}\n</script>\n\n<style>\n    /* Hide labels for small progress bars */\n    .progress-sm span {\n        color: transparent;\n    }\n</style>\n"]}, media: undefined });
+
+      };
       /* scoped */
       var __vue_scope_id__$T = undefined;
       /* module identifier */
@@ -16439,6 +16516,30 @@
         }
 
         component._scopeId = scope;
+
+        {
+          var hook;
+          if (style) {
+            hook = function(context) {
+              style.call(this, createInjector(context));
+            };
+          }
+
+          if (hook !== undefined) {
+            if (component.functional) {
+              // register for functional component in vue file
+              var originalRender = component.render;
+              component.render = function renderWithStyleInjection(h, context) {
+                hook.call(context);
+                return originalRender(h, context)
+              };
+            } else {
+              // inject component registration as beforeCreate hook
+              var existing = component.beforeCreate;
+              component.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+            }
+          }
+        }
 
         return component
       }
