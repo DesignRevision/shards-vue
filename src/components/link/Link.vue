@@ -1,5 +1,6 @@
 <template>
-    <component :is="computedTag"
+    <component v-bind="$props"
+        :is="computedTag"
         :rel="computedRel"
         :href="computedHref"
         :target="target"
@@ -65,8 +66,7 @@ export default {
          * The class name attached when the route is exact,
          */
         exactActiveClass: {
-            type: String,
-            default: 'active'
+            type: String
         },
         /**
          * Whether the link is active, or not.
@@ -79,8 +79,7 @@ export default {
          * The class applied when the link is active.
          */
         activeClass: {
-            type: String,
-            default: 'active'
+            type: String
         },
         /**
          * The component tag.
