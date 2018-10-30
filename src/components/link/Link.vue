@@ -11,14 +11,18 @@
             disabled ? 'disabled' : ''
         ]"
         :aria-disabled="computedAriaDisabled"
-        @click="handleClick">
+        @click.native="handleClick">
         <slot>Link</slot>
     </component>
 </template>
 
 <script>
+import { LINK_EVENTS } from '../../utils/constants';
+import rootListenerMixin from '../../mixins/root-listener.mixin'
+
 export default {
     name: 'd-link',
+    mixins: [ rootListenerMixin ],
     props: {
         /**
          * The link href.
@@ -140,6 +144,8 @@ export default {
                 } else {
                     this.$emit('click', event);
                 }
+
+                this.emitOnRoot(LINK_EVENTS.CLICKED, event);
             }
 
             if ((!isRouterLink && this.computedHref === '#') || this.disabled) {

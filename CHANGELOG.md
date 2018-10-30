@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 ### 1.0.5 - (2018-10-30)
 
 * fix(d-link): exact/active classes not properly applied #10
+* fix(d-dropdown): hide dropdown when link is clicked
 
 ### 1.0.4 - (2018-10-15)
 

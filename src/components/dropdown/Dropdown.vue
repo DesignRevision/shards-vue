@@ -62,7 +62,7 @@
 <script>
 import Popper from 'popper.js'
 import { guid, closest } from '../../utils'
-import { THEMECOLORS, DROPDOWN_EVENTS, KEYCODES } from '../../utils/constants'
+import { THEMECOLORS, DROPDOWN_EVENTS, KEYCODES, LINK_EVENTS } from '../../utils/constants'
 import { CancelableEvent } from '../../utils/events'
 import { mixin as clickAwayMixin } from 'vue-clickaway';
 import rootListenerMixin from '../../mixins/root-listener.mixin'
@@ -421,6 +421,8 @@ export default {
                 this.visible = false
             }
         })
+
+        this.listenOnRoot(LINK_EVENTS.CLICKED, this.away)
     },
     deactivated() {
         this.visible = false
