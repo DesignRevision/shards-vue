@@ -44,11 +44,17 @@ export const DROPDOWN_EVENTS = {
     HIDDEN: 'dropdown-hidden'
 }
 
+// Link Events
+export const LINK_EVENTS = {
+    CLICKED: 'link-clicked'
+}
+
 // All events
 export const EVENTS = {
     MODAL: MODAL_EVENTS,
     ALERT: ALERT_EVENTS,
-    DROPDOWN: DROPDOWN_EVENTS
+    DROPDOWN: DROPDOWN_EVENTS,
+    LINK: LINK_EVENTS
 }
 
 /**

@@ -1,5 +1,6 @@
 <template>
-    <component :is="computedTag"
+    <component v-bind="$props"
+        :is="computedTag"
         :rel="computedRel"
         :href="computedHref"
         :target="target"
@@ -10,14 +11,18 @@
             disabled ? 'disabled' : ''
         ]"
         :aria-disabled="computedAriaDisabled"
-        @click="handleClick">
+        @click.native="handleClick">
         <slot>Link</slot>
     </component>
 </template>
 
 <script>
+import { LINK_EVENTS } from '../../utils/constants';
+import rootListenerMixin from '../../mixins/root-listener.mixin'
+
 export default {
     name: 'd-link',
+    mixins: [ rootListenerMixin ],
     props: {
         /**
          * The link href.
@@ -65,8 +70,7 @@ export default {
          * The class name attached when the route is exact,
          */
         exactActiveClass: {
-            type: String,
-            default: 'active'
+            type: String
         },
         /**
          * Whether the link is active, or not.
@@ -79,8 +83,7 @@ export default {
          * The class applied when the link is active.
          */
         activeClass: {
-            type: String,
-            default: 'active'
+            type: String
         },
         /**
          * The component tag.
@@ -141,6 +144,8 @@ export default {
                 } else {
                     this.$emit('click', event);
                 }
+
+                this.emitOnRoot(LINK_EVENTS.CLICKED, event);
             }
 
             if ((!isRouterLink && this.computedHref === '#') || this.disabled) {

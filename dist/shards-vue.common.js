@@ -1,5 +1,5 @@
 /*
-* Shards Vue v1.0.4 (https://designrevision.com/downloads/shards-vue/)
+* Shards Vue v1.0.5 (https://designrevision.com/downloads/shards-vue/)
 * Based on: Bootstrap ^4.1.3 (https://getbootstrap.com)
 * Based on: Shards ^2.1.0 (https://designrevision.com/downloads/shards/)
 * Copyright 2017-2018 DesignRevision (https://designrevision.com)
@@ -309,6 +309,11 @@ var DROPDOWN_EVENTS = {
     SHOW: 'dropdown-show',
     HIDE: 'dropdown-hide',
     HIDDEN: 'dropdown-hidden'
+};
+
+// Link Events
+var LINK_EVENTS = {
+    CLICKED: 'link-clicked'
 };
 
 /**
@@ -928,26 +933,50 @@ var VuePlugin = {
 
 vueUse(VuePlugin);
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+var _DR_RL_ = '_DR_RL_';
+
+var rootListenerMixin = {
+    methods: {
+        listenOnRoot: function listenOnRoot(event, callback) {
+            if (!this[_DR_RL_] || !isArray(this[_DR_RL_])) {
+                this[_DR_RL_] = [];
+            }
+
+            this[_DR_RL_].push({ event: event, callback: callback });
+            this.$root.$on(event, callback);
+
+            return this
+        },
+        emitOnRoot: function emitOnRoot(event) {
+            var ref;
+
+            var args = [], len = arguments.length - 1;
+            while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
+            (ref = this.$root).$emit.apply(ref, [ event ].concat( args ));
+            return this
+        }
+    },
+    beforeDestroy: function beforeDestroy() {
+        var this$1 = this;
+
+        if (!this[_DR_RL_] && !isArray(this[_DR_RL_])) {
+            return
+        }
+
+        while (this[_DR_RL_].length > 0) {
+            var ref = this$1[_DR_RL_].shift();
+            var event = ref.event;
+            var callback = ref.callback;
+            this$1.$root.$off(event, callback);
+        }
+    }
+};
+
 //
 
 var script$2 = {
     name: 'd-link',
+    mixins: [ rootListenerMixin ],
     props: {
         /**
          * The link href.
@@ -995,8 +1024,7 @@ var script$2 = {
          * The class name attached when the route is exact,
          */
         exactActiveClass: {
-            type: String,
-            default: 'active'
+            type: String
         },
         /**
          * Whether the link is active, or not.
@@ -1009,8 +1037,7 @@ var script$2 = {
          * The class applied when the link is active.
          */
         activeClass: {
-            type: String,
-            default: 'active'
+            type: String
         },
         /**
          * The component tag.
@@ -1071,6 +1098,8 @@ var script$2 = {
                 } else {
                     this.$emit('click', event);
                 }
+
+                this.emitOnRoot(LINK_EVENTS.CLICKED, event);
             }
 
             if ((!isRouterLink && this.computedHref === '#') || this.disabled) {
@@ -1090,22 +1119,35 @@ var __vue_render__$2 = function() {
   var _c = _vm._self._c || _h;
   return _c(
     _vm.computedTag,
-    {
-      tag: "component",
-      class: [
-        _vm.active ? (_vm.exact ? _vm.exactActiveClass : _vm.activeClass) : "",
-        _vm.disabled ? "disabled" : ""
-      ],
-      attrs: {
-        rel: _vm.computedRel,
-        href: _vm.computedHref,
-        target: _vm.target,
-        to: _vm.to,
-        tabindex: _vm.computedTabindex,
-        "aria-disabled": _vm.computedAriaDisabled
+    _vm._b(
+      {
+        tag: "component",
+        class: [
+          _vm.active
+            ? _vm.exact
+              ? _vm.exactActiveClass
+              : _vm.activeClass
+            : "",
+          _vm.disabled ? "disabled" : ""
+        ],
+        attrs: {
+          rel: _vm.computedRel,
+          href: _vm.computedHref,
+          target: _vm.target,
+          to: _vm.to,
+          tabindex: _vm.computedTabindex,
+          "aria-disabled": _vm.computedAriaDisabled
+        },
+        nativeOn: {
+          click: function($event) {
+            return _vm.handleClick($event)
+          }
+        }
       },
-      on: { click: _vm.handleClick }
-    },
+      "component",
+      _vm.$props,
+      false
+    ),
     [_vm._t("default", [_vm._v("Link")])],
     2
   )
@@ -1244,16 +1286,14 @@ function createLinkProps() {
             default: false
         },
         exactActiveClass: {
-            type: String,
-            default: 'active'
+            type: String
         },
         active: {
             type: Boolean,
             default: false
         },
         activeClass: {
-            type: String,
-            default: 'active'
+            type: String
         },
         tag: {
             type: String,
@@ -3809,45 +3849,6 @@ var VuePlugin$6 = {
 };
 
 vueUse(VuePlugin$6);
-
-var _DR_RL_ = '_DR_RL_';
-
-var rootListenerMixin = {
-    methods: {
-        listenOnRoot: function listenOnRoot(event, callback) {
-            if (!this[_DR_RL_] || !isArray(this[_DR_RL_])) {
-                this[_DR_RL_] = [];
-            }
-
-            this[_DR_RL_].push({ event: event, callback: callback });
-            this.$root.$on(event, callback);
-
-            return this
-        },
-        emitOnRoot: function emitOnRoot(event) {
-            var ref;
-
-            var args = [], len = arguments.length - 1;
-            while ( len-- > 0 ) args[ len ] = arguments[ len + 1 ];
-            (ref = this.$root).$emit.apply(ref, [ event ].concat( args ));
-            return this
-        }
-    },
-    beforeDestroy: function beforeDestroy() {
-        var this$1 = this;
-
-        if (!this[_DR_RL_] && !isArray(this[_DR_RL_])) {
-            return
-        }
-
-        while (this[_DR_RL_].length > 0) {
-            var ref = this$1[_DR_RL_].shift();
-            var event = ref.event;
-            var callback = ref.callback;
-            this$1.$root.$off(event, callback);
-        }
-    }
-};
 
 //
 
@@ -8134,6 +8135,8 @@ var script$l = {
                 this.visible = false;
             }
         });
+
+        this.listenOnRoot(LINK_EVENTS.CLICKED, this.away);
     },
     deactivated: function deactivated() {
         this.visible = false;
@@ -8258,11 +8261,11 @@ __vue_render__$l._withStripped = true;
   /* style */
   var __vue_inject_styles__$l = function (inject) {
     if (!inject) { return }
-    inject("data-v-44811c60_0", { source: "\n.nav-link[data-v-44811c60]:hover {\n    cursor: pointer;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/dropdown/Dropdown.vue"],"names":[],"mappings":";AAobA;IACA,gBAAA;CACA","file":"Dropdown.vue","sourcesContent":["<template>\n    <component :is=\"computedTag\" :id=\"computedID\"\n        v-on-clickaway=\"away\"\n        :class=\"[\n            'dropdown',\n            'd-dropdown',\n            !isNav ? 'btn-group' : '',\n            isNav ? 'nav-item' : '',\n            dropup ? 'dropup' : '',\n            visible ? 'show' : '',\n            (boundary !== 'scrollParent' || !boundary) ? 'position-static' : ''\n        ]\">\n\n        <!-- Dropdown Split -->\n        <d-button v-if=\"split && !isNav\"\n            ref=\"button\"\n            :disabled=\"disabled\"\n            :theme=\"theme\"\n            :size=\"size\"\n            :id=\"computedSplitID\"\n            @click=\"click\">\n            <slot name=\"button-content\">{{ text }}</slot>\n        </d-button>\n\n        <!-- Dropdown Toggle -->\n        <component :is=\"computedToggleTag\" ref=\"toggle\"\n            :id=\"computedToggleID\"\n            :class=\"[\n                isNav ? 'nav-link' : '',\n                !noCaret || split ? 'dropdown-toggle' : '',\n                split && !isNav ? 'dropdown-toggle-split' : '',\n                toggleClass\n            ]\"\n            :theme=\"theme\"\n            :size=\"size\"\n            :disabled=\"disabled\"\n            :aria-expanded=\"visible ? 'true' : 'false'\"\n            aria-haspopup=\"true\"\n            @click=\"toggle\"\n            @keydown=\"toggle\">\n            <span v-if=\"split\" class=\"sr-only\">{{ toggleText }}</span>\n            <slot v-else name=\"button-content\">{{ text }}</slot>\n        </component>\n\n        <!-- Dropdown Menu -->\n        <div ref=\"menu\"\n            role=\"menu\"\n            :class=\"[\n                'dropdown-menu',\n                right ? 'dropdown-menu-right' : '',\n                visible ? 'show' : '',\n                menuClass\n            ]\"\n            :id=\"computedMenuID\"\n            :aria-labeledby=\"computedMenuID\"\n            @mouseover=\"onMouseOver\">\n            <slot />\n        </div>\n    </component>\n</template>\n\n<script>\nimport Popper from 'popper.js'\nimport { guid, closest } from '../../utils'\nimport { THEMECOLORS, DROPDOWN_EVENTS, KEYCODES } from '../../utils/constants'\nimport { CancelableEvent } from '../../utils/events'\nimport { mixin as clickAwayMixin } from 'vue-clickaway';\nimport rootListenerMixin from '../../mixins/root-listener.mixin'\n\nexport default {\n    name: 'd-dropdown',\n    mixins: [\n        rootListenerMixin,\n        clickAwayMixin\n    ],\n    data() {\n        return {\n            visible: false,\n            isNavbar: null,\n            visibleChangePrevented: false\n        }\n    },\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown menu ID.\n         */\n        menuId: {\n            type: String,\n            default: null\n        },\n        /**\n         * The toggle ID.\n         */\n        toggleId: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown menu class(es).\n         */\n        menuClass: {\n            type: [String, Array],\n            default: null\n        },\n        /**\n         * The dropdown toggle class(es).\n         */\n        toggleClass: {\n            type: [String, Array],\n            default: null\n        },\n        /**\n         * Align the menu to the right.\n         */\n        right: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to display the caret, or not.\n         */\n        noCaret: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to split the dropdown, or not.\n         */\n        split: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The color theme.\n         */\n        theme: {\n            type: String,\n            default: 'primary',\n            validator: v => THEMECOLORS.includes(v)\n        },\n        /**\n         * The dropdown toggle's size.\n         */\n        size: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown's disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The dropdown toggle's text.\n         */\n        toggleText: {\n            type: String,\n            default: 'Toggle Dropdown'\n        },\n        /**\n         * The button label's text.\n         */\n        text: {\n            type: String,\n            default: ''\n        },\n        /**\n         * The dropdown's boundary.\n         */\n        boundary: {\n            type: String,\n            default: 'scrollParent',\n            validator: v => ['scrollParent', 'window', 'viewport'].includes(v)\n        },\n        /**\n         * The offset value.\n         */\n        offset: {\n            type: [Number, String],\n            default: null\n        },\n        /**\n         * Display on top.\n         */\n        dropup: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The Popper options.\n         */\n        popperOptions: {\n            type: Object,\n            default() {\n                return {}\n            }\n        },\n        /**\n         * Disable autoflipping.\n         */\n        noFlip: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether the dropdown is displayed inside a nav, or not.\n         */\n        isNav: {\n            type: Boolean,\n            default: false\n        }\n    },\n    watch: {\n        visible(newVal, oldVal) {\n            if (this.visibleChangePrevented) {\n                this.visibleChangePrevented = false\n                return\n            }\n\n            if (newVal === oldVal) {\n                return\n            }\n\n            const eventName = newVal ? 'show' : 'hide'\n            let _visibleChangeEvent = new CancelableEvent(eventName, {\n                cancelable: true,\n                vueTarget: this,\n                target: this.$refs.menu,\n                relatedTarget: null\n            })\n\n            this.$emit(_visibleChangeEvent.type, _visibleChangeEvent)\n            this.emitOnRoot(DROPDOWN_EVENTS[_visibleChangeEvent.type.toUpperCase()])\n\n            if (_visibleChangeEvent.defaultPrevented) {\n                this.visibleChangePrevented = true\n                this.visible = oldVal\n                return\n            }\n\n            if (eventName === 'show') {\n                this.showMenu()\n                return\n            }\n\n            this.hideMenu()\n        },\n        disabled(newVal, oldVal) {\n            if (newVal !== oldVal && newVal && this.visible) {\n                this.visible = false\n            }\n        }\n    },\n    computed: {\n        computedTag() {\n            return this.isNav ? 'li' : 'div'\n        },\n        computedToggleTag() {\n            return this.isNav ? 'a' : 'd-button'\n        },\n        computedID() {\n            return this.id || `d-dropdown-${guid()}`\n        },\n        computedMenuID() {\n            return this.menuId || `d-dropdown-menu-${guid()}`\n        },\n        computedToggleID() {\n            return this.toggleId || `d-dropdown-toggle-${guid()}`\n        },\n        computedSplitID() {\n            return this.splitId || `d-dropdown-split-${guid()}`\n        },\n        toggler() {\n            return this.$refs.toggle.$el || this.$refs.toggle\n        }\n    },\n    methods: {\n        onMouseOver(event) {\n            const item = event.target\n            if (\n                item.classList.contains('dropdown-item')\n                && !item.disabled\n                && !item.classList.contains('disabled')\n                && item.focus\n            ) {\n                item.focus()\n            }\n        },\n        toggle(event) {\n            event = event || {}\n\n            // Enter, Space or Down\n            const KEY_ESD = event.keyCode === KEYCODES.ENTER\n                            || event.keyCode === KEYCODES.SPACE\n                            || event.keyCode === KEYCODES.DOWN\n\n            if (event.type !== 'click' && !(event.type === 'keydown' && KEY_ESD)) {\n                return\n            }\n\n            if (this.disabled) {\n                this.visible = false\n                return\n            }\n\n            this.$emit('toggle', event)\n\n            if (event.defaultPrevented) {\n                return\n            }\n\n            event.preventDefault()\n            event.stopPropagation()\n\n            this.visible = !this.visible\n        },\n        click(event) {\n            if (this.disabled) {\n                this.visible = false\n                return\n            }\n            this.$emit('click', event)\n        },\n        createPopper(element) {\n            this.removePopper()\n\n            // Define placement\n            let placement = 'bottom-start'\n\n            if (this.dropup && this.right) {\n                placement = 'top-end'\n            } else if (this.dropup) {\n                placement = 'top-start'\n            } else if (this.right) {\n                placement = 'bottom-end'\n            }\n\n            // Build Popper config\n            const popperConfig = {\n                placement,\n                modifiers: {\n                    offset: {\n                        offset: this.offset || 0\n                    },\n                    flip: {\n                        enabled: !this.noFlip\n                    },\n                    computeStyle: {\n                        enabled: true\n                    }\n                }\n            }\n\n            // Define Popper boundaries\n            if (this.boundary) {\n                popperConfig.modifiers.preventOverflow = {\n                    boundariesElement: this.boundary\n                }\n            }\n\n            // Create Popper instance\n            this._popperInstance = new Popper(\n                element,\n                this.$refs.menu,\n                {\n                    ...popperConfig,\n                    ...this.popperOptions\n                }\n            )\n        },\n        removePopper() {\n            if (this._popper) {\n                this._popper.destroy()\n            }\n            this._popperInstance = null\n        },\n        showMenu() {\n            if (this.disabled) {\n                return\n            }\n\n            this.emitOnRoot(DROPDOWN_EVENTS.SHOWN, this)\n\n            if (this.inNavbar === null && this.isNav) {\n                this.inNavbar = Boolean(closest('.navbar', this.$el))\n            }\n\n            if (!this.inNavbar) {\n                let _element = ((this.dropup && this.right) || this.split) ? this.$el : this.$refs.toggle\n                _element = _element.$el || _element\n                this.createPopper(_element)\n            }\n\n            this.$emit('shown')\n            this.$nextTick(this.focusFirstItem)\n        },\n        hideMenu() {\n            this.emitOnRoot(DROPDOWN_EVENTS.HIDDEN, this)\n            this.$emit('hidden')\n            this.removePopper()\n        },\n        away() {\n            this.visible = false\n        }\n    },\n    created() {\n        this._popperInstance = null\n    },\n    mounted() {\n        this.listenOnRoot(DROPDOWN_EVENTS.SHOWN, function(vm) {\n            if (vm !== this) {\n                this.visible = false\n            }\n        })\n    },\n    deactivated() {\n        this.visible = false\n        this.removePopper()\n    },\n    beforeDestroy() {\n        this.visible = false\n        this.removePopper()\n    }\n}\n</script>\n\n<style scoped>\n.nav-link:hover {\n    cursor: pointer;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-e10e790c_0", { source: "\n.nav-link[data-v-e10e790c]:hover {\n    cursor: pointer;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/shards-vue/src/components/dropdown/Dropdown.vue"],"names":[],"mappings":";AAsbA;IACA,gBAAA;CACA","file":"Dropdown.vue","sourcesContent":["<template>\n    <component :is=\"computedTag\" :id=\"computedID\"\n        v-on-clickaway=\"away\"\n        :class=\"[\n            'dropdown',\n            'd-dropdown',\n            !isNav ? 'btn-group' : '',\n            isNav ? 'nav-item' : '',\n            dropup ? 'dropup' : '',\n            visible ? 'show' : '',\n            (boundary !== 'scrollParent' || !boundary) ? 'position-static' : ''\n        ]\">\n\n        <!-- Dropdown Split -->\n        <d-button v-if=\"split && !isNav\"\n            ref=\"button\"\n            :disabled=\"disabled\"\n            :theme=\"theme\"\n            :size=\"size\"\n            :id=\"computedSplitID\"\n            @click=\"click\">\n            <slot name=\"button-content\">{{ text }}</slot>\n        </d-button>\n\n        <!-- Dropdown Toggle -->\n        <component :is=\"computedToggleTag\" ref=\"toggle\"\n            :id=\"computedToggleID\"\n            :class=\"[\n                isNav ? 'nav-link' : '',\n                !noCaret || split ? 'dropdown-toggle' : '',\n                split && !isNav ? 'dropdown-toggle-split' : '',\n                toggleClass\n            ]\"\n            :theme=\"theme\"\n            :size=\"size\"\n            :disabled=\"disabled\"\n            :aria-expanded=\"visible ? 'true' : 'false'\"\n            aria-haspopup=\"true\"\n            @click=\"toggle\"\n            @keydown=\"toggle\">\n            <span v-if=\"split\" class=\"sr-only\">{{ toggleText }}</span>\n            <slot v-else name=\"button-content\">{{ text }}</slot>\n        </component>\n\n        <!-- Dropdown Menu -->\n        <div ref=\"menu\"\n            role=\"menu\"\n            :class=\"[\n                'dropdown-menu',\n                right ? 'dropdown-menu-right' : '',\n                visible ? 'show' : '',\n                menuClass\n            ]\"\n            :id=\"computedMenuID\"\n            :aria-labeledby=\"computedMenuID\"\n            @mouseover=\"onMouseOver\">\n            <slot />\n        </div>\n    </component>\n</template>\n\n<script>\nimport Popper from 'popper.js'\nimport { guid, closest } from '../../utils'\nimport { THEMECOLORS, DROPDOWN_EVENTS, KEYCODES, LINK_EVENTS } from '../../utils/constants'\nimport { CancelableEvent } from '../../utils/events'\nimport { mixin as clickAwayMixin } from 'vue-clickaway';\nimport rootListenerMixin from '../../mixins/root-listener.mixin'\n\nexport default {\n    name: 'd-dropdown',\n    mixins: [\n        rootListenerMixin,\n        clickAwayMixin\n    ],\n    data() {\n        return {\n            visible: false,\n            isNavbar: null,\n            visibleChangePrevented: false\n        }\n    },\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown menu ID.\n         */\n        menuId: {\n            type: String,\n            default: null\n        },\n        /**\n         * The toggle ID.\n         */\n        toggleId: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown menu class(es).\n         */\n        menuClass: {\n            type: [String, Array],\n            default: null\n        },\n        /**\n         * The dropdown toggle class(es).\n         */\n        toggleClass: {\n            type: [String, Array],\n            default: null\n        },\n        /**\n         * Align the menu to the right.\n         */\n        right: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to display the caret, or not.\n         */\n        noCaret: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to split the dropdown, or not.\n         */\n        split: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The color theme.\n         */\n        theme: {\n            type: String,\n            default: 'primary',\n            validator: v => THEMECOLORS.includes(v)\n        },\n        /**\n         * The dropdown toggle's size.\n         */\n        size: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown's disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The dropdown toggle's text.\n         */\n        toggleText: {\n            type: String,\n            default: 'Toggle Dropdown'\n        },\n        /**\n         * The button label's text.\n         */\n        text: {\n            type: String,\n            default: ''\n        },\n        /**\n         * The dropdown's boundary.\n         */\n        boundary: {\n            type: String,\n            default: 'scrollParent',\n            validator: v => ['scrollParent', 'window', 'viewport'].includes(v)\n        },\n        /**\n         * The offset value.\n         */\n        offset: {\n            type: [Number, String],\n            default: null\n        },\n        /**\n         * Display on top.\n         */\n        dropup: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The Popper options.\n         */\n        popperOptions: {\n            type: Object,\n            default() {\n                return {}\n            }\n        },\n        /**\n         * Disable autoflipping.\n         */\n        noFlip: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether the dropdown is displayed inside a nav, or not.\n         */\n        isNav: {\n            type: Boolean,\n            default: false\n        }\n    },\n    watch: {\n        visible(newVal, oldVal) {\n            if (this.visibleChangePrevented) {\n                this.visibleChangePrevented = false\n                return\n            }\n\n            if (newVal === oldVal) {\n                return\n            }\n\n            const eventName = newVal ? 'show' : 'hide'\n            let _visibleChangeEvent = new CancelableEvent(eventName, {\n                cancelable: true,\n                vueTarget: this,\n                target: this.$refs.menu,\n                relatedTarget: null\n            })\n\n            this.$emit(_visibleChangeEvent.type, _visibleChangeEvent)\n            this.emitOnRoot(DROPDOWN_EVENTS[_visibleChangeEvent.type.toUpperCase()])\n\n            if (_visibleChangeEvent.defaultPrevented) {\n                this.visibleChangePrevented = true\n                this.visible = oldVal\n                return\n            }\n\n            if (eventName === 'show') {\n                this.showMenu()\n                return\n            }\n\n            this.hideMenu()\n        },\n        disabled(newVal, oldVal) {\n            if (newVal !== oldVal && newVal && this.visible) {\n                this.visible = false\n            }\n        }\n    },\n    computed: {\n        computedTag() {\n            return this.isNav ? 'li' : 'div'\n        },\n        computedToggleTag() {\n            return this.isNav ? 'a' : 'd-button'\n        },\n        computedID() {\n            return this.id || `d-dropdown-${guid()}`\n        },\n        computedMenuID() {\n            return this.menuId || `d-dropdown-menu-${guid()}`\n        },\n        computedToggleID() {\n            return this.toggleId || `d-dropdown-toggle-${guid()}`\n        },\n        computedSplitID() {\n            return this.splitId || `d-dropdown-split-${guid()}`\n        },\n        toggler() {\n            return this.$refs.toggle.$el || this.$refs.toggle\n        }\n    },\n    methods: {\n        onMouseOver(event) {\n            const item = event.target\n            if (\n                item.classList.contains('dropdown-item')\n                && !item.disabled\n                && !item.classList.contains('disabled')\n                && item.focus\n            ) {\n                item.focus()\n            }\n        },\n        toggle(event) {\n            event = event || {}\n\n            // Enter, Space or Down\n            const KEY_ESD = event.keyCode === KEYCODES.ENTER\n                            || event.keyCode === KEYCODES.SPACE\n                            || event.keyCode === KEYCODES.DOWN\n\n            if (event.type !== 'click' && !(event.type === 'keydown' && KEY_ESD)) {\n                return\n            }\n\n            if (this.disabled) {\n                this.visible = false\n                return\n            }\n\n            this.$emit('toggle', event)\n\n            if (event.defaultPrevented) {\n                return\n            }\n\n            event.preventDefault()\n            event.stopPropagation()\n\n            this.visible = !this.visible\n        },\n        click(event) {\n            if (this.disabled) {\n                this.visible = false\n                return\n            }\n            this.$emit('click', event)\n        },\n        createPopper(element) {\n            this.removePopper()\n\n            // Define placement\n            let placement = 'bottom-start'\n\n            if (this.dropup && this.right) {\n                placement = 'top-end'\n            } else if (this.dropup) {\n                placement = 'top-start'\n            } else if (this.right) {\n                placement = 'bottom-end'\n            }\n\n            // Build Popper config\n            const popperConfig = {\n                placement,\n                modifiers: {\n                    offset: {\n                        offset: this.offset || 0\n                    },\n                    flip: {\n                        enabled: !this.noFlip\n                    },\n                    computeStyle: {\n                        enabled: true\n                    }\n                }\n            }\n\n            // Define Popper boundaries\n            if (this.boundary) {\n                popperConfig.modifiers.preventOverflow = {\n                    boundariesElement: this.boundary\n                }\n            }\n\n            // Create Popper instance\n            this._popperInstance = new Popper(\n                element,\n                this.$refs.menu,\n                {\n                    ...popperConfig,\n                    ...this.popperOptions\n                }\n            )\n        },\n        removePopper() {\n            if (this._popper) {\n                this._popper.destroy()\n            }\n            this._popperInstance = null\n        },\n        showMenu() {\n            if (this.disabled) {\n                return\n            }\n\n            this.emitOnRoot(DROPDOWN_EVENTS.SHOWN, this)\n\n            if (this.inNavbar === null && this.isNav) {\n                this.inNavbar = Boolean(closest('.navbar', this.$el))\n            }\n\n            if (!this.inNavbar) {\n                let _element = ((this.dropup && this.right) || this.split) ? this.$el : this.$refs.toggle\n                _element = _element.$el || _element\n                this.createPopper(_element)\n            }\n\n            this.$emit('shown')\n            this.$nextTick(this.focusFirstItem)\n        },\n        hideMenu() {\n            this.emitOnRoot(DROPDOWN_EVENTS.HIDDEN, this)\n            this.$emit('hidden')\n            this.removePopper()\n        },\n        away() {\n            this.visible = false\n        }\n    },\n    created() {\n        this._popperInstance = null\n    },\n    mounted() {\n        this.listenOnRoot(DROPDOWN_EVENTS.SHOWN, function(vm) {\n            if (vm !== this) {\n                this.visible = false\n            }\n        })\n\n        this.listenOnRoot(LINK_EVENTS.CLICKED, this.away)\n    },\n    deactivated() {\n        this.visible = false\n        this.removePopper()\n    },\n    beforeDestroy() {\n        this.visible = false\n        this.removePopper()\n    }\n}\n</script>\n\n<style scoped>\n.nav-link:hover {\n    cursor: pointer;\n}\n</style>\n"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$l = "data-v-44811c60";
+  var __vue_scope_id__$l = "data-v-e10e790c";
   /* module identifier */
   var __vue_module_identifier__$l = undefined;
   /* functional template */

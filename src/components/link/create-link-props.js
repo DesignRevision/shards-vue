@@ -25,16 +25,14 @@ export default function createLinkProps() {
             default: false
         },
         exactActiveClass: {
-            type: String,
-            default: 'active'
+            type: String
         },
         active: {
             type: Boolean,
             default: false
         },
         activeClass: {
-            type: String,
-            default: 'active'
+            type: String
         },
         tag: {
             type: String,
