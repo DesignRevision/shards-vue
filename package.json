@@ -1,6 +1,6 @@
 {
   "name": "shards-vue",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "license": "MIT",
   "description": "A free, beautiful and modern Vue.js UI kit based on the Shards UI kit.",
   "main": "dist/shards-vue.common.js",
@@ -106,6 +106,6 @@
     "sass-loader": "^7.1.0",
     "uglify-es": "^3.3.9",
     "uglify-js": "^3.4.8",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.21"
   }
 }
