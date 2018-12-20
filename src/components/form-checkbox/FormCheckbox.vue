@@ -19,7 +19,6 @@
             :disabled="disabled"
             :required="required"
             v-model="computedLocalState"
-            :checked="checked"
             @change="handleChange" />
         <label :for="computedID" class="custom-control-label" aria-hidden="true"></label>
         <span :class="['custom-control-description']">
