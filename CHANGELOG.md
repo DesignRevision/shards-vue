@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+### 1.0.6 - (2018-11-20)
+
+* compat: fix IE11 conflict
+* fix(d-form-checkbox): remove unnecessary `:checked` binding.
+* fix(d-form-radio): remove unnecessary `:checked` binding.
+
 ### 1.0.5 - (2018-10-30)
 
 * fix(d-link): exact/active classes not properly applied #10

@@ -16,7 +16,6 @@
             :disabled="disabled"
             :required="name && required"
             v-model="computedLocalChecked"
-            :checked="checked"
             @change="handleChange" />
         <label :for="computedID" class="custom-control-label" aria-hidden="true"></label>
         <span :class="['custom-control-description']">
