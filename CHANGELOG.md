@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+### 1.0.7 - (2019-01-20)
+
+* fix(d-textarea): fix(d-textarea): dynamic height based on max-rows #12
+
 ### 1.0.6 - (2018-11-20)
 
 * compat: fix IE11 conflict
@@ -43,4 +47,3 @@ All notable changes to this project will be documented in this file.
 ### 1.0.0 - (2018-09-11)
 
 * Initial release.
-
