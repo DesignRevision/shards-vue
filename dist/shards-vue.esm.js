@@ -496,23 +496,8 @@ var script = {
             var __vue_script__ = script;
             
 /* template */
-var __vue_render__ = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "button",
-    {
-      class: ["close", _vm.theme ? "text-" + _vm.theme : ""],
-      attrs: { disabled: _vm.disabled, "aria-label": _vm.ariaLabel },
-      on: { click: _vm.handleClick }
-    },
-    [_vm._t("default", [_vm._v("×")])],
-    2
-  )
-};
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{class:[ 'close', _vm.theme ? ("text-" + _vm.theme) : '' ],attrs:{"disabled":_vm.disabled,"aria-label":_vm.ariaLabel},on:{"click":_vm.handleClick}},[_vm._t("default",[_vm._v("×")])],2)};
 var __vue_staticRenderFns__ = [];
-__vue_render__._withStripped = true;
 
   /* style */
   var __vue_inject_styles__ = undefined;
@@ -529,10 +514,6 @@ __vue_render__._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script$$1 === 'function' ? script$$1.options : script$$1) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/button/ButtonClose.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -565,6 +546,17 @@ __vue_render__._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -753,46 +745,21 @@ var script$1 = {
             var __vue_script__$1 = script$1;
             
 /* template */
-var __vue_render__$1 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _vm.computedShow
-    ? _c(
-        "div",
-        {
-          class: [
-            "alert",
-            _vm.theme ? "alert-" + _vm.theme : "",
-            _vm.dismissible ? "alert-dismissible" : ""
-          ],
-          attrs: { role: "alert", "aria-live": "polite", "aria-atomic": "true" }
-        },
-        [
-          _vm._t("default"),
-          _vm._v(" "),
-          _vm.dismissible
-            ? _c("d-button-close", {
-                attrs: { "aria-label": _vm.dismissLabel, href: "#" },
-                on: { click: _vm.dismiss }
-              })
-            : _vm._e()
-        ],
-        2
-      )
-    : _vm._e()
-};
+var __vue_render__$1 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.computedShow)?_c('div',{class:[
+        'alert',
+        _vm.theme ? ("alert-" + _vm.theme) : '',
+        _vm.dismissible ? "alert-dismissible" : ''
+    ],attrs:{"role":"alert","aria-live":"polite","aria-atomic":"true"}},[_vm._t("default"),_vm._v(" "),(_vm.dismissible)?_c('d-button-close',{attrs:{"aria-label":_vm.dismissLabel,"href":"#"},on:{"click":_vm.dismiss}}):_vm._e()],2):_vm._e()};
 var __vue_staticRenderFns__$1 = [];
-__vue_render__$1._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$1 = function (inject) {
     if (!inject) { return }
-    inject("data-v-843c744c_0", { source: "\n.close[data-v-843c744c] {\n    min-height: 100%;\n    padding: 0.625rem 1.25rem 0.75rem 1.25rem;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/alert/Alert.vue"],"names":[],"mappings":";AAuJA;IACA,iBAAA;IACA,0CAAA;CACA","file":"Alert.vue","sourcesContent":["<template>\n    <div v-if=\"computedShow\"\n        role=\"alert\"\n        aria-live=\"polite\"\n        aria-atomic=\"true\"\n        :class=\"[\n            'alert',\n            theme ? `alert-${theme}` : '',\n            dismissible ? `alert-dismissible` : ''\n        ]\">\n        <slot />\n        <d-button-close v-if=\"dismissible\"\n            :aria-label=\"dismissLabel\"\n            @click=\"dismiss\"\n            href=\"#\" />\n    </div>\n</template>\n\n<script>\nimport { THEMECOLORS, ALERT_EVENTS } from '../../utils/constants';\nimport dButtonClose from '../button/ButtonClose.vue';\n\nexport default {\n    name: 'd-alert',\n    components: {\n        dButtonClose\n    },\n    props: {\n        /**\n         * Alert color theme.\n         */\n        theme: {\n            type: String,\n            default: 'primary',\n            validator: v => THEMECOLORS.includes(v)\n        },\n        /**\n         * Whether the alert is dismissible, or not.\n         */\n        dismissible: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Dismiss button label.\n         */\n        dismissLabel: {\n            type: String,\n            default: 'Close'\n        },\n        /**\n         * Show state or duration.\n         */\n        show: {\n            type: [Boolean, Number, String],\n            default: false\n        }\n    },\n    model: {\n        prop: 'show',\n        event: 'input'\n    },\n    data() {\n        return {\n            timer: null,\n            dismissed: false\n        }\n    },\n    watch: {\n        show() {\n            this.showChanged();\n        }\n    },\n    mounted() {\n        this.showChanged();\n    },\n    destroyed() {\n        this.clearCounter();\n    },\n    computed: {\n        computedShow() {\n            return !this.dismissed && (this.timer || this.show);\n        }\n    },\n    methods: {\n        clearCounter() {\n            if (this.timer) {\n                clearInterval(this.timer);\n                this.timer = null;\n            }\n        },\n\n        dismiss() {\n            this.clearCounter();\n            this.dismissed = true;\n\n            /**\n             * Alert dismissed event.\n             *\n             * @event alert-dismissed\n             * @type {Boolean}\n             */\n            this.$emit(ALERT_EVENTS.DISMISSED);\n            this.$emit('input', false);\n\n            if (typeof this.show === 'boolean') {\n                this.$emit('input', false);\n                return;\n            }\n\n            /**\n             * Alert dismiss countdown event.\n             *\n             * @event alert-dismiss-countdown\n             * @type {Number}\n             */\n            this.$emit(ALERT_EVENTS.DISMISS_COUNTDOWN, 0);\n            this.$emit('input', 0);\n        },\n\n        showChanged() {\n            this.clearCounter();\n            this.dismissed = false;\n\n            if (typeof this.show === 'boolean' || this.show === null || this.show === 0)\n                return\n\n            let dismissTimer = this.show;\n            this.timer = setInterval(() => {\n                if (dismissTimer < 1) {\n                    this.dismiss();\n                    return;\n                }\n\n                dismissTimer--;\n\n                /**\n                 * Alert dismiss countdown event.\n                 *\n                 * @event alert-dismiss-countdown\n                 * @type {Number}\n                 */\n                this.$emit(ALERT_EVENTS.DISMISS_COUNTDOWN, dismissTimer);\n                this.$emit('input', dismissTimer);\n            }, 1000);\n        }\n    }\n}\n</script>\n\n<style scoped>\n.close {\n    min-height: 100%;\n    padding: 0.625rem 1.25rem 0.75rem 1.25rem;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-4615c7a3_0", { source: ".close[data-v-4615c7a3]{min-height:100%;padding:.625rem 1.25rem .75rem 1.25rem}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$1 = "data-v-843c744c";
+  var __vue_scope_id__$1 = "data-v-4615c7a3";
   /* module identifier */
   var __vue_module_identifier__$1 = undefined;
   /* functional template */
@@ -804,10 +771,6 @@ __vue_render__$1._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/alert/Alert.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -864,6 +827,17 @@ __vue_render__$1._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -1109,47 +1083,11 @@ var script$2 = {
             var __vue_script__$2 = script$2;
             
 /* template */
-var __vue_render__$2 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.computedTag,
-    _vm._b(
-      {
-        tag: "component",
-        class: [
-          _vm.active
-            ? _vm.exact
-              ? _vm.exactActiveClass
-              : _vm.activeClass
-            : "",
-          _vm.disabled ? "disabled" : ""
-        ],
-        attrs: {
-          rel: _vm.computedRel,
-          href: _vm.computedHref,
-          target: _vm.target,
-          to: _vm.to,
-          tabindex: _vm.computedTabindex,
-          "aria-disabled": _vm.computedAriaDisabled
-        },
-        nativeOn: {
-          click: function($event) {
-            return _vm.handleClick($event)
-          }
-        }
-      },
-      "component",
-      _vm.$props,
-      false
-    ),
-    [_vm._t("default", [_vm._v("Link")])],
-    2
-  )
-};
+var __vue_render__$2 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.computedTag,_vm._b({tag:"component",class:[
+        _vm.active ? (_vm.exact ? _vm.exactActiveClass : _vm.activeClass) : '',
+        _vm.disabled ? 'disabled' : ''
+    ],attrs:{"rel":_vm.computedRel,"href":_vm.computedHref,"target":_vm.target,"to":_vm.to,"tabindex":_vm.computedTabindex,"aria-disabled":_vm.computedAriaDisabled},nativeOn:{"click":function($event){return _vm.handleClick($event)}}},'component',_vm.$props,false),[_vm._t("default",[_vm._v("Link")])],2)};
 var __vue_staticRenderFns__$2 = [];
-__vue_render__$2._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$2 = undefined;
@@ -1166,10 +1104,6 @@ __vue_render__$2._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/link/Link.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -1202,6 +1136,17 @@ __vue_render__$2._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -1362,27 +1307,12 @@ var script$3 = {
             var __vue_script__$3 = script$3;
             
 /* template */
-var __vue_render__$3 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.computedTag,
-    {
-      tag: "component",
-      class: [
-        "badge",
-        _vm.theme && !_vm.outline ? "badge-" + _vm.theme : "",
-        _vm.outline ? "badge-outline-" + _vm.theme : "",
-        _vm.pill ? "badge-pill" : ""
-      ]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$3 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.computedTag,{tag:"component",class:[
+    'badge',
+    _vm.theme && !_vm.outline ? ("badge-" + _vm.theme) : '',
+    _vm.outline ? ("badge-outline-" + _vm.theme) : '',
+    _vm.pill ? "badge-pill" : '' ]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$3 = [];
-__vue_render__$3._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$3 = undefined;
@@ -1399,10 +1329,6 @@ __vue_render__$3._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/badge/Badge.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -1435,6 +1361,17 @@ __vue_render__$3._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -1551,18 +1488,8 @@ var script$4 = {
             var __vue_script__$4 = script$4;
             
 /* template */
-var __vue_render__$4 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(_vm.computedTag, {
-    tag: "component",
-    attrs: { "aria-current": _vm.ariaCurrent, href: _vm.href },
-    domProps: { innerHTML: _vm._s(_vm.text) }
-  })
-};
+var __vue_render__$4 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.computedTag,{tag:"component",attrs:{"aria-current":_vm.ariaCurrent,"href":_vm.href},domProps:{"innerHTML":_vm._s(_vm.text)}})};
 var __vue_staticRenderFns__$4 = [];
-__vue_render__$4._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$4 = undefined;
@@ -1579,10 +1506,6 @@ __vue_render__$4._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/breadcrumb/BreadcrumbLink.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -1615,6 +1538,17 @@ __vue_render__$4._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -1704,28 +1638,8 @@ var script$5 = {
             var __vue_script__$5 = script$5;
             
 /* template */
-var __vue_render__$5 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "li",
-    {
-      class: ["breadcrumb-item", _vm.active ? "active" : ""],
-      attrs: { role: "presentation" }
-    },
-    [
-      !_vm.active
-        ? _c("BreadcrumbLink", { attrs: { text: _vm.text, href: _vm.href } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.active ? _c("span", [_vm._v(_vm._s(_vm.text))]) : _vm._e()
-    ],
-    1
-  )
-};
+var __vue_render__$5 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:[ 'breadcrumb-item', _vm.active ? 'active' : '' ],attrs:{"role":"presentation"}},[(!_vm.active)?_c('BreadcrumbLink',{attrs:{"text":_vm.text,"href":_vm.href}}):_vm._e(),_vm._v(" "),(_vm.active)?_c('span',[_vm._v(_vm._s(_vm.text))]):_vm._e()],1)};
 var __vue_staticRenderFns__$5 = [];
-__vue_render__$5._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$5 = undefined;
@@ -1742,10 +1656,6 @@ __vue_render__$5._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/breadcrumb/BreadcrumbItem.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -1778,6 +1688,17 @@ __vue_render__$5._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -1880,28 +1801,8 @@ var script$6 = {
             var __vue_script__$6 = script$6;
             
 /* template */
-var __vue_render__$6 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "ol",
-    { staticClass: "breadcrumb" },
-    [
-      _vm._l(_vm.computedItems, function(item, index) {
-        return _c("BreadcrumbItem", {
-          key: "dr-breadcrumb-" + index,
-          attrs: { active: item.active, text: item.text, href: item.href }
-        })
-      }),
-      _vm._v(" "),
-      _vm._t("default")
-    ],
-    2
-  )
-};
+var __vue_render__$6 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ol',{staticClass:"breadcrumb"},[_vm._l((_vm.computedItems),function(item,index){return _c('BreadcrumbItem',{key:("dr-breadcrumb-" + index),attrs:{"active":item.active,"text":item.text,"href":item.href}})}),_vm._v(" "),_vm._t("default")],2)};
 var __vue_staticRenderFns__$6 = [];
-__vue_render__$6._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$6 = undefined;
@@ -1918,10 +1819,6 @@ __vue_render__$6._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/breadcrumb/Breadcrumb.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -1954,6 +1851,17 @@ __vue_render__$6._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -2115,31 +2023,15 @@ var script$7 = {
             var __vue_script__$7 = script$7;
             
 /* template */
-var __vue_render__$7 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "button",
-    {
-      staticClass: "btn",
-      class: [
+var __vue_render__$7 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"btn",class:[
         _vm.themeClass,
         _vm.sizeClass,
-        _vm.pill ? "btn-pill" : "",
-        _vm.squared ? "btn-squared" : "",
-        _vm.blockLevel ? "btn-block" : "",
-        _vm.active ? "active" : ""
-      ],
-      attrs: { disabled: this.disabled, "aria-pressed": this.active },
-      on: { click: _vm.handleClick }
-    },
-    [_vm._t("default", [_vm._v("Button")])],
-    2
-  )
-};
+        _vm.pill ? 'btn-pill' : '',
+        _vm.squared ? 'btn-squared' : '',
+        _vm.blockLevel ? 'btn-block' : '',
+        _vm.active ? 'active' : ''
+    ],attrs:{"disabled":this.disabled,"aria-pressed":this.active},on:{"click":_vm.handleClick}},[_vm._t("default",[_vm._v("Button")])],2)};
 var __vue_staticRenderFns__$7 = [];
-__vue_render__$7._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$7 = undefined;
@@ -2156,10 +2048,6 @@ __vue_render__$7._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/button/Button.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -2192,6 +2080,17 @@ __vue_render__$7._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -2322,34 +2221,20 @@ var script$8 = {
             var __vue_script__$8 = script$8;
             
 /* template */
-var __vue_render__$8 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "div",
-    {
-      class: [
+var __vue_render__$8 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
         _vm.btnGroupSizeClass,
-        _vm.vertical ? "btn-group-vertical" : "btn-group"
-      ],
-      attrs: { "aria-role": _vm.ariaRole, "aria-label": _vm.ariaLabel }
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+        _vm.vertical ? 'btn-group-vertical' : 'btn-group'
+    ],attrs:{"aria-role":_vm.ariaRole,"aria-label":_vm.ariaLabel}},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$8 = [];
-__vue_render__$8._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$8 = function (inject) {
     if (!inject) { return }
-    inject("data-v-47e3f48c_0", { source: "\n.btn-group-vertical .btn + .btn[data-v-47e3f48c] {\n  margin-left: 0 !important;\n}\n\n/*# sourceMappingURL=ButtonGroup.vue.map */", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/button-group/ButtonGroup.vue","ButtonGroup.vue"],"names":[],"mappings":";AA6DA;EACA,0BAAA;CACA;;AC5DA,2CAA2C","file":"ButtonGroup.vue","sourcesContent":[null,".btn-group-vertical .btn + .btn {\n  margin-left: 0 !important; }\n\n/*# sourceMappingURL=ButtonGroup.vue.map */"]}, media: undefined });
+    inject("data-v-12cb6715_0", { source: ".btn-group-vertical .btn+.btn[data-v-12cb6715]{margin-left:0!important}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$8 = "data-v-47e3f48c";
+  var __vue_scope_id__$8 = "data-v-12cb6715";
   /* module identifier */
   var __vue_module_identifier__$8 = undefined;
   /* functional template */
@@ -2361,10 +2246,6 @@ __vue_render__$8._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/button-group/ButtonGroup.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -2421,6 +2302,17 @@ __vue_render__$8._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -2520,22 +2412,8 @@ var script$9 = {
             var __vue_script__$9 = script$9;
             
 /* template */
-var __vue_render__$9 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "div",
-    {
-      staticClass: "btn-toolbar",
-      attrs: { "aria-role": _vm.ariaRole, "aria-label": _vm.ariaLabel }
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$9 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"btn-toolbar",attrs:{"aria-role":_vm.ariaRole,"aria-label":_vm.ariaLabel}},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$9 = [];
-__vue_render__$9._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$9 = undefined;
@@ -2552,10 +2430,6 @@ __vue_render__$9._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/button-toolbar/ButtonToolbar.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -2588,6 +2462,17 @@ __vue_render__$9._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -2715,36 +2600,14 @@ var script$a = {
             var __vue_script__$a = script$a;
             
 /* template */
-var __vue_render__$a = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    _vm._g(
-      _vm._b(
-        {
-          tag: "component",
-          class: [
-            "card",
-            Boolean(_vm.align) ? "text-" + _vm.align : "",
-            Boolean(_vm.bgTheme) ? "bg-" + _vm.bgTheme : "",
-            Boolean(_vm.borderTheme) ? "border-" + _vm.borderTheme : "",
-            Boolean(_vm.textTheme) ? "text-" + _vm.textTheme : ""
-          ]
-        },
-        "component",
-        _vm.$attrs,
-        false
-      ),
-      _vm.$listeners
-    ),
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$a = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,_vm._g(_vm._b({tag:"component",class:[
+        'card',
+        Boolean(_vm.align) ? ("text-" + _vm.align) : '',
+        Boolean(_vm.bgTheme) ? ("bg-" + _vm.bgTheme) : '',
+        Boolean(_vm.borderTheme) ? ("border-" + _vm.borderTheme) : '',
+        Boolean(_vm.textTheme) ? ("text-" + _vm.textTheme) : ''
+    ]},'component',_vm.$attrs,false),_vm.$listeners),[_vm._t("default")],2)};
 var __vue_staticRenderFns__$a = [];
-__vue_render__$a._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$a = undefined;
@@ -2761,10 +2624,6 @@ __vue_render__$a._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/card/Card.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -2797,6 +2656,17 @@ __vue_render__$a._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -2946,47 +2816,15 @@ var script$b = {
             var __vue_script__$b = script$b;
             
 /* template */
-var __vue_render__$b = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: [
-        "card-body",
-        _vm.overlay ? "card-img-overlay" : "",
-        Boolean(_vm.bgTheme) ? "bg-" + _vm.bgTheme : "",
-        Boolean(_vm.borderTheme) ? "border-" + _vm.borderTheme : "",
-        Boolean(_vm.textTheme) ? "text-" + _vm.textTheme : "",
-        _vm.bodyClass
-      ]
-    },
-    [
-      _vm.title
-        ? _c(_vm.titleTag, {
-            tag: "component",
-            staticClass: "card-title",
-            domProps: { innerHTML: _vm._s(_vm.title) }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.subtitle
-        ? _c(_vm.subtitleTag, {
-            tag: "component",
-            staticClass: "card-subtitle mb-2 text-muted",
-            domProps: { innerHTML: _vm._s(_vm.subtitle) }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._t("default")
-    ],
-    2
-  )
-};
+var __vue_render__$b = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+    'card-body',
+    _vm.overlay ? 'card-img-overlay' : '',
+    Boolean(_vm.bgTheme) ? ("bg-" + _vm.bgTheme) : '',
+    Boolean(_vm.borderTheme) ? ("border-" + _vm.borderTheme) : '',
+    Boolean(_vm.textTheme) ? ("text-" + _vm.textTheme) : '',
+    _vm.bodyClass
+]},[(_vm.title)?_c(_vm.titleTag,{tag:"component",staticClass:"card-title",domProps:{"innerHTML":_vm._s(_vm.title)}}):_vm._e(),_vm._v(" "),(_vm.subtitle)?_c(_vm.subtitleTag,{tag:"component",staticClass:"card-subtitle mb-2 text-muted",domProps:{"innerHTML":_vm._s(_vm.subtitle)}}):_vm._e(),_vm._v(" "),_vm._t("default")],2)};
 var __vue_staticRenderFns__$b = [];
-__vue_render__$b._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$b = undefined;
@@ -3003,10 +2841,6 @@ __vue_render__$b._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/card/CardBody.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -3039,6 +2873,17 @@ __vue_render__$b._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -3157,28 +3002,14 @@ var script$c = {
             var __vue_script__$c = script$c;
             
 /* template */
-var __vue_render__$c = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: [
-        "card-footer",
-        Boolean(_vm.bgTheme) ? "bg-" + _vm.bgTheme : "",
-        Boolean(_vm.borderTheme) ? "border-" + _vm.borderTheme : "",
-        Boolean(_vm.textTheme) ? "text-" + _vm.textTheme : "",
-        _vm.footerClass
-      ]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$c = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+    'card-footer',
+    Boolean(_vm.bgTheme) ? ("bg-" + _vm.bgTheme) : '',
+    Boolean(_vm.borderTheme) ? ("border-" + _vm.borderTheme) : '',
+    Boolean(_vm.textTheme) ? ("text-" + _vm.textTheme) : '',
+    _vm.footerClass
+]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$c = [];
-__vue_render__$c._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$c = undefined;
@@ -3195,10 +3026,6 @@ __vue_render__$c._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/card/CardFooter.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -3231,6 +3058,17 @@ __vue_render__$c._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -3335,19 +3173,8 @@ var script$d = {
             var __vue_script__$d = script$d;
             
 /* template */
-var __vue_render__$d = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    { tag: "component", class: _vm.computedClass },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$d = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:_vm.computedClass},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$d = [];
-__vue_render__$d._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$d = undefined;
@@ -3364,10 +3191,6 @@ __vue_render__$d._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/card/CardGroup.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -3400,6 +3223,17 @@ __vue_render__$d._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -3518,28 +3352,14 @@ var script$e = {
             var __vue_script__$e = script$e;
             
 /* template */
-var __vue_render__$e = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: [
-        "card-header",
-        Boolean(_vm.bgTheme) ? "bg-" + _vm.bgTheme : "",
-        Boolean(_vm.borderTheme) ? "border-" + _vm.borderTheme : "",
-        Boolean(_vm.textTheme) ? "text-" + _vm.textTheme : "",
-        _vm.headerClass
-      ]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$e = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+    'card-header',
+    Boolean(_vm.bgTheme) ? ("bg-" + _vm.bgTheme) : '',
+    Boolean(_vm.borderTheme) ? ("border-" + _vm.borderTheme) : '',
+    Boolean(_vm.textTheme) ? ("text-" + _vm.textTheme) : '',
+    _vm.headerClass
+]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$e = [];
-__vue_render__$e._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$e = undefined;
@@ -3556,10 +3376,6 @@ __vue_render__$e._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/card/CardHeader.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -3592,6 +3408,17 @@ __vue_render__$e._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -3713,17 +3540,8 @@ var script$f = {
             var __vue_script__$f = script$f;
             
 /* template */
-var __vue_render__$f = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c("img", {
-    class: _vm.computedClass,
-    attrs: { src: _vm.src, alt: _vm.alt }
-  })
-};
+var __vue_render__$f = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('img',{class:_vm.computedClass,attrs:{"src":_vm.src,"alt":_vm.alt}})};
 var __vue_staticRenderFns__$f = [];
-__vue_render__$f._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$f = undefined;
@@ -3740,10 +3558,6 @@ __vue_render__$f._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/card/CardImg.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -3776,6 +3590,17 @@ __vue_render__$f._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -4035,51 +3860,12 @@ var script$g = {
             var __vue_script__$g = script$g;
             
 /* template */
-var __vue_render__$g = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "transition",
-    {
-      attrs: { enterActiveClass: "collapsing", leaveActiveClass: "collapsing" },
-      on: {
-        enter: _vm.onEnter,
-        afterEnter: _vm.onAfterEnter,
-        leave: _vm.onLeave,
-        afterLeave: _vm.onAfterLeave
-      }
-    },
-    [
-      _c(
-        _vm.tag,
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.show,
-              expression: "show"
-            }
-          ],
-          tag: "component",
-          class: [
-            _vm.isNav ? "navbar-collapse" : "",
-            !_vm.transitioning ? "collapse" : "",
-            _vm.show && !_vm.transitioning ? "show" : ""
-          ],
-          attrs: { id: [_vm.id ? _vm.id : ""] },
-          on: { click: _vm.handleClick }
-        },
-        [_vm._t("default")],
-        2
-      )
-    ],
-    1
-  )
-};
+var __vue_render__$g = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enterActiveClass":'collapsing',"leaveActiveClass":'collapsing'},on:{"enter":_vm.onEnter,"afterEnter":_vm.onAfterEnter,"leave":_vm.onLeave,"afterLeave":_vm.onAfterLeave}},[_c(_vm.tag,{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],tag:"component",class:[
+            _vm.isNav ? 'navbar-collapse' : '',
+            !_vm.transitioning ? 'collapse' : '',
+            _vm.show && !_vm.transitioning ? 'show' : ''
+        ],attrs:{"id":[ _vm.id ? _vm.id : '' ]},on:{"click":_vm.handleClick}},[_vm._t("default")],2)],1)};
 var __vue_staticRenderFns__$g = [];
-__vue_render__$g._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$g = undefined;
@@ -4096,10 +3882,6 @@ __vue_render__$g._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/collapse/Collapse.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -4132,6 +3914,17 @@ __vue_render__$g._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -4231,22 +4024,10 @@ var script$h = {
             var __vue_script__$h = script$h;
             
 /* template */
-var __vue_render__$h = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: [!_vm.fluid ? "container" : "container-fluid"]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$h = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+        !_vm.fluid ? 'container' : 'container-fluid'
+    ]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$h = [];
-__vue_render__$h._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$h = undefined;
@@ -4263,10 +4044,6 @@ __vue_render__$h._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/container/Container.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -4299,6 +4076,17 @@ __vue_render__$h._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -4419,28 +4207,13 @@ var script$i = {
             var __vue_script__$i = script$i;
             
 /* template */
-var __vue_render__$i = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      staticClass: "row",
-      class: [
-        _vm.noGutters ? "no-gutters" : "",
-        _vm.alignV ? "align-items-" + _vm.alignV : "",
-        _vm.alignH ? "justify-content-" + _vm.alignH : "",
-        _vm.alignContent ? "align-content-" + _vm.alignContent : ""
-      ]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$i = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",staticClass:"row",class:[
+        _vm.noGutters ? 'no-gutters' : '',
+        _vm.alignV ? ("align-items-" + _vm.alignV) : '',
+        _vm.alignH ? ("justify-content-" + _vm.alignH) : '',
+        _vm.alignContent ? ("align-content-" + _vm.alignContent) : ''
+    ]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$i = [];
-__vue_render__$i._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$i = undefined;
@@ -4457,10 +4230,6 @@ __vue_render__$i._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/container/Row.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -4493,6 +4262,17 @@ __vue_render__$i._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -4684,31 +4464,15 @@ var script$j = {
             var __vue_script__$j = script$j;
             
 /* template */
-var __vue_render__$j = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: [
+var __vue_render__$j = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
         _vm.breakpointClasses,
-        _vm.col || (_vm.breakpointClasses.length === 0 && !_vm.cols)
-          ? "col"
-          : "",
-        _vm.cols ? "col-" + _vm.cols : "",
-        _vm.offset ? "offset-" + _vm.offset : "",
-        _vm.order ? "order-" + _vm.order : "",
-        _vm.alignSelf ? "align-self-" + _vm.alignSelf : ""
-      ]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+        (_vm.col || (_vm.breakpointClasses.length === 0 && !_vm.cols)) ? 'col' : '',
+        _vm.cols ? ("col-" + _vm.cols) : '',
+        _vm.offset ? ("offset-" + _vm.offset) : '',
+        _vm.order ? ("order-" + _vm.order) : '',
+        _vm.alignSelf ? ("align-self-" + _vm.alignSelf) : ''
+    ]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$j = [];
-__vue_render__$j._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$j = undefined;
@@ -4725,10 +4489,6 @@ __vue_render__$j._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/container/Col.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -4761,6 +4521,17 @@ __vue_render__$j._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -5000,62 +4771,13 @@ var script$k = {
             var __vue_script__$k = script$k;
             
 /* template */
-var __vue_render__$k = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "VueDatepicker",
-    _vm._g(
-      {
-        attrs: {
-          value: _vm.value,
-          name: _vm.name,
-          id: _vm.id,
-          format: _vm.format,
-          language: _vm.language,
-          "open-date": _vm.openDate,
-          "day-cell-content": _vm.dayCellContent,
-          "full-month-name": _vm.fullMonthName,
-          "disabled-dates": _vm.disabledDates,
-          highlighted: _vm.highlighted,
-          placeholder: _vm.placeholder,
-          inline: _vm.inline,
-          "calendar-class": _vm.computedCalendarClass,
-          "input-class": _vm.inputClass,
-          "wrapper-class": _vm.wrapperClass,
-          "monday-first": _vm.mondayFirst,
-          "clear-button": _vm.clearButton,
-          "clear-button-icon": _vm.clearButtonIcon,
-          "calendar-button": _vm.calendarButton,
-          "calendar-button-icon": _vm.calendarButtonIcon,
-          "calendar-button-icon-content": _vm.calendarButtonIconContent,
-          "initial-view": _vm.initialView,
-          disabled: _vm.disabled,
-          required: _vm.required,
-          typeable: _vm.typeable,
-          "use-utc": _vm.useUtc,
-          "minimum-view": _vm.minimumView,
-          "maximum-view": _vm.maximumView
-        }
-      },
-      _vm.$listeners
-    ),
-    [
-      _vm._t("beforeCalendarHeader", null, { slot: "beforeCalendarHeader" }),
-      _vm._v(" "),
-      _vm._t("afterDateInput", null, { slot: "afterDateInput" })
-    ],
-    2
-  )
-};
+var __vue_render__$k = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('VueDatepicker',_vm._g({attrs:{"value":_vm.value,"name":_vm.name,"id":_vm.id,"format":_vm.format,"language":_vm.language,"open-date":_vm.openDate,"day-cell-content":_vm.dayCellContent,"full-month-name":_vm.fullMonthName,"disabled-dates":_vm.disabledDates,"highlighted":_vm.highlighted,"placeholder":_vm.placeholder,"inline":_vm.inline,"calendar-class":_vm.computedCalendarClass,"input-class":_vm.inputClass,"wrapper-class":_vm.wrapperClass,"monday-first":_vm.mondayFirst,"clear-button":_vm.clearButton,"clear-button-icon":_vm.clearButtonIcon,"calendar-button":_vm.calendarButton,"calendar-button-icon":_vm.calendarButtonIcon,"calendar-button-icon-content":_vm.calendarButtonIconContent,"initial-view":_vm.initialView,"disabled":_vm.disabled,"required":_vm.required,"typeable":_vm.typeable,"use-utc":_vm.useUtc,"minimum-view":_vm.minimumView,"maximum-view":_vm.maximumView}},_vm.$listeners),[_vm._t("beforeCalendarHeader",null,{slot:"beforeCalendarHeader"}),_vm._v(" "),_vm._t("afterDateInput",null,{slot:"afterDateInput"})],2)};
 var __vue_staticRenderFns__$k = [];
-__vue_render__$k._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$k = function (inject) {
     if (!inject) { return }
-    inject("data-v-6b777267_0", { source: "\ndiv.vdp-datepicker__calendar {\n  color: #5a6169;\n  padding: 20px 22px;\n  min-width: 10rem;\n  font-size: 1rem;\n  font-weight: 300;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";\n  background-color: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.375rem;\n  box-shadow: 0 0.5rem 4rem rgba(0, 0, 0, 0.11), 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 3px rgba(0, 0, 0, 0.06);\n  border: 1px solid rgba(0, 0, 0, 0.15) !important;\n}\ndiv.vdp-datepicker__calendar header {\n    display: flex;\n    padding-bottom: 10px;\n}\ndiv.vdp-datepicker__calendar header span {\n      transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n      border-radius: 0.375rem;\n      font-weight: 500;\n}\ndiv.vdp-datepicker__calendar header span.next:after {\n        border-left-color: #c3c7cc;\n}\ndiv.vdp-datepicker__calendar header span.prev:after {\n        border-right-color: #c3c7cc;\n}\ndiv.vdp-datepicker__calendar header span:hover,\n  div.vdp-datepicker__calendar .cell.day:not(.disabled):not(.blank):hover, div.vdp-datepicker__calendar .cell.month:hover, div.vdp-datepicker__calendar .cell.year:hover {\n    background-color: #eceeef;\n    border-color: transparent !important;\n}\ndiv.vdp-datepicker__calendar .cell {\n    line-height: 2;\n    font-size: 1rem;\n    border-radius: 0.375rem;\n    transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n    border-color: transparent;\n    height: auto;\n}\ndiv.vdp-datepicker__calendar .cell.day-header {\n      font-weight: 500;\n}\ndiv.vdp-datepicker__calendar .cell.day {\n      width: 36px;\n      height: 36px;\n      border-radius: 50%;\n}\ndiv.vdp-datepicker__calendar .cell.month, div.vdp-datepicker__calendar .cell.year {\n      height: 36px;\n      font-size: 12px;\n      line-height: 33px;\n}\ndiv.vdp-datepicker__calendar .cell.selected, div.vdp-datepicker__calendar .cell.highlighted.selected {\n      background: #007bff !important;\n      color: #fff;\n}\ndiv.vdp-datepicker__calendar .cell.selected:hover, div.vdp-datepicker__calendar .cell.highlighted.selected:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important;\n}\ndiv.vdp-datepicker__calendar .cell.highlighted {\n      background: #007bff;\n      color: #fff;\n}\ndiv.vdp-datepicker__calendar .cell.highlighted:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important;\n}\ndiv.vdp-datepicker__calendar .cell.highlighted:not(.highlight-start):not(.highlight-end) {\n        border-radius: 0;\n}\ndiv.vdp-datepicker__calendar .cell.highlighted.highlight-start {\n        border-top-right-radius: 0;\n        border-bottom-right-radius: 0;\n}\ndiv.vdp-datepicker__calendar .cell.highlighted.highlight-end {\n        border-top-left-radius: 0;\n        border-bottom-left-radius: 0;\n}\ndiv.vdp-datepicker__small {\n  padding: 0.625rem 0.625rem;\n  font-size: 0.75rem;\n  max-width: 235px;\n}\ndiv.vdp-datepicker__small .cell.day {\n    width: 1.875rem;\n    height: 1.875rem;\n    line-height: 2.25;\n}\ndiv.vdp-datepicker__small .cell.day, div.vdp-datepicker__small .cell.month, div.vdp-datepicker__small .cell.year {\n    font-size: 12px;\n    font-weight: 500;\n}\ndiv.vdp-datepicker__small .cell.day-header {\n    font-size: 100%;\n}\n\n/*# sourceMappingURL=Datepicker.vue.map */", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/datepicker/Datepicker.vue","Datepicker.vue"],"names":[],"mappings":";AA4PA;EAEA,eA1CA;EA2CA,mBA9BA;EA+BA,iBAnCA;EAoCA,gBAjCA;EAkCA,iBA/BA;EAgCA,kKAzCA;EA0CA,uBArDA;EAsDA,sCArDA;EAsDA,wBA9CA;EA+CA,8GAvDA;EAwDA,iDAAA;CA+FA;AA3GA;IAgBA,cAAA;IACA,qBAAA;CAeA;AAhCA;MAoBA,2DAvDA;MAwDA,wBAzDA;MA0DA,iBAAA;CASA;AA/BA;QAyBA,2BAnEA;CAoEA;AA1BA;QA6BA,4BAvEA;CAwEA;AA9BA;;IAsCA,0BA7EA;IA8EA,qCAAA;CACA;AAxCA;IA6CA,eA7DA;IA8DA,gBA7DA;IA8DA,wBAnFA;IAoFA,2DAnFA;IAoFA,0BAtFA;IAuFA,aAAA;CAwDA;AA1GA;MAsDA,iBAAA;CACA;AAvDA;MA2DA,YA9EA;MA+EA,aA9EA;MA+EA,mBAAA;CACA;AA9DA;MAmEA,aArFA;MAsFA,gBAAA;MACA,kBAAA;CACA;AAtEA;MA2EA,+BAAA;MACA,YAzHA;CA8HA;AAjFA;QA8EA,+BAAA;QACA,qCAAA;CACA;AAhFA;MAoFA,oBA7HA;MA8HA,YAlIA;CAsJA;AAzGA;QAwFA,+BAAA;QACA,qCAAA;CACA;AA1FA;QA6FA,iBAAA;CACA;AA9FA;QAiGA,2BAAA;QACA,8BAAA;CACA;AAnGA;QAsGA,0BAAA;QACA,6BAAA;CACA;AAxGA;EA+GA,2BA3HA;EA4HA,mBA3HA;EA4HA,iBA3HA;CA+IA;AArIA;IAqHA,gBA3HA;IA4HA,iBA3HA;IA4HA,kBA3HA;CA4HA;AAxHA;IA6HA,gBArIA;IAsIA,iBArIA;CAsIA;AA/HA;IAkIA,gBApIA;CAqIA;;AChTA,0CAA0C","file":"Datepicker.vue","sourcesContent":[null,"div.vdp-datepicker__calendar {\n  color: #5a6169;\n  padding: 20px 22px;\n  min-width: 10rem;\n  font-size: 1rem;\n  font-weight: 300;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\";\n  background-color: #fff;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 0.375rem;\n  box-shadow: 0 0.5rem 4rem rgba(0, 0, 0, 0.11), 0 10px 20px rgba(0, 0, 0, 0.05), 0 2px 3px rgba(0, 0, 0, 0.06);\n  border: 1px solid rgba(0, 0, 0, 0.15) !important; }\n  div.vdp-datepicker__calendar header {\n    display: flex;\n    padding-bottom: 10px; }\n    div.vdp-datepicker__calendar header span {\n      transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n      border-radius: 0.375rem;\n      font-weight: 500; }\n      div.vdp-datepicker__calendar header span.next:after {\n        border-left-color: #c3c7cc; }\n      div.vdp-datepicker__calendar header span.prev:after {\n        border-right-color: #c3c7cc; }\n  div.vdp-datepicker__calendar header span:hover,\n  div.vdp-datepicker__calendar .cell.day:not(.disabled):not(.blank):hover, div.vdp-datepicker__calendar .cell.month:hover, div.vdp-datepicker__calendar .cell.year:hover {\n    background-color: #eceeef;\n    border-color: transparent !important; }\n  div.vdp-datepicker__calendar .cell {\n    line-height: 2;\n    font-size: 1rem;\n    border-radius: 0.375rem;\n    transition: all 250ms cubic-bezier(0.27, 0.01, 0.38, 1.06);\n    border-color: transparent;\n    height: auto; }\n    div.vdp-datepicker__calendar .cell.day-header {\n      font-weight: 500; }\n    div.vdp-datepicker__calendar .cell.day {\n      width: 36px;\n      height: 36px;\n      border-radius: 50%; }\n    div.vdp-datepicker__calendar .cell.month, div.vdp-datepicker__calendar .cell.year {\n      height: 36px;\n      font-size: 12px;\n      line-height: 33px; }\n    div.vdp-datepicker__calendar .cell.selected, div.vdp-datepicker__calendar .cell.highlighted.selected {\n      background: #007bff !important;\n      color: #fff; }\n      div.vdp-datepicker__calendar .cell.selected:hover, div.vdp-datepicker__calendar .cell.highlighted.selected:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important; }\n    div.vdp-datepicker__calendar .cell.highlighted {\n      background: #007bff;\n      color: #fff; }\n      div.vdp-datepicker__calendar .cell.highlighted:hover {\n        background: #006fe6 !important;\n        border-color: transparent !important; }\n      div.vdp-datepicker__calendar .cell.highlighted:not(.highlight-start):not(.highlight-end) {\n        border-radius: 0; }\n      div.vdp-datepicker__calendar .cell.highlighted.highlight-start {\n        border-top-right-radius: 0;\n        border-bottom-right-radius: 0; }\n      div.vdp-datepicker__calendar .cell.highlighted.highlight-end {\n        border-top-left-radius: 0;\n        border-bottom-left-radius: 0; }\n\ndiv.vdp-datepicker__small {\n  padding: 0.625rem 0.625rem;\n  font-size: 0.75rem;\n  max-width: 235px; }\n  div.vdp-datepicker__small .cell.day {\n    width: 1.875rem;\n    height: 1.875rem;\n    line-height: 2.25; }\n  div.vdp-datepicker__small .cell.day, div.vdp-datepicker__small .cell.month, div.vdp-datepicker__small .cell.year {\n    font-size: 12px;\n    font-weight: 500; }\n  div.vdp-datepicker__small .cell.day-header {\n    font-size: 100%; }\n\n/*# sourceMappingURL=Datepicker.vue.map */"]}, media: undefined });
+    inject("data-v-55b0792c_0", { source: "div.vdp-datepicker__calendar{color:#5a6169;padding:20px 22px;min-width:10rem;font-size:1rem;font-weight:300;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\";background-color:#fff;border:1px solid rgba(0,0,0,.05);border-radius:.375rem;box-shadow:0 .5rem 4rem rgba(0,0,0,.11),0 10px 20px rgba(0,0,0,.05),0 2px 3px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.15)!important}div.vdp-datepicker__calendar header{display:flex;padding-bottom:10px}div.vdp-datepicker__calendar header span{transition:all 250ms cubic-bezier(.27,.01,.38,1.06);border-radius:.375rem;font-weight:500}div.vdp-datepicker__calendar header span.next:after{border-left-color:#c3c7cc}div.vdp-datepicker__calendar header span.prev:after{border-right-color:#c3c7cc}div.vdp-datepicker__calendar .cell.day:not(.disabled):not(.blank):hover,div.vdp-datepicker__calendar .cell.month:hover,div.vdp-datepicker__calendar .cell.year:hover,div.vdp-datepicker__calendar header span:hover{background-color:#eceeef;border-color:transparent!important}div.vdp-datepicker__calendar .cell{line-height:2;font-size:1rem;border-radius:.375rem;transition:all 250ms cubic-bezier(.27,.01,.38,1.06);border-color:transparent;height:auto}div.vdp-datepicker__calendar .cell.day-header{font-weight:500}div.vdp-datepicker__calendar .cell.day{width:36px;height:36px;border-radius:50%}div.vdp-datepicker__calendar .cell.month,div.vdp-datepicker__calendar .cell.year{height:36px;font-size:12px;line-height:33px}div.vdp-datepicker__calendar .cell.highlighted.selected,div.vdp-datepicker__calendar .cell.selected{background:#007bff!important;color:#fff}div.vdp-datepicker__calendar .cell.highlighted.selected:hover,div.vdp-datepicker__calendar .cell.selected:hover{background:#006fe6!important;border-color:transparent!important}div.vdp-datepicker__calendar .cell.highlighted{background:#007bff;color:#fff}div.vdp-datepicker__calendar .cell.highlighted:hover{background:#006fe6!important;border-color:transparent!important}div.vdp-datepicker__calendar .cell.highlighted:not(.highlight-start):not(.highlight-end){border-radius:0}div.vdp-datepicker__calendar .cell.highlighted.highlight-start{border-top-right-radius:0;border-bottom-right-radius:0}div.vdp-datepicker__calendar .cell.highlighted.highlight-end{border-top-left-radius:0;border-bottom-left-radius:0}div.vdp-datepicker__small{padding:.625rem .625rem;font-size:.75rem;max-width:235px}div.vdp-datepicker__small .cell.day{width:1.875rem;height:1.875rem;line-height:2.25}div.vdp-datepicker__small .cell.day,div.vdp-datepicker__small .cell.month,div.vdp-datepicker__small .cell.year{font-size:12px;font-weight:500}div.vdp-datepicker__small .cell.day-header{font-size:100%}", map: undefined, media: undefined });
 
   };
   /* scoped */
@@ -5071,10 +4793,6 @@ __vue_render__$k._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/datepicker/Datepicker.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -5131,6 +4849,17 @@ __vue_render__$k._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -8148,120 +7877,35 @@ var script$l = {
             var __vue_script__$l = script$l;
             
 /* template */
-var __vue_render__$l = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.computedTag,
-    {
-      directives: [
-        {
-          name: "on-clickaway",
-          rawName: "v-on-clickaway",
-          value: _vm.away,
-          expression: "away"
-        }
-      ],
-      tag: "component",
-      class: [
-        "dropdown",
-        "d-dropdown",
-        !_vm.isNav ? "btn-group" : "",
-        _vm.isNav ? "nav-item" : "",
-        _vm.dropup ? "dropup" : "",
-        _vm.visible ? "show" : "",
-        _vm.boundary !== "scrollParent" || !_vm.boundary
-          ? "position-static"
-          : ""
-      ],
-      attrs: { id: _vm.computedID }
-    },
-    [
-      _vm.split && !_vm.isNav
-        ? _c(
-            "d-button",
-            {
-              ref: "button",
-              attrs: {
-                disabled: _vm.disabled,
-                theme: _vm.theme,
-                size: _vm.size,
-                id: _vm.computedSplitID
-              },
-              on: { click: _vm.click }
-            },
-            [_vm._t("button-content", [_vm._v(_vm._s(_vm.text))])],
-            2
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        _vm.computedToggleTag,
-        {
-          ref: "toggle",
-          tag: "component",
-          class: [
-            _vm.isNav ? "nav-link" : "",
-            !_vm.noCaret || _vm.split ? "dropdown-toggle" : "",
-            _vm.split && !_vm.isNav ? "dropdown-toggle-split" : "",
+var __vue_render__$l = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.computedTag,{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.away),expression:"away"}],tag:"component",class:[
+        'dropdown',
+        'd-dropdown',
+        !_vm.isNav ? 'btn-group' : '',
+        _vm.isNav ? 'nav-item' : '',
+        _vm.dropup ? 'dropup' : '',
+        _vm.visible ? 'show' : '',
+        (_vm.boundary !== 'scrollParent' || !_vm.boundary) ? 'position-static' : ''
+    ],attrs:{"id":_vm.computedID}},[(_vm.split && !_vm.isNav)?_c('d-button',{ref:"button",attrs:{"disabled":_vm.disabled,"theme":_vm.theme,"size":_vm.size,"id":_vm.computedSplitID},on:{"click":_vm.click}},[_vm._t("button-content",[_vm._v(_vm._s(_vm.text))])],2):_vm._e(),_vm._v(" "),_c(_vm.computedToggleTag,{ref:"toggle",tag:"component",class:[
+            _vm.isNav ? 'nav-link' : '',
+            !_vm.noCaret || _vm.split ? 'dropdown-toggle' : '',
+            _vm.split && !_vm.isNav ? 'dropdown-toggle-split' : '',
             _vm.toggleClass
-          ],
-          attrs: {
-            id: _vm.computedToggleID,
-            theme: _vm.theme,
-            size: _vm.size,
-            disabled: _vm.disabled,
-            "aria-expanded": _vm.visible ? "true" : "false",
-            "aria-haspopup": "true"
-          },
-          on: { click: _vm.toggle, keydown: _vm.toggle }
-        },
-        [
-          _vm.split
-            ? _c("span", { staticClass: "sr-only" }, [
-                _vm._v(_vm._s(_vm.toggleText))
-              ])
-            : _vm._t("button-content", [_vm._v(_vm._s(_vm.text))])
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          ref: "menu",
-          class: [
-            "dropdown-menu",
-            _vm.right ? "dropdown-menu-right" : "",
-            _vm.visible ? "show" : "",
+        ],attrs:{"id":_vm.computedToggleID,"theme":_vm.theme,"size":_vm.size,"disabled":_vm.disabled,"aria-expanded":_vm.visible ? 'true' : 'false',"aria-haspopup":"true"},on:{"click":_vm.toggle,"keydown":_vm.toggle}},[(_vm.split)?_c('span',{staticClass:"sr-only"},[_vm._v(_vm._s(_vm.toggleText))]):_vm._t("button-content",[_vm._v(_vm._s(_vm.text))])],2),_vm._v(" "),_c('div',{ref:"menu",class:[
+            'dropdown-menu',
+            _vm.right ? 'dropdown-menu-right' : '',
+            _vm.visible ? 'show' : '',
             _vm.menuClass
-          ],
-          attrs: {
-            role: "menu",
-            id: _vm.computedMenuID,
-            "aria-labeledby": _vm.computedMenuID
-          },
-          on: { mouseover: _vm.onMouseOver }
-        },
-        [_vm._t("default")],
-        2
-      )
-    ],
-    1
-  )
-};
+        ],attrs:{"role":"menu","id":_vm.computedMenuID,"aria-labeledby":_vm.computedMenuID},on:{"mouseover":_vm.onMouseOver}},[_vm._t("default")],2)],1)};
 var __vue_staticRenderFns__$l = [];
-__vue_render__$l._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$l = function (inject) {
     if (!inject) { return }
-    inject("data-v-68c0b8ac_0", { source: "\n.nav-link[data-v-68c0b8ac]:hover {\n    cursor: pointer;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/dropdown/Dropdown.vue"],"names":[],"mappings":";AAsbA;IACA,gBAAA;CACA","file":"Dropdown.vue","sourcesContent":["<template>\n    <component :is=\"computedTag\" :id=\"computedID\"\n        v-on-clickaway=\"away\"\n        :class=\"[\n            'dropdown',\n            'd-dropdown',\n            !isNav ? 'btn-group' : '',\n            isNav ? 'nav-item' : '',\n            dropup ? 'dropup' : '',\n            visible ? 'show' : '',\n            (boundary !== 'scrollParent' || !boundary) ? 'position-static' : ''\n        ]\">\n\n        <!-- Dropdown Split -->\n        <d-button v-if=\"split && !isNav\"\n            ref=\"button\"\n            :disabled=\"disabled\"\n            :theme=\"theme\"\n            :size=\"size\"\n            :id=\"computedSplitID\"\n            @click=\"click\">\n            <slot name=\"button-content\">{{ text }}</slot>\n        </d-button>\n\n        <!-- Dropdown Toggle -->\n        <component :is=\"computedToggleTag\" ref=\"toggle\"\n            :id=\"computedToggleID\"\n            :class=\"[\n                isNav ? 'nav-link' : '',\n                !noCaret || split ? 'dropdown-toggle' : '',\n                split && !isNav ? 'dropdown-toggle-split' : '',\n                toggleClass\n            ]\"\n            :theme=\"theme\"\n            :size=\"size\"\n            :disabled=\"disabled\"\n            :aria-expanded=\"visible ? 'true' : 'false'\"\n            aria-haspopup=\"true\"\n            @click=\"toggle\"\n            @keydown=\"toggle\">\n            <span v-if=\"split\" class=\"sr-only\">{{ toggleText }}</span>\n            <slot v-else name=\"button-content\">{{ text }}</slot>\n        </component>\n\n        <!-- Dropdown Menu -->\n        <div ref=\"menu\"\n            role=\"menu\"\n            :class=\"[\n                'dropdown-menu',\n                right ? 'dropdown-menu-right' : '',\n                visible ? 'show' : '',\n                menuClass\n            ]\"\n            :id=\"computedMenuID\"\n            :aria-labeledby=\"computedMenuID\"\n            @mouseover=\"onMouseOver\">\n            <slot />\n        </div>\n    </component>\n</template>\n\n<script>\nimport Popper from 'popper.js'\nimport { guid, closest } from '../../utils'\nimport { THEMECOLORS, DROPDOWN_EVENTS, KEYCODES, LINK_EVENTS } from '../../utils/constants'\nimport { CancelableEvent } from '../../utils/events'\nimport { mixin as clickAwayMixin } from 'vue-clickaway';\nimport rootListenerMixin from '../../mixins/root-listener.mixin'\n\nexport default {\n    name: 'd-dropdown',\n    mixins: [\n        rootListenerMixin,\n        clickAwayMixin\n    ],\n    data() {\n        return {\n            visible: false,\n            isNavbar: null,\n            visibleChangePrevented: false\n        }\n    },\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown menu ID.\n         */\n        menuId: {\n            type: String,\n            default: null\n        },\n        /**\n         * The toggle ID.\n         */\n        toggleId: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown menu class(es).\n         */\n        menuClass: {\n            type: [String, Array],\n            default: null\n        },\n        /**\n         * The dropdown toggle class(es).\n         */\n        toggleClass: {\n            type: [String, Array],\n            default: null\n        },\n        /**\n         * Align the menu to the right.\n         */\n        right: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to display the caret, or not.\n         */\n        noCaret: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to split the dropdown, or not.\n         */\n        split: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The color theme.\n         */\n        theme: {\n            type: String,\n            default: 'primary',\n            validator: v => THEMECOLORS.includes(v)\n        },\n        /**\n         * The dropdown toggle's size.\n         */\n        size: {\n            type: String,\n            default: null\n        },\n        /**\n         * The dropdown's disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The dropdown toggle's text.\n         */\n        toggleText: {\n            type: String,\n            default: 'Toggle Dropdown'\n        },\n        /**\n         * The button label's text.\n         */\n        text: {\n            type: String,\n            default: ''\n        },\n        /**\n         * The dropdown's boundary.\n         */\n        boundary: {\n            type: String,\n            default: 'scrollParent',\n            validator: v => ['scrollParent', 'window', 'viewport'].includes(v)\n        },\n        /**\n         * The offset value.\n         */\n        offset: {\n            type: [Number, String],\n            default: null\n        },\n        /**\n         * Display on top.\n         */\n        dropup: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The Popper options.\n         */\n        popperOptions: {\n            type: Object,\n            default() {\n                return {}\n            }\n        },\n        /**\n         * Disable autoflipping.\n         */\n        noFlip: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether the dropdown is displayed inside a nav, or not.\n         */\n        isNav: {\n            type: Boolean,\n            default: false\n        }\n    },\n    watch: {\n        visible(newVal, oldVal) {\n            if (this.visibleChangePrevented) {\n                this.visibleChangePrevented = false\n                return\n            }\n\n            if (newVal === oldVal) {\n                return\n            }\n\n            const eventName = newVal ? 'show' : 'hide'\n            let _visibleChangeEvent = new CancelableEvent(eventName, {\n                cancelable: true,\n                vueTarget: this,\n                target: this.$refs.menu,\n                relatedTarget: null\n            })\n\n            this.$emit(_visibleChangeEvent.type, _visibleChangeEvent)\n            this.emitOnRoot(DROPDOWN_EVENTS[_visibleChangeEvent.type.toUpperCase()])\n\n            if (_visibleChangeEvent.defaultPrevented) {\n                this.visibleChangePrevented = true\n                this.visible = oldVal\n                return\n            }\n\n            if (eventName === 'show') {\n                this.showMenu()\n                return\n            }\n\n            this.hideMenu()\n        },\n        disabled(newVal, oldVal) {\n            if (newVal !== oldVal && newVal && this.visible) {\n                this.visible = false\n            }\n        }\n    },\n    computed: {\n        computedTag() {\n            return this.isNav ? 'li' : 'div'\n        },\n        computedToggleTag() {\n            return this.isNav ? 'a' : 'd-button'\n        },\n        computedID() {\n            return this.id || `d-dropdown-${guid()}`\n        },\n        computedMenuID() {\n            return this.menuId || `d-dropdown-menu-${guid()}`\n        },\n        computedToggleID() {\n            return this.toggleId || `d-dropdown-toggle-${guid()}`\n        },\n        computedSplitID() {\n            return this.splitId || `d-dropdown-split-${guid()}`\n        },\n        toggler() {\n            return this.$refs.toggle.$el || this.$refs.toggle\n        }\n    },\n    methods: {\n        onMouseOver(event) {\n            const item = event.target\n            if (\n                item.classList.contains('dropdown-item')\n                && !item.disabled\n                && !item.classList.contains('disabled')\n                && item.focus\n            ) {\n                item.focus()\n            }\n        },\n        toggle(event) {\n            event = event || {}\n\n            // Enter, Space or Down\n            const KEY_ESD = event.keyCode === KEYCODES.ENTER\n                            || event.keyCode === KEYCODES.SPACE\n                            || event.keyCode === KEYCODES.DOWN\n\n            if (event.type !== 'click' && !(event.type === 'keydown' && KEY_ESD)) {\n                return\n            }\n\n            if (this.disabled) {\n                this.visible = false\n                return\n            }\n\n            this.$emit('toggle', event)\n\n            if (event.defaultPrevented) {\n                return\n            }\n\n            event.preventDefault()\n            event.stopPropagation()\n\n            this.visible = !this.visible\n        },\n        click(event) {\n            if (this.disabled) {\n                this.visible = false\n                return\n            }\n            this.$emit('click', event)\n        },\n        createPopper(element) {\n            this.removePopper()\n\n            // Define placement\n            let placement = 'bottom-start'\n\n            if (this.dropup && this.right) {\n                placement = 'top-end'\n            } else if (this.dropup) {\n                placement = 'top-start'\n            } else if (this.right) {\n                placement = 'bottom-end'\n            }\n\n            // Build Popper config\n            const popperConfig = {\n                placement,\n                modifiers: {\n                    offset: {\n                        offset: this.offset || 0\n                    },\n                    flip: {\n                        enabled: !this.noFlip\n                    },\n                    computeStyle: {\n                        enabled: true\n                    }\n                }\n            }\n\n            // Define Popper boundaries\n            if (this.boundary) {\n                popperConfig.modifiers.preventOverflow = {\n                    boundariesElement: this.boundary\n                }\n            }\n\n            // Create Popper instance\n            this._popperInstance = new Popper(\n                element,\n                this.$refs.menu,\n                {\n                    ...popperConfig,\n                    ...this.popperOptions\n                }\n            )\n        },\n        removePopper() {\n            if (this._popper) {\n                this._popper.destroy()\n            }\n            this._popperInstance = null\n        },\n        showMenu() {\n            if (this.disabled) {\n                return\n            }\n\n            this.emitOnRoot(DROPDOWN_EVENTS.SHOWN, this)\n\n            if (this.inNavbar === null && this.isNav) {\n                this.inNavbar = Boolean(closest('.navbar', this.$el))\n            }\n\n            if (!this.inNavbar) {\n                let _element = ((this.dropup && this.right) || this.split) ? this.$el : this.$refs.toggle\n                _element = _element.$el || _element\n                this.createPopper(_element)\n            }\n\n            this.$emit('shown')\n            this.$nextTick(this.focusFirstItem)\n        },\n        hideMenu() {\n            this.emitOnRoot(DROPDOWN_EVENTS.HIDDEN, this)\n            this.$emit('hidden')\n            this.removePopper()\n        },\n        away() {\n            this.visible = false\n        }\n    },\n    created() {\n        this._popperInstance = null\n    },\n    mounted() {\n        this.listenOnRoot(DROPDOWN_EVENTS.SHOWN, function(vm) {\n            if (vm !== this) {\n                this.visible = false\n            }\n        })\n\n        this.listenOnRoot(LINK_EVENTS.CLICKED, this.away)\n    },\n    deactivated() {\n        this.visible = false\n        this.removePopper()\n    },\n    beforeDestroy() {\n        this.visible = false\n        this.removePopper()\n    }\n}\n</script>\n\n<style scoped>\n.nav-link:hover {\n    cursor: pointer;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-6027cdfe_0", { source: ".nav-link[data-v-6027cdfe]:hover{cursor:pointer}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$l = "data-v-68c0b8ac";
+  var __vue_scope_id__$l = "data-v-6027cdfe";
   /* module identifier */
   var __vue_module_identifier__$l = undefined;
   /* functional template */
@@ -8273,10 +7917,6 @@ __vue_render__$l._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/dropdown/Dropdown.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -8333,6 +7973,17 @@ __vue_render__$l._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -8400,33 +8051,17 @@ var script$m = {
             var __vue_script__$m = script$m;
             
 /* template */
-var __vue_render__$m = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "d-link",
-    _vm._b(
-      { staticClass: "dropdown-item", attrs: { role: "menuitem" } },
-      "d-link",
-      _vm.$props,
-      false
-    ),
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$m = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('d-link',_vm._b({staticClass:"dropdown-item",attrs:{"role":"menuitem"}},'d-link',_vm.$props,false),[_vm._t("default")],2)};
 var __vue_staticRenderFns__$m = [];
-__vue_render__$m._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$m = function (inject) {
     if (!inject) { return }
-    inject("data-v-f0cf116e_0", { source: "\n.dropdown-item[data-v-f0cf116e]:focus {\n    outline: 0;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/dropdown/DropdownItem.vue"],"names":[],"mappings":";AAqBA;IACA,WAAA;CACA","file":"DropdownItem.vue","sourcesContent":["<template>\n    <d-link class=\"dropdown-item\" role=\"menuitem\" v-bind=\"$props\">\n        <slot />\n    </d-link>\n</template>\n\n<script>\nimport createLinkProps from '../link/create-link-props'\n\n/**\n * This subcomponent is inheriting <a href=\"/docs/components/link\">Link</a> component's props.\n */\nexport default {\n    name: 'd-dropdown-item',\n    props: {\n        ...createLinkProps()\n    }\n}\n</script>\n\n<style scoped>\n.dropdown-item:focus {\n    outline: 0;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-13e1a5b7_0", { source: ".dropdown-item[data-v-13e1a5b7]:focus{outline:0}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$m = "data-v-f0cf116e";
+  var __vue_scope_id__$m = "data-v-13e1a5b7";
   /* module identifier */
   var __vue_module_identifier__$m = undefined;
   /* functional template */
@@ -8438,10 +8073,6 @@ __vue_render__$m._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/dropdown/DropdownItem.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -8498,6 +8129,17 @@ __vue_render__$m._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -8584,19 +8226,8 @@ var script$n = {
             var __vue_script__$n = script$n;
             
 /* template */
-var __vue_render__$n = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    { tag: "component", staticClass: "dropdown-header", attrs: { id: _vm.id } },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$n = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",staticClass:"dropdown-header",attrs:{"id":_vm.id}},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$n = [];
-__vue_render__$n._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$n = undefined;
@@ -8613,10 +8244,6 @@ __vue_render__$n._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/dropdown/DropdownHeader.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -8649,6 +8276,17 @@ __vue_render__$n._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -8728,23 +8366,8 @@ var script$o = {
             var __vue_script__$o = script$o;
             
 /* template */
-var __vue_render__$o = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      staticClass: "dropdown-divier",
-      attrs: { role: "separator" }
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$o = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",staticClass:"dropdown-divier",attrs:{"role":"separator"}},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$o = [];
-__vue_render__$o._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$o = undefined;
@@ -8761,10 +8384,6 @@ __vue_render__$o._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/dropdown/DropdownDivider.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -8797,6 +8416,17 @@ __vue_render__$o._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -8900,34 +8530,11 @@ var script$p = {
             var __vue_script__$p = script$p;
             
 /* template */
-var __vue_render__$p = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: ["embed-responsive", "embed-responsive-" + _vm.aspect]
-    },
-    [
-      _c(
-        _vm.type,
-        _vm._b(
-          { tag: "component", staticClass: "embed-responsive-item" },
-          "component",
-          _vm.$attrs,
-          false
-        ),
-        [_vm._t("default")],
-        2
-      )
-    ],
-    1
-  )
-};
+var __vue_render__$p = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+        'embed-responsive',
+        ("embed-responsive-" + _vm.aspect)
+    ]},[_c(_vm.type,_vm._b({tag:"component",staticClass:"embed-responsive-item"},'component',_vm.$attrs,false),[_vm._t("default")],2)],1)};
 var __vue_staticRenderFns__$p = [];
-__vue_render__$p._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$p = undefined;
@@ -8944,10 +8551,6 @@ __vue_render__$p._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/embed/Embed.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -8980,6 +8583,17 @@ __vue_render__$p._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -9089,33 +8703,11 @@ var script$q = {
             var __vue_script__$q = script$q;
             
 /* template */
-var __vue_render__$q = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "form",
-    _vm._g(
-      _vm._b(
-        {
-          class: [
-            _vm.inline ? "form-inline" : "",
-            _vm.validated ? "was-validated" : ""
-          ],
-          attrs: { novalidate: _vm.novalidate ? true : false }
-        },
-        "form",
-        _vm.$attrs,
-        false
-      ),
-      _vm.$listeners
-    ),
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$q = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('form',_vm._g(_vm._b({class:[
+        _vm.inline ? 'form-inline' : '',
+        _vm.validated ? 'was-validated' : ''
+    ],attrs:{"novalidate":_vm.novalidate ? true : false}},'form',_vm.$attrs,false),_vm.$listeners),[_vm._t("default")],2)};
 var __vue_staticRenderFns__$q = [];
-__vue_render__$q._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$q = undefined;
@@ -9132,10 +8724,6 @@ __vue_render__$q._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/form/Form.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -9168,6 +8756,17 @@ __vue_render__$q._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -9245,19 +8844,8 @@ var script$r = {
             var __vue_script__$r = script$r;
             
 /* template */
-var __vue_render__$r = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    { tag: "component", staticClass: "form-row" },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$r = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",staticClass:"form-row"},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$r = [];
-__vue_render__$r._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$r = undefined;
@@ -9274,10 +8862,6 @@ __vue_render__$r._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/form/FormRow.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -9310,6 +8894,17 @@ __vue_render__$r._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -9397,25 +8992,11 @@ var script$s = {
             var __vue_script__$s = script$s;
             
 /* template */
-var __vue_render__$s = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: [
-        !_vm.inline ? "form-text" : "",
-        Boolean(_vm.theme) ? "text-" + _vm.theme : ""
-      ]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$s = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+        !_vm.inline ? 'form-text' : '',
+        Boolean(_vm.theme) ? ("text-" + _vm.theme) : ''
+    ]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$s = [];
-__vue_render__$s._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$s = undefined;
@@ -9432,10 +9013,6 @@ __vue_render__$s._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/form/FormText.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -9468,6 +9045,17 @@ __vue_render__$s._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -9564,22 +9152,11 @@ var script$t = {
             var __vue_script__$t = script$t;
             
 /* template */
-var __vue_render__$t = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: [_vm.type + "-feedback", _vm.forceShow ? "d-block" : ""]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$t = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+        (_vm.type + "-feedback"),
+        _vm.forceShow ? 'd-block' : ''
+    ]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$t = [];
-__vue_render__$t._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$t = undefined;
@@ -9596,10 +9173,6 @@ __vue_render__$t._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/form/FormFeedback.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -9632,6 +9205,17 @@ __vue_render__$t._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -9728,23 +9312,11 @@ var script$u = {
             var __vue_script__$u = script$u;
             
 /* template */
-var __vue_render__$u = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: ["valid-feedback", _vm.forceShow ? "d-block" : ""],
-      attrs: { id: _vm.id }
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$u = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+        'valid-feedback',
+        _vm.forceShow ? 'd-block' : ''
+    ],attrs:{"id":_vm.id}},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$u = [];
-__vue_render__$u._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$u = undefined;
@@ -9761,10 +9333,6 @@ __vue_render__$u._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/form/FormValidFeedback.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -9797,6 +9365,17 @@ __vue_render__$u._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -9893,23 +9472,11 @@ var script$v = {
             var __vue_script__$v = script$v;
             
 /* template */
-var __vue_render__$v = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: ["invalid-feedback", _vm.forceShow ? "d-block" : ""],
-      attrs: { id: _vm.id }
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$v = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+        'invalid-feedback',
+        _vm.forceShow ? 'd-block' : ''
+    ],attrs:{"id":_vm.id}},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$v = [];
-__vue_render__$v._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$v = undefined;
@@ -9926,10 +9493,6 @@ __vue_render__$v._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/form/FormInvalidFeedback.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -9962,6 +9525,17 @@ __vue_render__$v._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -10208,92 +9782,14 @@ var script$w = {
             var __vue_script__$w = script$w;
             
 /* template */
-var __vue_render__$w = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "label",
-    {
-      class: [
-        "custom-control",
-        !_vm.toggle ? "custom-checkbox" : "custom-toggle",
-        _vm.toggle && _vm.toggleSmall ? "custom-toggle-sm" : "",
-        _vm.inline ? "custom-control-inline" : "",
+var __vue_render__$w = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{class:[
+        'custom-control',
+        !_vm.toggle ? 'custom-checkbox' : 'custom-toggle',
+        _vm.toggle && _vm.toggleSmall ? 'custom-toggle-sm' : '',
+        _vm.inline ? 'custom-control-inline' : '',
         _vm.computedStateClass
-      ]
-    },
-    [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.computedLocalState,
-            expression: "computedLocalState"
-          }
-        ],
-        ref: "check",
-        class: ["custom-control-input", _vm.computedStateClass],
-        attrs: {
-          type: "checkbox",
-          autocomplete: "off",
-          "aria-required": _vm.required ? "true" : null,
-          id: _vm.computedID,
-          name: _vm.name,
-          "true-value": _vm.value,
-          "false-value": _vm.uncheckedValue,
-          disabled: _vm.disabled,
-          required: _vm.required
-        },
-        domProps: {
-          value: _vm.value,
-          checked: Array.isArray(_vm.computedLocalState)
-            ? _vm._i(_vm.computedLocalState, _vm.value) > -1
-            : _vm._q(_vm.computedLocalState, _vm.value)
-        },
-        on: {
-          change: [
-            function($event) {
-              var $$a = _vm.computedLocalState,
-                $$el = $event.target,
-                $$c = $$el.checked ? _vm.value : _vm.uncheckedValue;
-              if (Array.isArray($$a)) {
-                var $$v = _vm.value,
-                  $$i = _vm._i($$a, $$v);
-                if ($$el.checked) {
-                  $$i < 0 && (_vm.computedLocalState = $$a.concat([$$v]));
-                } else {
-                  $$i > -1 &&
-                    (_vm.computedLocalState = $$a
-                      .slice(0, $$i)
-                      .concat($$a.slice($$i + 1)));
-                }
-              } else {
-                _vm.computedLocalState = $$c;
-              }
-            },
-            _vm.handleChange
-          ]
-        }
-      }),
-      _vm._v(" "),
-      _c("label", {
-        staticClass: "custom-control-label",
-        attrs: { for: _vm.computedID, "aria-hidden": "true" }
-      }),
-      _vm._v(" "),
-      _c(
-        "span",
-        { class: ["custom-control-description"] },
-        [_vm._t("default")],
-        2
-      )
-    ]
-  )
-};
+    ]},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.computedLocalState),expression:"computedLocalState"}],ref:"check",class:[ 'custom-control-input', _vm.computedStateClass ],attrs:{"type":"checkbox","autocomplete":"off","aria-required":_vm.required ? 'true' : null,"id":_vm.computedID,"name":_vm.name,"true-value":_vm.value,"false-value":_vm.uncheckedValue,"disabled":_vm.disabled,"required":_vm.required},domProps:{"value":_vm.value,"checked":Array.isArray(_vm.computedLocalState)?_vm._i(_vm.computedLocalState,_vm.value)>-1:_vm._q(_vm.computedLocalState,_vm.value)},on:{"change":[function($event){var $$a=_vm.computedLocalState,$$el=$event.target,$$c=$$el.checked?(_vm.value):(_vm.uncheckedValue);if(Array.isArray($$a)){var $$v=_vm.value,$$i=_vm._i($$a,$$v);if($$el.checked){$$i<0&&(_vm.computedLocalState=$$a.concat([$$v]));}else{$$i>-1&&(_vm.computedLocalState=$$a.slice(0,$$i).concat($$a.slice($$i+1)));}}else{_vm.computedLocalState=$$c;}},_vm.handleChange]}}),_vm._v(" "),_c('label',{staticClass:"custom-control-label",attrs:{"for":_vm.computedID,"aria-hidden":"true"}}),_vm._v(" "),_c('span',{class:['custom-control-description']},[_vm._t("default")],2)])};
 var __vue_staticRenderFns__$w = [];
-__vue_render__$w._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$w = undefined;
@@ -10310,10 +9806,6 @@ __vue_render__$w._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/form-checkbox/FormCheckbox.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -10346,6 +9838,17 @@ __vue_render__$w._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -10566,44 +10069,13 @@ var script$x = {
             var __vue_script__$x = script$x;
             
 /* template */
-var __vue_render__$x = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "input",
-    _vm._b(
-      {
-        ref: "input",
-        class: [
-          _vm.plaintext ? "form-control-plaintext" : "form-control",
-          _vm.plaintext ? "w-100" : "",
-          _vm.size ? "form-control-" + _vm.size : null,
-          _vm.computedStateClass
-        ],
-        attrs: {
-          id: _vm.computedID,
-          type: _vm.type,
-          name: _vm.name,
-          disabled: _vm.disabled,
-          required: _vm.required,
-          readonly: _vm.readonly || _vm.plaintext,
-          placeholder: _vm.placeholder,
-          autocomplete: _vm.autocomplete,
-          "aria-required": _vm.required ? true : null,
-          "aria-invalid": _vm.computedAriaInvalid
-        },
-        domProps: { value: _vm.value },
-        on: { input: _vm.onInput, change: _vm.onChange }
-      },
-      "input",
-      _vm.$attrs,
-      false
-    )
-  )
-};
+var __vue_render__$x = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',_vm._b({ref:"input",class:[
+        _vm.plaintext ? 'form-control-plaintext' : 'form-control',
+        _vm.plaintext ? 'w-100' : '',
+        _vm.size ? ("form-control-" + _vm.size) : null,
+        _vm.computedStateClass
+    ],attrs:{"id":_vm.computedID,"type":_vm.type,"name":_vm.name,"disabled":_vm.disabled,"required":_vm.required,"readonly":_vm.readonly || _vm.plaintext,"placeholder":_vm.placeholder,"autocomplete":_vm.autocomplete,"aria-required":_vm.required ? true : null,"aria-invalid":_vm.computedAriaInvalid},domProps:{"value":_vm.value},on:{"input":_vm.onInput,"change":_vm.onChange}},'input',_vm.$attrs,false))};
 var __vue_staticRenderFns__$x = [];
-__vue_render__$x._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$x = undefined;
@@ -10620,10 +10092,6 @@ __vue_render__$x._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/form-input/FormInput.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -10656,6 +10124,17 @@ __vue_render__$x._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -10854,71 +10333,13 @@ var script$y = {
             var __vue_script__$y = script$y;
             
 /* template */
-var __vue_render__$y = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "label",
-    {
-      class: [
-        "custom-control",
-        "custom-radio",
-        _vm.inline ? "custom-control-inline" : "",
-        _vm.computedStateClass
-      ]
-    },
-    [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.computedLocalChecked,
-            expression: "computedLocalChecked"
-          }
-        ],
-        ref: "check",
-        class: ["custom-control-input", _vm.computedStateClass],
-        attrs: {
-          type: "radio",
-          autocomplete: "off",
-          "aria-required": _vm.required ? "true" : null,
-          id: _vm.computedID,
-          name: _vm.name,
-          disabled: _vm.disabled,
-          required: _vm.name && _vm.required
-        },
-        domProps: {
-          value: _vm.value,
-          checked: _vm._q(_vm.computedLocalChecked, _vm.value)
-        },
-        on: {
-          change: [
-            function($event) {
-              _vm.computedLocalChecked = _vm.value;
-            },
-            _vm.handleChange
-          ]
-        }
-      }),
-      _vm._v(" "),
-      _c("label", {
-        staticClass: "custom-control-label",
-        attrs: { for: _vm.computedID, "aria-hidden": "true" }
-      }),
-      _vm._v(" "),
-      _c(
-        "span",
-        { class: ["custom-control-description"] },
-        [_vm._t("default")],
-        2
-      )
-    ]
-  )
-};
+var __vue_render__$y = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{class:[
+    'custom-control',
+    'custom-radio',
+    _vm.inline ? 'custom-control-inline' : '',
+    _vm.computedStateClass
+]},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.computedLocalChecked),expression:"computedLocalChecked"}],ref:"check",class:[ 'custom-control-input', _vm.computedStateClass ],attrs:{"type":"radio","autocomplete":"off","aria-required":_vm.required ? 'true' : null,"id":_vm.computedID,"name":_vm.name,"disabled":_vm.disabled,"required":_vm.name && _vm.required},domProps:{"value":_vm.value,"checked":_vm._q(_vm.computedLocalChecked,_vm.value)},on:{"change":[function($event){_vm.computedLocalChecked=_vm.value;},_vm.handleChange]}}),_vm._v(" "),_c('label',{staticClass:"custom-control-label",attrs:{"for":_vm.computedID,"aria-hidden":"true"}}),_vm._v(" "),_c('span',{class:['custom-control-description']},[_vm._t("default")],2)])};
 var __vue_staticRenderFns__$y = [];
-__vue_render__$y._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$y = undefined;
@@ -10935,10 +10356,6 @@ __vue_render__$y._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/form-radio/FormRadio.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -10971,6 +10388,17 @@ __vue_render__$y._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -11250,86 +10678,22 @@ var script$z = {
             var __vue_script__$z = script$z;
             
 /* template */
-var __vue_render__$z = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "select",
-    {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.localValue,
-          expression: "localValue"
-        }
-      ],
-      ref: "input",
-      class: [
-        "form-control",
+var __vue_render__$z = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('select',{directives:[{name:"model",rawName:"v-model",value:(_vm.localValue),expression:"localValue"}],ref:"input",class:[
+        'form-control',
         _vm.stateClass,
-        _vm.size ? "form-control-" + _vm.size : null,
-        !_vm.multiple && _vm.selectSize > 1 ? null : "custom-select"
-      ],
-      attrs: {
-        id: _vm.computedID,
-        name: _vm.name,
-        multiple: _vm.multiple || null,
-        size: _vm.multiple || _vm.selectSize > 1 ? _vm.selectSize : null,
-        disabled: _vm.disabled,
-        required: _vm.required,
-        "aria-required": _vm.required ? true : null,
-        "aria-invalid": _vm.computedAriaInvalid
-      },
-      on: {
-        change: [
-          function($event) {
-            var $$selectedVal = Array.prototype.filter
-              .call($event.target.options, function(o) {
-                return o.selected
-              })
-              .map(function(o) {
-                var val = "_value" in o ? o._value : o.value;
-                return val
-              });
-            _vm.localValue = $event.target.multiple
-              ? $$selectedVal
-              : $$selectedVal[0];
-          },
-          _vm.handleChange
-        ]
-      }
-    },
-    [
-      _vm._l(_vm.formOptions, function(option, idx) {
-        return _c(
-          "option",
-          {
-            key: "dr-opt-" + idx,
-            attrs: { disabled: Boolean(option.disabled) },
-            domProps: { value: option.value }
-          },
-          [_vm._v("\n            " + _vm._s(option.text) + "\n    ")]
-        )
-      }),
-      _vm._v(" "),
-      _vm._t("default")
-    ],
-    2
-  )
-};
+        _vm.size ? ("form-control-" + _vm.size) : null,
+        !_vm.multiple && _vm.selectSize > 1 ? null : 'custom-select'
+    ],attrs:{"id":_vm.computedID,"name":_vm.name,"multiple":_vm.multiple || null,"size":(_vm.multiple || _vm.selectSize > 1) ? _vm.selectSize : null,"disabled":_vm.disabled,"required":_vm.required,"aria-required":_vm.required ? true : null,"aria-invalid":_vm.computedAriaInvalid},on:{"change":[function($event){var $$selectedVal = Array.prototype.filter.call($event.target.options,function(o){return o.selected}).map(function(o){var val = "_value" in o ? o._value : o.value;return val}); _vm.localValue=$event.target.multiple ? $$selectedVal : $$selectedVal[0];},_vm.handleChange]}},[_vm._l((_vm.formOptions),function(option,idx){return _c('option',{key:("dr-opt-" + idx),attrs:{"disabled":Boolean(option.disabled)},domProps:{"value":option.value}},[_vm._v("\n            "+_vm._s(option.text)+"\n    ")])}),_vm._v(" "),_vm._t("default")],2)};
 var __vue_staticRenderFns__$z = [];
-__vue_render__$z._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$z = function (inject) {
     if (!inject) { return }
-    inject("data-v-7666fa81_0", { source: "\n.custom-select[data-v-7666fa81] {\n    -webkit-appearance: none;\n    -moz-appearance: none;\n    appearance: none;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/form-select/FormSelect.vue"],"names":[],"mappings":";AAgPA;IACA,yBAAA;IACA,sBAAA;IACA,iBAAA;CACA","file":"FormSelect.vue","sourcesContent":["<template>\n    <select ref=\"input\"\n        :class=\"[\n            'form-control',\n            stateClass,\n            size ? `form-control-${size}` : null,\n            !multiple && selectSize > 1 ? null : 'custom-select'\n        ]\"\n        v-model=\"localValue\"\n        :id=\"computedID\"\n        :name=\"name\"\n        :multiple=\"multiple || null\"\n        :size=\"(multiple || selectSize > 1) ? selectSize : null\"\n        :disabled=\"disabled\"\n        :required=\"required\"\n        :aria-required=\"required ? true : null\"\n        :aria-invalid=\"computedAriaInvalid\"\n        @change=\"handleChange\" >\n        <option v-for=\"(option, idx) in formOptions\"\n            :key=\"`dr-opt-${idx}`\"\n            :value=\"option.value\"\n            :disabled=\"Boolean(option.disabled)\">\n                {{ option.text }}\n        </option>\n        <slot />\n    </select>\n</template>\n\n<script>\nimport { guid } from '../../utils'\n\nexport default {\n    name: 'd-form-select',\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The element name.\n         */\n        name: {\n            type: String\n        },\n        /**\n         * The select options.\n         */\n        options: {\n            type: [Array, Object],\n            default() {\n                return []\n            }\n        },\n        /**\n         * The select value.\n         */\n        value: {},\n        /**\n         * Whether it should allow multiple selections, or not.\n         */\n        multiple: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * How many options should be visible.\n         */\n        selectSize: {\n            type: Number,\n            default: 0\n        },\n        /**\n         * Controls the `aria-invalid` attribute.\n         */\n        ariaInvalid: {\n            type: [Boolean, String],\n            default: false\n        },\n        /**\n         * The value field.\n         */\n        valueField: {\n            type: String,\n            default: 'value'\n        },\n        /**\n         * The disabled field.\n         */\n        disabledField: {\n            type: String,\n            default: 'disabled'\n        },\n        /**\n         * The text field.\n         */\n        textField: {\n            type: String,\n            default: 'text'\n        },\n        /**\n         * The disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The required state.\n         */\n        required: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The validity state (invalid, valid, true, false).\n         */\n        state: {\n            type: [Boolean, String],\n            default: null,\n            validator: v => ['valid', 'invalid', true, false, null].includes(v)\n        },\n        /**\n         * The form control size (sm, lg).\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: v => ['sm', 'lg', null].includes(v)\n        }\n    },\n    data() {\n        return {\n            localValue: this.value\n        }\n    },\n    watch: {\n        value(newVal) {\n            this.localValue = newVal\n        },\n\n        localValue() {\n            this.$emit('input', this.localValue)\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `dr-select-${guid()}`\n        },\n\n        computedState() {\n            if (this.state === true || this.state === 'valid') {\n                return true\n            }\n\n            if (this.state === false || this.state === 'invalid') {\n                return false\n            }\n\n            return null\n        },\n\n        stateClass() {\n            if (this.computedState === true) {\n                return 'is-valid'\n            } else if (this.computedState === false) {\n                return 'is-invalid'\n            }\n\n            return null\n        },\n\n        computedAriaInvalid() {\n            if (this.ariaInvalid === true || this.ariaInvalid === 'true') {\n                return 'true';\n            }\n\n            return this.stateClass == 'is-invalid' ? 'true' : null;\n        },\n\n        formOptions() {\n            let options = this.options || {}\n            const valueField = this.valueField || 'value'\n            const textField = this.textField || 'text'\n            const disabledField = this.disabledField || 'disabled'\n\n            // Parse array options\n            if (Array.isArray(options)) {\n                return options.map(option => {\n                    if (typeof option === 'object') {\n                        return {\n                            value: option[valueField],\n                            text: String(option[textField]),\n                            disabled: option[disabledField] || false\n                        }\n                    }\n\n                    return { text: String(option), value: option, disabled: false }\n                })\n\n            // Parse object options\n            } else if (typeof options === 'object') {\n                return Object.keys(options).map(key => {\n                    let option = options[key] || {}\n\n                    if (typeof option === 'object') {\n                        const value = option[valueField]\n                        const text = option[textField]\n\n                        return {\n                            text: typeof text === 'undefined' ? key : String(text),\n                            value: typeof value === 'undefined' ? key : value,\n                            disabled: option[disabledField] || false\n                        }\n                    }\n\n                    return { text: String(option), value: key, disabled: false }\n                })\n            }\n\n            return []\n        }\n    },\n    methods: {\n        handleChange(evt) {\n            const target = evt.target;\n            const selectedVal = Array.from(target.options)\n                                    .filter(opt => opt.selected)\n                                    .map(opt => '_value' in opt ? opt._value : opt.value)\n\n            this.localValue = target.multiple ? selectedVal : selectedVal[0];\n            this.$emit('change', this.localValue);\n        }\n    }\n}\n</script>\n\n<style scoped>\n    .custom-select {\n        -webkit-appearance: none;\n        -moz-appearance: none;\n        appearance: none;\n    }\n</style>\n"]}, media: undefined });
+    inject("data-v-6ad5ed73_0", { source: ".custom-select[data-v-6ad5ed73]{-webkit-appearance:none;-moz-appearance:none;appearance:none}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$z = "data-v-7666fa81";
+  var __vue_scope_id__$z = "data-v-6ad5ed73";
   /* module identifier */
   var __vue_module_identifier__$z = undefined;
   /* functional template */
@@ -11341,10 +10705,6 @@ __vue_render__$z._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/form-select/FormSelect.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -11401,6 +10761,17 @@ __vue_render__$z._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -11695,37 +11066,13 @@ var script$A = {
             var __vue_script__$A = script$A;
             
 /* template */
-var __vue_render__$A = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c("textarea", {
-    ref: "input",
-    class: [
-      _vm.plaintext ? "form-control-plaintext" : "form-control",
-      _vm.plaintext ? "w-100" : "",
-      _vm.size ? "form-control-" + this.size : null,
-      _vm.stateClass
-    ],
-    style: _vm.computedStyle,
-    attrs: {
-      name: _vm.name,
-      id: _vm.computedID,
-      disabled: _vm.disabled,
-      required: _vm.required,
-      placeholder: _vm.placeholder,
-      autocomplete: _vm.autocomplete,
-      readonly: _vm.readonly || _vm.plaintext,
-      rows: _vm.rows,
-      wrap: _vm.wrap,
-      "aria-required": _vm.required ? "true" : null,
-      "aria-invalid": _vm.computedAriaInvalid
-    },
-    on: { input: _vm.handleInput }
-  })
-};
+var __vue_render__$A = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('textarea',{ref:"input",class:[
+          _vm.plaintext ? 'form-control-plaintext' : 'form-control',
+          _vm.plaintext ? 'w-100' : '',
+          _vm.size ? ("form-control-" + (this.size)) : null,
+          _vm.stateClass
+      ],style:(_vm.computedStyle),attrs:{"name":_vm.name,"id":_vm.computedID,"disabled":_vm.disabled,"required":_vm.required,"placeholder":_vm.placeholder,"autocomplete":_vm.autocomplete,"readonly":_vm.readonly || _vm.plaintext,"rows":_vm.rows,"wrap":_vm.wrap,"aria-required":_vm.required ? 'true' : null,"aria-invalid":_vm.computedAriaInvalid},on:{"input":_vm.handleInput}})};
 var __vue_staticRenderFns__$A = [];
-__vue_render__$A._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$A = undefined;
@@ -11742,10 +11089,6 @@ __vue_render__$A._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/form-textarea/FormTextarea.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -11778,6 +11121,17 @@ __vue_render__$A._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -11969,29 +11323,14 @@ var script$B = {
             var __vue_script__$B = script$B;
             
 /* template */
-var __vue_render__$B = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c("img", {
-    class: [
-      _vm.thumbnail ? "img-thumbnail" : "",
-      _vm.fluid || _vm.fluidGrow ? "img-fluid" : "",
-      _vm.fluidGrow ? "w-100" : "",
-      _vm.rounded ? "rounded" : "",
-      _vm.center ? "d-block" : "",
-      Boolean(_vm.computedAlign) ? _vm.computedAlign : ""
-    ],
-    attrs: {
-      src: _vm.src,
-      alt: _vm.alt,
-      width: _vm.computedWidth,
-      height: _vm.computedHeight
-    }
-  })
-};
+var __vue_render__$B = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('img',{class:[
+        _vm.thumbnail ? 'img-thumbnail' : '',
+        _vm.fluid || _vm.fluidGrow ? 'img-fluid' : '',
+        _vm.fluidGrow ? 'w-100' : '',
+        _vm.rounded ? 'rounded' : '',
+        _vm.center ? 'd-block' : '',
+        Boolean(_vm.computedAlign) ? _vm.computedAlign : '' ],attrs:{"src":_vm.src,"alt":_vm.alt,"width":_vm.computedWidth,"height":_vm.computedHeight}})};
 var __vue_staticRenderFns__$B = [];
-__vue_render__$B._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$B = undefined;
@@ -12008,10 +11347,6 @@ __vue_render__$B._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/image/Image.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -12044,6 +11379,17 @@ __vue_render__$B._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -12134,19 +11480,8 @@ var script$C = {
             var __vue_script__$C = script$C;
             
 /* template */
-var __vue_render__$C = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    { tag: "component", staticClass: "input-group-text" },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$C = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",staticClass:"input-group-text"},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$C = [];
-__vue_render__$C._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$C = undefined;
@@ -12163,10 +11498,6 @@ __vue_render__$C._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/input-group/InputGroupText.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -12199,6 +11530,17 @@ __vue_render__$C._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -12302,27 +11644,8 @@ var script$D = {
             var __vue_script__$D = script$D;
             
 /* template */
-var __vue_render__$D = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: ["input-group-" + (_vm.append ? "append" : "prepend")],
-      attrs: { id: _vm.id }
-    },
-    [
-      _vm.isText ? _c("InputGroupText", [_vm._t("default")], 2) : _vm._e(),
-      _vm._v(" "),
-      !_vm.isText ? _vm._t("default") : _vm._e()
-    ],
-    2
-  )
-};
+var __vue_render__$D = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[ ("input-group-" + (_vm.append ? 'append' : 'prepend')) ],attrs:{"id":_vm.id}},[(_vm.isText)?_c('InputGroupText',[_vm._t("default")],2):_vm._e(),_vm._v(" "),(!_vm.isText)?_vm._t("default"):_vm._e()],2)};
 var __vue_staticRenderFns__$D = [];
-__vue_render__$D._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$D = undefined;
@@ -12339,10 +11662,6 @@ __vue_render__$D._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/input-group/InputGroupAddon.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -12375,6 +11694,17 @@ __vue_render__$D._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -12495,68 +11825,17 @@ var script$E = {
             var __vue_script__$E = script$E;
             
 /* template */
-var __vue_render__$E = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: [
-        "input-group",
-        this.size ? "input-group-" + this.size : "",
-        this.seamless ? "input-group-seamless" : ""
-      ],
-      attrs: { role: "group", id: _vm.id }
-    },
-    [
-      _vm.prependIsUsed
-        ? _c(
-            "InputGroupAddon",
-            { attrs: { prepend: Boolean(_vm.prepend || _vm.prependIsUsed) } },
-            [
-              Boolean(_vm.prepend)
-                ? _c("InputGroupText", {
-                    domProps: { innerHTML: _vm._s(_vm.prepend) }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._t("prepend")
-            ],
-            2
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm._t("default"),
-      _vm._v(" "),
-      _vm.appendIsUsed
-        ? _c(
-            "InputGroupAddon",
-            { attrs: { append: Boolean(_vm.append || _vm.appendIsUsed) } },
-            [
-              Boolean(_vm.append)
-                ? _c("InputGroupText", {
-                    domProps: { innerHTML: _vm._s(_vm.append) }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _vm._t("append")
-            ],
-            2
-          )
-        : _vm._e()
-    ],
-    2
-  )
-};
+var __vue_render__$E = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+        'input-group',
+        this.size ? ("input-group-" + (this.size)) : '',
+        this.seamless ? 'input-group-seamless' : ''
+    ],attrs:{"role":"group","id":_vm.id}},[(_vm.prependIsUsed)?_c('InputGroupAddon',{attrs:{"prepend":Boolean(_vm.prepend || _vm.prependIsUsed)}},[(Boolean(_vm.prepend))?_c('InputGroupText',{domProps:{"innerHTML":_vm._s(_vm.prepend)}}):_vm._e(),_vm._v(" "),_vm._t("prepend")],2):_vm._e(),_vm._v(" "),_vm._t("default"),_vm._v(" "),(_vm.appendIsUsed)?_c('InputGroupAddon',{attrs:{"append":Boolean(_vm.append || _vm.appendIsUsed)}},[(Boolean(_vm.append))?_c('InputGroupText',{domProps:{"innerHTML":_vm._s(_vm.append)}}):_vm._e(),_vm._v(" "),_vm._t("append")],2):_vm._e()],2)};
 var __vue_staticRenderFns__$E = [];
-__vue_render__$E._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$E = function (inject) {
     if (!inject) { return }
-    inject("data-v-7b663d44_0", { source: "\n.input-group input:focus {\n    position: relative;\n    z-index: 3;\n}\n\n/* Adjust dropdowns inside input groups. */\n.input-group > .input-group-prepend > .d-dropdown > .btn {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n.input-group > .input-group-append > .d-dropdown > .btn {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n\n/* Datepickers */\n.vdp-datepicker:not(:last-child) input {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n.vdp-datepicker:not(:first-child) input {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n.vdp-datepicker + .vdp-datepicker {\n    margin-left: -1px;\n}\n.input-group-sm .vdp-datepicker input {\n    height: 1.9375rem;\n    font-size: 0.875rem;\n    line-height: 1.5;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/input-group/InputGroup.vue"],"names":[],"mappings":";AAwFA;IACA,mBAAA;IACA,WAAA;CACA;;AAEA,2CAAA;AACA;IACA,2BAAA;IACA,8BAAA;CACA;AAEA;IACA,0BAAA;IACA,6BAAA;CACA;;AAEA,iBAAA;AACA;IACA,2BAAA;IACA,8BAAA;CACA;AAEA;IACA,0BAAA;IACA,6BAAA;CACA;AAEA;IACA,kBAAA;CACA;AAEA;IACA,kBAAA;IACA,oBAAA;IACA,iBAAA;CACA","file":"InputGroup.vue","sourcesContent":["<template>\n    <component :is=\"tag\"\n        role=\"group\"\n        :id=\"id\"\n        :class=\"[\n            'input-group',\n            this.size ? `input-group-${this.size}` : '',\n            this.seamless ? 'input-group-seamless' : ''\n        ]\">\n        <InputGroupAddon v-if=\"prependIsUsed\" :prepend=\"Boolean(prepend || prependIsUsed)\">\n            <InputGroupText v-if=\"Boolean(prepend)\" v-html=\"prepend\"  />\n            <slot name=\"prepend\" />\n        </InputGroupAddon>\n        <slot />\n        <InputGroupAddon v-if=\"appendIsUsed\" :append=\"Boolean(append || appendIsUsed)\">\n            <InputGroupText v-if=\"Boolean(append)\" v-html=\"append\" />\n            <slot name=\"append\" />\n        </InputGroupAddon>\n    </component>\n</template>\n\n<script>\nimport InputGroupAddon from './InputGroupAddon.vue'\nimport InputGroupText from './InputGroupText.vue'\n\nexport default {\n    name: 'd-input-group',\n    components: {\n        InputGroupAddon,\n        InputGroupText\n    },\n    props: {\n        /**\n         * The element id.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The input group size.\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: v => ['sm', 'lg', null].includes(v)\n        },\n        /**\n         * The prepend value.\n         */\n        prepend: {\n            type: String,\n            default: null\n        },\n        /**\n         * The append value.\n         */\n        append: {\n            type: String,\n            default: null\n        },\n        /**\n         * Whether it should be seamless, or not.\n         */\n        seamless: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The element tag.\n         */\n        tag: {\n            type: String,\n            default: 'div'\n        }\n    },\n    computed: {\n        appendIsUsed() {\n            return !!this.$slots['append'] || this.append\n        },\n        prependIsUsed() {\n            return !!this.$slots['prepend'] || this.prepend\n        }\n    }\n}\n</script>\n\n<style>\n.input-group input:focus {\n    position: relative;\n    z-index: 3;\n}\n\n/* Adjust dropdowns inside input groups. */\n.input-group > .input-group-prepend > .d-dropdown > .btn {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n\n.input-group > .input-group-append > .d-dropdown > .btn {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n\n/* Datepickers */\n.vdp-datepicker:not(:last-child) input {\n    border-top-right-radius: 0;\n    border-bottom-right-radius: 0;\n}\n\n.vdp-datepicker:not(:first-child) input {\n    border-top-left-radius: 0;\n    border-bottom-left-radius: 0;\n}\n\n.vdp-datepicker + .vdp-datepicker {\n    margin-left: -1px;\n}\n\n.input-group-sm .vdp-datepicker input {\n    height: 1.9375rem;\n    font-size: 0.875rem;\n    line-height: 1.5;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-2151d2bb_0", { source: ".input-group input:focus{position:relative;z-index:3}.input-group>.input-group-prepend>.d-dropdown>.btn{border-top-right-radius:0;border-bottom-right-radius:0}.input-group>.input-group-append>.d-dropdown>.btn{border-top-left-radius:0;border-bottom-left-radius:0}.vdp-datepicker:not(:last-child) input{border-top-right-radius:0;border-bottom-right-radius:0}.vdp-datepicker:not(:first-child) input{border-top-left-radius:0;border-bottom-left-radius:0}.vdp-datepicker+.vdp-datepicker{margin-left:-1px}.input-group-sm .vdp-datepicker input{height:1.9375rem;font-size:.875rem;line-height:1.5}", map: undefined, media: undefined });
 
   };
   /* scoped */
@@ -12572,10 +11851,6 @@ __vue_render__$E._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/input-group/InputGroup.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -12632,6 +11907,17 @@ __vue_render__$E._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -12745,22 +12031,11 @@ var script$F = {
             var __vue_script__$F = script$F;
             
 /* template */
-var __vue_render__$F = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: ["list-group", _vm.flush ? "list-group-flush" : ""]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$F = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+    'list-group',
+    _vm.flush ? 'list-group-flush' : ''
+]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$F = [];
-__vue_render__$F._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$F = undefined;
@@ -12777,10 +12052,6 @@ __vue_render__$F._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/list-group/ListGroup.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -12813,6 +12084,17 @@ __vue_render__$F._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -12940,29 +12222,14 @@ var script$G = {
             var __vue_script__$G = script$G;
             
 /* template */
-var __vue_render__$G = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.computedTag,
-    {
-      tag: "component",
-      class: [
-        "list-group-item",
-        _vm.theme ? "list-group-item-" + _vm.theme : "",
-        _vm.isAction ? "list-group-item-action" : "",
-        _vm.active ? "active" : "",
-        _vm.disabled ? "disabled" : ""
-      ],
-      attrs: { disabled: _vm.button && _vm.disabled }
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$G = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.computedTag,{tag:"component",class:[
+        'list-group-item',
+        _vm.theme ? ("list-group-item-" + _vm.theme) : '',
+        _vm.isAction ? 'list-group-item-action': '',
+        _vm.active ? 'active' : '',
+        _vm.disabled ? 'disabled' : ''
+    ],attrs:{"disabled":_vm.button && _vm.disabled}},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$G = [];
-__vue_render__$G._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$G = undefined;
@@ -12979,10 +12246,6 @@ __vue_render__$G._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/list-group/ListGroupItem.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -13015,6 +12278,17 @@ __vue_render__$G._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -13144,65 +12418,23 @@ var script$H = {
             var __vue_script__$H = script$H;
             
 /* template */
-var __vue_render__$H = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "transition",
-    { attrs: { name: "fade" } },
-    [
-      _c(
-        _vm.tag,
-        {
-          tag: "component",
-          class: ["modal", this.noBackdrop ? "modal--no-backdrop" : ""]
-        },
-        [
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "on-clickaway",
-                  rawName: "v-on-clickaway",
-                  value: _vm.away,
-                  expression: "away"
-                }
-              ],
-              class: [
-                "modal-dialog",
-                _vm.size ? "modal-" + _vm.size : "",
-                _vm.centered ? "modal-dialog-centered" : ""
-              ],
-              attrs: { role: "document" }
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "modal-content" },
-                [_vm._t("default")],
-                2
-              )
-            ]
-          )
-        ]
-      )
-    ],
-    1
-  )
-};
+var __vue_render__$H = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":"fade"}},[_c(_vm.tag,{tag:"component",class:[
+          'modal',
+          this.noBackdrop ? 'modal--no-backdrop' : ''
+      ]},[_c('div',{directives:[{name:"on-clickaway",rawName:"v-on-clickaway",value:(_vm.away),expression:"away"}],class:[
+          'modal-dialog',
+          _vm.size ? ("modal-" + _vm.size) : '',
+          _vm.centered ? "modal-dialog-centered" : '' ],attrs:{"role":"document"}},[_c('div',{staticClass:"modal-content"},[_vm._t("default")],2)])])],1)};
 var __vue_staticRenderFns__$H = [];
-__vue_render__$H._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$H = function (inject) {
     if (!inject) { return }
-    inject("data-v-37df0aa6_0", { source: "\n.modal[data-v-37df0aa6] {\n    display: block;\n    background-color: rgba(0,0,0,0.5);\n    transition: .3s;\n    overflow-y: auto;\n}\n.modal-dialog[data-v-37df0aa6] {\n    transition: .3s;\n}\n.modal--no-backdrop[data-v-37df0aa6] {\n    background: none;\n    pointer-events: none;\n}\n.fade-enter[data-v-37df0aa6] {\n    transform: translate(0,0);\n    opacity: 1;\n}\n.fade-leave-active[data-v-37df0aa6] {\n    transform: translate(0,0);\n    opacity: 1;\n}\n.fade-enter[data-v-37df0aa6], .fade-leave-active[data-v-37df0aa6] {\n    opacity: 0;\n}\n.fade-enter .modal-dialog[data-v-37df0aa6],\n.fade-leave-active .modal-dialog[data-v-37df0aa6] {\n    -webkit-transform: translate(0,-25%);\n    transform: translate(0,-25%);\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/modal/Modal.vue"],"names":[],"mappings":";AAqFA;IACA,eAAA;IACA,kCAAA;IACA,gBAAA;IACA,iBAAA;CACA;AAEA;IACA,gBAAA;CACA;AAEA;IACA,iBAAA;IACA,qBAAA;CACA;AAEA;IACA,0BAAA;IACA,WAAA;CACA;AAEA;IACA,0BAAA;IACA,WAAA;CACA;AAEA;IACA,WAAA;CACA;AAEA;;IAEA,qCAAA;IACA,6BAAA;CACA","file":"Modal.vue","sourcesContent":["<template>\n  <transition name=\"fade\">\n    <component :is=\"tag\"\n        :class=\"[\n            'modal',\n            this.noBackdrop ? 'modal--no-backdrop' : ''\n        ]\">\n      <div :class=\"[\n            'modal-dialog',\n            size ? `modal-${size}` : '',\n            centered ? `modal-dialog-centered` : '',\n        ]\"\n        role=\"document\"\n        v-on-clickaway=\"away\">\n        <div class=\"modal-content\">\n            <slot />\n        </div>\n      </div>\n    </component>\n  </transition>\n</template>\n\n<script>\nimport { mixin as clickAwayMixin } from 'vue-clickaway';\nimport { MODAL_EVENTS } from '../../utils/constants';\n\nexport default {\n    name: 'd-modal',\n    mixins: [clickAwayMixin],\n    props: {\n        /**\n         * The component tag.\n         */\n        tag: {\n            type: String,\n            default: \"div\"\n        },\n        /**\n         * The size (sm, lg).\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: v => ['sm', 'lg'].includes(v)\n        },\n        /**\n         * Hides the backdrop overlay.\n         */\n        noBackdrop: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether it is centered, or not.\n         */\n        centered: {\n            type: Boolean,\n            default: false\n        }\n    },\n  methods: {\n    away() {\n        if (this.noBackdrop) {\n            return;\n        }\n\n        /**\n         * @event close\n         *\n         * Triggered when the modal is closed.\n         */\n        this.$emit('close');\n\n        /**\n         * @event hidden\n         *\n         * Triggered when the modal is hidden.\n         */\n        this.$root.$emit(MODAL_EVENTS.HIDDEN)\n    }\n  },\n};\n</script>\n\n<style scoped>\n.modal {\n    display: block;\n    background-color: rgba(0,0,0,0.5);\n    transition: .3s;\n    overflow-y: auto;\n}\n\n.modal-dialog {\n    transition: .3s;\n}\n\n.modal--no-backdrop {\n    background: none;\n    pointer-events: none;\n}\n\n.fade-enter {\n    transform: translate(0,0);\n    opacity: 1;\n}\n\n.fade-leave-active {\n    transform: translate(0,0);\n    opacity: 1;\n}\n\n.fade-enter, .fade-leave-active {\n    opacity: 0;\n}\n\n.fade-enter .modal-dialog,\n.fade-leave-active .modal-dialog {\n    -webkit-transform: translate(0,-25%);\n    transform: translate(0,-25%);\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-762013a7_0", { source: ".modal[data-v-762013a7]{display:block;background-color:rgba(0,0,0,.5);transition:.3s;overflow-y:auto}.modal-dialog[data-v-762013a7]{transition:.3s}.modal--no-backdrop[data-v-762013a7]{background:0 0;pointer-events:none}.fade-enter[data-v-762013a7]{transform:translate(0,0);opacity:1}.fade-leave-active[data-v-762013a7]{transform:translate(0,0);opacity:1}.fade-enter[data-v-762013a7],.fade-leave-active[data-v-762013a7]{opacity:0}.fade-enter .modal-dialog[data-v-762013a7],.fade-leave-active .modal-dialog[data-v-762013a7]{-webkit-transform:translate(0,-25%);transform:translate(0,-25%)}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$H = "data-v-37df0aa6";
+  var __vue_scope_id__$H = "data-v-762013a7";
   /* module identifier */
   var __vue_module_identifier__$H = undefined;
   /* functional template */
@@ -13214,10 +12446,6 @@ __vue_render__$H._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/modal/Modal.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -13274,6 +12502,17 @@ __vue_render__$H._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -13361,32 +12600,8 @@ var script$I = {
             var __vue_script__$I = script$I;
             
 /* template */
-var __vue_render__$I = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    { tag: "component", staticClass: "modal-header" },
-    [
-      _vm._t("default"),
-      _vm._v(" "),
-      _vm.close
-        ? _c("d-btn-close", {
-            on: {
-              click: function($event) {
-                $event.preventDefault();
-                return _vm.away($event)
-              }
-            }
-          })
-        : _vm._e()
-    ],
-    2
-  )
-};
+var __vue_render__$I = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",staticClass:"modal-header"},[_vm._t("default"),_vm._v(" "),(_vm.close)?_c('d-btn-close',{on:{"click":function($event){$event.preventDefault();return _vm.away($event)}}}):_vm._e()],2)};
 var __vue_staticRenderFns__$I = [];
-__vue_render__$I._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$I = undefined;
@@ -13403,10 +12618,6 @@ __vue_render__$I._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/modal/ModalHeader.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -13439,6 +12650,17 @@ __vue_render__$I._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -13516,19 +12738,8 @@ var script$J = {
             var __vue_script__$J = script$J;
             
 /* template */
-var __vue_render__$J = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    { tag: "component", staticClass: "modal-title" },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$J = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",staticClass:"modal-title"},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$J = [];
-__vue_render__$J._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$J = undefined;
@@ -13545,10 +12756,6 @@ __vue_render__$J._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/modal/ModalTitle.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -13581,6 +12788,17 @@ __vue_render__$J._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -13658,19 +12876,8 @@ var script$K = {
             var __vue_script__$K = script$K;
             
 /* template */
-var __vue_render__$K = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    { tag: "component", staticClass: "modal-body" },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$K = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",staticClass:"modal-body"},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$K = [];
-__vue_render__$K._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$K = undefined;
@@ -13687,10 +12894,6 @@ __vue_render__$K._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/modal/ModalBody.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -13723,6 +12926,17 @@ __vue_render__$K._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -13800,19 +13014,8 @@ var script$L = {
             var __vue_script__$L = script$L;
             
 /* template */
-var __vue_render__$L = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    { tag: "component", staticClass: "modal-footer" },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$L = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",staticClass:"modal-footer"},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$L = [];
-__vue_render__$L._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$L = undefined;
@@ -13829,10 +13032,6 @@ __vue_render__$L._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/modal/ModalFooter.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -13865,6 +13064,17 @@ __vue_render__$L._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -14000,29 +13210,15 @@ var script$M = {
             var __vue_script__$M = script$M;
             
 /* template */
-var __vue_render__$M = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: [
-        "nav",
-        _vm.tabs ? "nav-tabs" : "",
-        _vm.pills ? "nav-pills" : "",
-        _vm.vertical ? "flex-column" : "",
-        _vm.fill ? "nav-fill" : "",
-        _vm.justified ? "nav-justified" : ""
-      ]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$M = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+    'nav',
+    _vm.tabs ? 'nav-tabs' : '',
+    _vm.pills ? 'nav-pills' : '',
+    _vm.vertical ? 'flex-column' : '',
+    _vm.fill ? 'nav-fill' : '',
+    _vm.justified ? 'nav-justified' : ''
+]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$M = [];
-__vue_render__$M._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$M = undefined;
@@ -14039,10 +13235,6 @@ __vue_render__$M._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/nav/Nav.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -14075,6 +13267,17 @@ __vue_render__$M._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -14145,26 +13348,8 @@ var script$N = {
             var __vue_script__$N = script$N;
             
 /* template */
-var __vue_render__$N = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "li",
-    { staticClass: "nav-item" },
-    [
-      _c(
-        "d-link",
-        _vm._b({ staticClass: "nav-link" }, "d-link", _vm.$props, false),
-        [_vm._t("default")],
-        2
-      )
-    ],
-    1
-  )
-};
+var __vue_render__$N = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{staticClass:"nav-item"},[_c('d-link',_vm._b({staticClass:"nav-link"},'d-link',_vm.$props,false),[_vm._t("default")],2)],1)};
 var __vue_staticRenderFns__$N = [];
-__vue_render__$N._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$N = undefined;
@@ -14181,10 +13366,6 @@ __vue_render__$N._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/nav/NavItem.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -14217,6 +13398,17 @@ __vue_render__$N._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -14336,32 +13528,15 @@ var script$O = {
             var __vue_script__$O = script$O;
             
 /* template */
-var __vue_render__$O = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: [
-        "navbar",
-        _vm.type ? "navbar-" + _vm.type : "",
-        _vm.theme ? "bg-" + _vm.theme : "",
-        _vm.fixed ? "fixed-" + _vm.fixed : "",
-        _vm.sticky ? "sticky-top" : "",
-        _vm.toggleable
-          ? "navbar-expand-" +
-            ((_vm.toggleable ? "sm" : _vm.toggleable) || "sm")
-          : ""
-      ]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$O = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+    'navbar',
+    _vm.type ? ("navbar-" + _vm.type) : '',
+    _vm.theme ? ("bg-" + _vm.theme) : '',
+    _vm.fixed ? ("fixed-" + _vm.fixed) : '',
+    _vm.sticky ? 'sticky-top' : '',
+    _vm.toggleable ? ("navbar-expand-" + ((_vm.toggleable ? 'sm' : _vm.toggleable) || 'sm')) : ''
+]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$O = [];
-__vue_render__$O._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$O = undefined;
@@ -14378,10 +13553,6 @@ __vue_render__$O._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/navbar/Navbar.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -14414,6 +13585,17 @@ __vue_render__$O._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -14502,19 +13684,8 @@ var script$P = {
             var __vue_script__$P = script$P;
             
 /* template */
-var __vue_render__$P = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.computedTag,
-    _vm._b({ tag: "component" }, "component", _vm.computedProps, false),
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$P = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.computedTag,_vm._b({tag:"component"},'component',_vm.computedProps,false),[_vm._t("default")],2)};
 var __vue_staticRenderFns__$P = [];
-__vue_render__$P._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$P = undefined;
@@ -14531,10 +13702,6 @@ __vue_render__$P._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/navbar/NavbarBrand.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -14567,6 +13734,17 @@ __vue_render__$P._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -14662,26 +13840,12 @@ var script$Q = {
             var __vue_script__$Q = script$Q;
             
 /* template */
-var __vue_render__$Q = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: [
-        "navbar-nav",
-        _vm.fill ? "nav-fill" : "",
-        _vm.justified ? "nav-justified" : ""
-      ]
-    },
-    [_vm._t("default")],
-    2
-  )
-};
+var __vue_render__$Q = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:[
+    'navbar-nav',
+    _vm.fill ? 'nav-fill' : '',
+    _vm.justified ? 'nav-justified' : ''
+]},[_vm._t("default")],2)};
 var __vue_staticRenderFns__$Q = [];
-__vue_render__$Q._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$Q = undefined;
@@ -14698,10 +13862,6 @@ __vue_render__$Q._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/navbar/NavbarNav.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -14734,6 +13894,17 @@ __vue_render__$Q._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -14832,27 +14003,8 @@ var script$R = {
             var __vue_script__$R = script$R;
             
 /* template */
-var __vue_render__$R = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "button",
-    {
-      staticClass: "navbar-toggler",
-      attrs: {
-        "aria-label": _vm.label,
-        "aria-controls": _vm.target,
-        "aria-expanded": _vm.toggleState ? "true" : "false"
-      },
-      on: { click: _vm.onClick }
-    },
-    [_vm._t("default", [_c("span", { staticClass: "navbar-toggler-icon" })])],
-    2
-  )
-};
+var __vue_render__$R = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"navbar-toggler",attrs:{"aria-label":_vm.label,"aria-controls":_vm.target,"aria-expanded":_vm.toggleState ? 'true' : 'false'},on:{"click":_vm.onClick}},[_vm._t("default",[_c('span',{staticClass:"navbar-toggler-icon"})])],2)};
 var __vue_staticRenderFns__$R = [];
-__vue_render__$R._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$R = undefined;
@@ -14869,10 +14021,6 @@ __vue_render__$R._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/navbar/NavbarToggle.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -14905,6 +14053,17 @@ __vue_render__$R._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -16289,26 +15448,8 @@ var script$S = {
             var __vue_script__$S = script$S;
             
 /* template */
-var __vue_render__$S = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "div",
-    {
-      staticClass: "d-none",
-      staticStyle: { display: "none" },
-      attrs: { "aria-hidden": "true" }
-    },
-    [
-      _c("div", { ref: "title" }, [_vm._t("title")], 2),
-      _vm._v(" "),
-      _c("div", { ref: "content" }, [_vm._t("default")], 2)
-    ]
-  )
-};
+var __vue_render__$S = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"d-none",staticStyle:{"display":"none"},attrs:{"aria-hidden":"true"}},[_c('div',{ref:"title"},[_vm._t("title")],2),_vm._v(" "),_c('div',{ref:"content"},[_vm._t("default")],2)])};
 var __vue_staticRenderFns__$S = [];
-__vue_render__$S._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$S = undefined;
@@ -16325,10 +15466,6 @@ __vue_render__$S._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/popover/Popover.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -16361,6 +15498,17 @@ __vue_render__$S._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -16516,31 +15664,13 @@ var script$T = {
             var __vue_script__$T = script$T;
             
 /* template */
-var __vue_render__$T = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "div",
-    {
-      class: ["progress", _vm.size ? "progress-" + _vm.size : ""],
-      style: { height: _vm.height || null }
-    },
-    [
-      _vm._t("default", [
-        _c("d-progress-bar", _vm._b({}, "d-progress-bar", _vm.$props, false))
-      ])
-    ],
-    2
-  )
-};
+var __vue_render__$T = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:['progress', _vm.size ? ("progress-" + _vm.size) : ''],style:({ height: _vm.height || null })},[_vm._t("default",[_c('d-progress-bar',_vm._b({},'d-progress-bar',_vm.$props,false))])],2)};
 var __vue_staticRenderFns__$T = [];
-__vue_render__$T._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$T = function (inject) {
     if (!inject) { return }
-    inject("data-v-719823bb_0", { source: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Hide labels for small progress bars */\n.progress-sm span {\n    color: transparent;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/progress/Progress.vue"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;AAwFA,yCAAA;AACA;IACA,mBAAA;CACA","file":"Progress.vue","sourcesContent":["<template>\n    <div :class=\"['progress', size ? `progress-${size}` : '']\" :style=\"{ height: height || null }\">\n        <slot>\n            <d-progress-bar v-bind=\"$props\"/>\n        </slot>\n    </div>\n</template>\n\n<script>\nexport default {\n    name: 'd-progress',\n    props: {\n        /**\n         * Theme color.\n         */\n        theme: {\n            type: String,\n            default: 'primary'\n        },\n        /**\n         * Whether it should be striped, or not.\n         */\n        striped: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether it should be animated, or not.\n         */\n        animated: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Height value.\n         */\n        height: {\n            type: String,\n            default: null\n        },\n        /**\n         * Precision number of digits.\n         */\n        precision: {\n            type: Number,\n            default: 0\n        },\n        /**\n         * Whether to show progress, or not.\n         */\n        showProgress: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether to show the value, or not.\n         */\n        showValue: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The maximum value.\n         */\n        max: {\n            type: Number,\n            default: 100\n        },\n        /**\n         * The value.\n         */\n        value: {\n            type: Number,\n            default: 0\n        },\n        /**\n         * The size.\n         */\n        size: {\n            type: String,\n            default: null,\n            validator: (v) => ['sm', 'lg'].includes(v)\n        }\n    }\n}\n</script>\n\n<style>\n    /* Hide labels for small progress bars */\n    .progress-sm span {\n        color: transparent;\n    }\n</style>\n"]}, media: undefined });
+    inject("data-v-80e374e6_0", { source: ".progress-sm span{color:transparent}", map: undefined, media: undefined });
 
   };
   /* scoped */
@@ -16556,10 +15686,6 @@ __vue_render__$T._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/progress/Progress.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -16616,6 +15742,17 @@ __vue_render__$T._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -16790,64 +15927,22 @@ var script$U = {
             var __vue_script__$U = script$U;
             
 /* template */
-var __vue_render__$U = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "div",
-    {
-      class: [
-        "progress-bar",
-        _vm.computedTheme ? "bg-" + _vm.computedTheme : "",
-        _vm.computedStriped || _vm.computedAnimated
-          ? "progress-bar-striped"
-          : "",
-        _vm.computedAnimated ? "progress-bar-animated" : ""
-      ],
-      style: { width: 100 * (_vm.value / _vm.computedMax) + "%" },
-      attrs: {
-        role: "progressbar",
-        "aria-valuemin": 0,
-        "aria-valuemax": _vm.computedMax.toString(),
-        "aria-valuenow": _vm.value.toFixed(_vm.computedPrecision)
-      }
-    },
-    [
-      _vm._t("default", [
-        _vm.label
-          ? _c("span", { domProps: { innerHTML: _vm._s(_vm.label) } })
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.computedShowProgress
-          ? _c("span", [
-              _vm._v(
-                _vm._s(_vm.computedProgress.toFixed(_vm.computedPrecision))
-              )
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.computedShowValue
-          ? _c("span", [
-              _vm._v(_vm._s(_vm.value.toFixed(_vm.computedPrecision)))
-            ])
-          : _vm._e()
-      ])
-    ],
-    2
-  )
-};
+var __vue_render__$U = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:[
+    'progress-bar',
+    _vm.computedTheme ? ("bg-" + _vm.computedTheme) : '',
+    (_vm.computedStriped || _vm.computedAnimated) ? 'progress-bar-striped' : '',
+    _vm.computedAnimated ? 'progress-bar-animated' : ''
+],style:({ width: (100 * (_vm.value / _vm.computedMax)) + '%' }),attrs:{"role":"progressbar","aria-valuemin":0,"aria-valuemax":_vm.computedMax.toString(),"aria-valuenow":_vm.value.toFixed(_vm.computedPrecision)}},[_vm._t("default",[(_vm.label)?_c('span',{domProps:{"innerHTML":_vm._s(_vm.label)}}):_vm._e(),_vm._v(" "),(_vm.computedShowProgress)?_c('span',[_vm._v(_vm._s(_vm.computedProgress.toFixed(_vm.computedPrecision)))]):_vm._e(),_vm._v(" "),(_vm.computedShowValue)?_c('span',[_vm._v(_vm._s(_vm.value.toFixed(_vm.computedPrecision)))]):_vm._e()])],2)};
 var __vue_staticRenderFns__$U = [];
-__vue_render__$U._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$U = function (inject) {
     if (!inject) { return }
-    inject("data-v-c26047f0_0", { source: "\n.progress-bar[data-v-c26047f0] {\n    height: 100%;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/progress/ProgressBar.vue"],"names":[],"mappings":";AAuHA;IACA,aAAA;CACA","file":"ProgressBar.vue","sourcesContent":["<template>\n    <div :class=\"[\n        'progress-bar',\n        computedTheme ? `bg-${computedTheme}` : '',\n        (computedStriped || computedAnimated) ? 'progress-bar-striped' : '',\n        computedAnimated ? 'progress-bar-animated' : ''\n    ]\"\n    :style=\"{ width: (100 * (value / computedMax)) + '%' }\"\n    role=\"progressbar\"\n    :aria-valuemin=\"0\"\n    :aria-valuemax=\"computedMax.toString()\"\n    :aria-valuenow=\"value.toFixed(computedPrecision)\">\n        <slot>\n            <span v-if=\"label\" v-html=\"label\"></span>\n            <span v-if=\"computedShowProgress\">{{ computedProgress.toFixed(computedPrecision) }}</span>\n            <span v-if=\"computedShowValue\">{{ value.toFixed(computedPrecision) }}</span>\n        </slot>\n    </div>\n</template>\n\n<script>\nexport default {\n    name: 'd-progress-bar',\n    props: {\n        /**\n         * The value.\n         */\n        value: {\n            type: Number,\n            default: 0\n        },\n        /**\n         * The label.\n         */\n        label: {\n            type: String,\n            value: null\n        },\n        /**\n         * The max value.\n         */\n        max: {\n            type: Number,\n            default: null\n        },\n        /**\n         * Precision number of digits.\n         */\n        precision: {\n            type: Number,\n            default: null\n        },\n        /**\n         * Theme color.\n         */\n        theme: {\n            type: String,\n            default: null\n        },\n        /**\n         * Whether it should be striped, or not.\n         */\n        striped: {\n            type: Boolean,\n            default: null\n        },\n        /**\n         * Whether it should be animated, or not.\n         */\n        animated: {\n            type: Boolean,\n            default: null\n        },\n        /**\n         * Whether it should show the progress, or not.\n         */\n        showProgress: {\n            type: Boolean,\n            default: null\n        },\n        /**\n         * Whether it should show the value, or not.\n         */\n        showValue: {\n            type: Boolean,\n            default: null\n        }\n    },\n    computed: {\n        computedTheme() {\n            return this.theme || this.$parent.theme\n        },\n        computedStriped() {\n            return typeof this.striped === 'boolean' ? this.striped : (this.$parent.striped || false)\n        },\n        computedAnimated() {\n            return typeof this.animated === 'boolean' ? this.animated : (this.$parent.animated || false)\n        },\n        computedMax() {\n            return typeof this.max === 'number' ? this.max : (this.$parent.max || 100)\n        },\n        computedPrecision() {\n            return typeof this.precision === 'number' ? this.precision : (this.$parent.precision || 0)\n        },\n        computedShowProgress() {\n            return typeof this.showProgress === 'boolean' ? this.showProgress : (this.$parent.showProgress || false)\n        },\n        computedShowValue() {\n            return typeof this.showValue === 'boolean' ? this.showValue : (this.$parent.showValue || false)\n        },\n        computedProgress() {\n            const p = Math.pow(10, this.computedPrecision)\n            return Math.round((100 * p * this.value) / this.computedMax) / p\n        }\n    }\n}\n</script>\n\n<style scoped>\n.progress-bar {\n    height: 100%;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-75cbc55a_0", { source: ".progress-bar[data-v-75cbc55a]{height:100%}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$U = "data-v-c26047f0";
+  var __vue_scope_id__$U = "data-v-75cbc55a";
   /* module identifier */
   var __vue_module_identifier__$U = undefined;
   /* functional template */
@@ -16859,10 +15954,6 @@ __vue_render__$U._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/progress/ProgressBar.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -16919,6 +16010,17 @@ __vue_render__$U._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -17073,7 +16175,7 @@ var script$V = {
 
         noUiSlider.create(this.$el, config);
 
-        this.$el.noUiSlider.on('slide', function () {
+        this.$el.noUiSlider.on('update', function () {
             var value = this$1.$el.noUiSlider.get();
             if (value !== this$1.value) {
                 this$1.$emit('input', value);
@@ -17086,18 +16188,8 @@ var script$V = {
             var __vue_script__$V = script$V;
             
 /* template */
-var __vue_render__$V = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c("div", {
-    ref: "slider",
-    staticClass: "shards-custom-slider",
-    attrs: { id: _vm.computedID }
-  })
-};
+var __vue_render__$V = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"slider",staticClass:"shards-custom-slider",attrs:{"id":_vm.computedID}})};
 var __vue_staticRenderFns__$V = [];
-__vue_render__$V._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$V = undefined;
@@ -17114,10 +16206,6 @@ __vue_render__$V._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/slider/Slider.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -17150,6 +16238,17 @@ __vue_render__$V._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -17311,48 +16410,22 @@ var script$W = {
             var __vue_script__$W = script$W;
             
 /* template */
-var __vue_render__$W = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "li",
-    { class: ["nav-item", _vm.itemClass], attrs: { role: "presentation" } },
-    [
-      _c("a", {
-        class: [
-          "nav-link",
-          _vm.active ? "active" : "",
-          _vm.disabled ? "disabled" : "",
-          _vm.linkClass
-        ],
-        attrs: {
-          role: "tab",
-          tabindex: "-1",
-          id: _vm.computedID,
-          disabled: _vm.disabled,
-          "aria-selected": _vm.active ? "true" : "false",
-          "aria-setsize": _vm.setSize,
-          "aria-posinset": _vm.posInSet,
-          "aria-controls": _vm.controls
-        },
-        domProps: { innerHTML: _vm._s(_vm.content) },
-        on: { click: _vm.handleClick, keydown: _vm.handleClick }
-      })
-    ]
-  )
-};
+var __vue_render__$W = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:['nav-item', _vm.itemClass],attrs:{"role":"presentation"}},[_c('a',{class:[
+        'nav-link',
+        _vm.active ? 'active' : '',
+        _vm.disabled ? 'disabled' : '',
+        _vm.linkClass
+    ],attrs:{"role":"tab","tabindex":"-1","id":_vm.computedID,"disabled":_vm.disabled,"aria-selected":_vm.active ? 'true' : 'false',"aria-setsize":_vm.setSize,"aria-posinset":_vm.posInSet,"aria-controls":_vm.controls},domProps:{"innerHTML":_vm._s(_vm.content)},on:{"click":_vm.handleClick,"keydown":_vm.handleClick}})])};
 var __vue_staticRenderFns__$W = [];
-__vue_render__$W._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$W = function (inject) {
     if (!inject) { return }
-    inject("data-v-5166239b_0", { source: "\n.nav-link.active[data-v-5166239b] {\n    border-bottom: 1px solid transparent;\n}\n.nav-link[data-v-5166239b]:hover {\n    cursor: pointer;\n}\n.nav-link.disabled[data-v-5166239b]:hover {\n    cursor: not-allowed;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/tabs/_TabButton.vue"],"names":[],"mappings":";AAsHA;IACA,qCAAA;CACA;AAEA;IACA,gBAAA;CACA;AAEA;IACA,oBAAA;CACA","file":"_TabButton.vue","sourcesContent":["<template>\n    <li :class=\"['nav-item', itemClass]\" role=\"presentation\">\n        <a :class=\"[\n            'nav-link',\n            active ? 'active' : '',\n            disabled ? 'disabled' : '',\n            linkClass\n        ]\"\n        role=\"tab\"\n        tabindex=\"-1\"\n        :id=\"computedID\"\n        :disabled=\"disabled\"\n        :aria-selected=\"active ? 'true' : 'false'\"\n        :aria-setsize=\"setSize\"\n        :aria-posinset=\"posInSet\"\n        :aria-controls=\"controls\"\n        v-html=\"content\"\n        @click=\"handleClick\"\n        @keydown=\"handleClick\" />\n    </li>\n</template>\n\n<script>\nimport { guid } from '../../utils'\nimport { KEYCODES } from '../../utils/constants';\n\nexport default {\n    name: 'd-tab-button',\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The active state.\n         */\n        active: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The link class.\n         */\n        linkClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The item class.\n         */\n        itemClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The aria-setsize value.\n         */\n        setSize: {\n            type: Number,\n            default: 0,\n        },\n        /**\n         * The position in set value (aria-posinset).\n         */\n        posInSet: {\n            type: Number,\n            default: 0,\n        },\n        /**\n         * The aria-controls value.\n         */\n        controls: {\n            type: String,\n            default: null\n        },\n        /**\n         * The content.\n         */\n        content: {\n            type: String,\n            default: null\n        }\n    },\n    methods: {\n        handleClick(e) {\n            if (this.disabled) {\n                e.preventDefault()\n                e.stopPropagation()\n            }\n\n            if (e.type === 'click'\n                || e.keyCode === KEYCODES.ENTER\n                || e.keyCode === KEYCODES.SPACE) {\n                e.preventDefault()\n                e.stopPropagation()\n                this.$emit('click', e)\n            }\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `d-tab-btn-${guid()}`\n        }\n    }\n}\n</script>\n\n<style scoped>\n.nav-link.active {\n    border-bottom: 1px solid transparent;\n}\n\n.nav-link:hover {\n    cursor: pointer;\n}\n\n.nav-link.disabled:hover {\n    cursor: not-allowed;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-3ad2780c_0", { source: ".nav-link.active[data-v-3ad2780c]{border-bottom:1px solid transparent}.nav-link[data-v-3ad2780c]:hover{cursor:pointer}.nav-link.disabled[data-v-3ad2780c]:hover{cursor:not-allowed}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$W = "data-v-5166239b";
+  var __vue_scope_id__$W = "data-v-3ad2780c";
   /* module identifier */
   var __vue_module_identifier__$W = undefined;
   /* functional template */
@@ -17364,10 +16437,6 @@ __vue_render__$W._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/tabs/_TabButton.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -17424,6 +16493,17 @@ __vue_render__$W._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -17728,84 +16808,17 @@ var script$X = {
             var __vue_script__$X = script$X;
             
 /* template */
-var __vue_render__$X = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    _vm.tag,
-    {
-      tag: "component",
-      class: _vm.computedTabsClasses,
-      attrs: { id: _vm.computedID }
-    },
-    [
-      _c("div", { class: _vm.computedNavListWrapperClasses }, [
-        _c(
-          "ul",
-          {
-            class: _vm.computedNavListClasses,
-            attrs: {
-              role: "tablist",
-              tabindex: "0",
-              id: _vm.computedTabControlsID
-            },
-            on: { keydown: _vm.handleOnKeynav }
-          },
-          [
-            _vm._l(_vm.tabs, function(tab, index) {
-              return _c("d-tab-button", {
-                key: index,
-                attrs: {
-                  content: tab.headHtml || tab.title,
-                  href: tab.href,
-                  id: _vm.computedTabButtonID,
-                  active: tab.localActiveState,
-                  disabled: tab.disabled,
-                  setSize: _vm.tabs.length,
-                  posInSet: index + 1,
-                  controls: _vm._tabsContainerID,
-                  linkClass: tab.titleLinkClass,
-                  itemClass: tab.titleItemClass
-                },
-                on: {
-                  click: function($event) {
-                    _vm.setTab(index);
-                  }
-                }
-              })
-            }),
-            _vm._v(" "),
-            _vm._t("tabs")
-          ],
-          2
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          ref: "tabsContainer",
-          class: _vm.computedTabsContainerClasses,
-          attrs: { id: _vm._tabsContainerID }
-        },
-        [_vm._t("default")],
-        2
-      )
-    ]
-  )
-};
+var __vue_render__$X = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(_vm.tag,{tag:"component",class:_vm.computedTabsClasses,attrs:{"id":_vm.computedID}},[_c('div',{class:_vm.computedNavListWrapperClasses},[_c('ul',{class:_vm.computedNavListClasses,attrs:{"role":"tablist","tabindex":"0","id":_vm.computedTabControlsID},on:{"keydown":_vm.handleOnKeynav}},[_vm._l((_vm.tabs),function(tab,index){return _c('d-tab-button',{key:index,attrs:{"content":tab.headHtml || tab.title,"href":tab.href,"id":_vm.computedTabButtonID,"active":tab.localActiveState,"disabled":tab.disabled,"setSize":_vm.tabs.length,"posInSet":index + 1,"controls":_vm._tabsContainerID,"linkClass":tab.titleLinkClass,"itemClass":tab.titleItemClass},on:{"click":function($event){_vm.setTab(index);}}})}),_vm._v(" "),_vm._t("tabs")],2)]),_vm._v(" "),_c('div',{ref:"tabsContainer",class:_vm.computedTabsContainerClasses,attrs:{"id":_vm._tabsContainerID}},[_vm._t("default")],2)])};
 var __vue_staticRenderFns__$X = [];
-__vue_render__$X._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$X = function (inject) {
     if (!inject) { return }
-    inject("data-v-44a67609_0", { source: "\n.d-tabs-vertical-nav[data-v-44a67609]:hover {\n    background: rgba(90, 97, 105, 0.06);\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/tabs/Tabs.vue"],"names":[],"mappings":";AA8RA;IACA,oCAAA;CACA","file":"Tabs.vue","sourcesContent":["<template>\n    <component :is=\"tag\"\n        :id=\"computedID\"\n        :class=\"computedTabsClasses\">\n\n        <div :class=\"computedNavListWrapperClasses\">\n            <ul :class=\"computedNavListClasses\"\n            role=\"tablist\"\n            tabindex='0'\n            :id=\"computedTabControlsID\"\n            @keydown=\"handleOnKeynav\">\n                <d-tab-button v-for=\"(tab, index) in tabs\" :key=\"index\"\n                    :content=\"tab.headHtml || tab.title\"\n                    :href=\"tab.href\"\n                    :id=\"computedTabButtonID\"\n                    :active=\"tab.localActiveState\"\n                    :disabled=\"tab.disabled\"\n                    :setSize=\"tabs.length\"\n                    :posInSet=\"index + 1\"\n                    :controls=\"_tabsContainerID\"\n                    :linkClass=\"tab.titleLinkClass\"\n                    :itemClass=\"tab.titleItemClass\"\n                    @click=\"setTab(index)\" />\n                <slot name=\"tabs\" />\n            </ul>\n        </div>\n\n        <div ref=\"tabsContainer\"\n            :class=\"computedTabsContainerClasses\"\n            :id=\"_tabsContainerID\">\n            <slot />\n        </div>\n    </component>\n</template>\n\n<script>\nimport { guid } from '../../utils'\nimport { KEYCODES } from '../../utils/constants'\nimport dTabButton from './_TabButton.vue'\n\nexport default {\n    name: 'd-tabs',\n    components: {\n        dTabButton\n    },\n    data() {\n        return {\n            currentTab: this.value,\n            tabs: [],\n            // eslint-disable-next-line\n            _tabsContainerID: null\n        }\n    },\n    watch: {\n        currentTab (newVal, oldVal) {\n            if (newVal === oldVal) {\n                return\n            }\n\n            this.$emit('input', newVal)\n            this.tabs[newVal].$emit('click')\n        },\n        value (newVal, oldVal) {\n            if (newVal === oldVal) {\n                return\n            }\n\n            if (typeof oldVal !== 'number') {\n                oldVal = 0\n            }\n\n            const direction = newVal < oldVal ? -1 : 1\n            this.setTab(newVal, false, direction)\n        }\n    },\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The element tag.\n         */\n        tag: {\n            type: String,\n            default: 'div'\n        },\n        /**\n         * Whether it should be displayed as a card, or not.\n         */\n        card: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The value used to set the current tab.\n         */\n        value: {\n            type: Number,\n            default: null\n        },\n        /**\n         * Whether the tab controls should be displayed as pills, or not.\n         */\n        pills: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether the tab controls should be displayed vertically, or not.\n         */\n        vertical: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The content class.\n         */\n        contentClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The nav class.\n         */\n        navClass: {\n            type: String,\n            default: null\n        },\n        /**\n         * The nav wrapper class.\n         */\n        navWrapperClass: {\n            type: String,\n            default: null\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `dr-tabs-${guid()}`\n        },\n        computedTabControlsID() {\n            return `dr-tab-controls-${guid()}`\n        },\n        computedTabButtonID() {\n            return `dr-tabs-tab-${guid()}`\n        },\n        navStyle() {\n            return this.pills ? 'pills' : 'tabs'\n        },\n        computedTabsClasses() {\n            return [\n                'tabs',\n                this.vertical ? 'row' : '',\n                (this.vertical && this.card) ? 'no-gutters' : '',\n            ]\n        },\n        computedNavListClasses() {\n            return [\n                'nav',\n                `nav-${this.navStyle}`,\n                (this.card && !this.vertical) ? `card-header-${this.navStyle}` : '',\n                (this.card && this.vertical) ? 'card-header' : '',\n                (this.card && this.vertical) ? 'h-100' : '',\n                this.vertical ? 'flex-column' : '',\n                this.vertical ? 'border-bottom-0' : '',\n                this.vertical ? 'rounded-0' : '',\n                this.vertical ? 'd-tabs-vertical-nav' : '',\n                this.navClass\n            ]\n        },\n        computedNavListWrapperClasses() {\n            return [\n                this.card && !this.vertical ? 'card-header' : '',\n                this.vertical ? 'col-auto' : '',\n                this.navWrapperClass\n            ]\n        },\n        computedTabsContainerClasses() {\n            return [\n                'tab-content',\n                this.vertical ? 'col' : '',\n                this.contentClass\n            ]\n        }\n    },\n    created() {\n        this._tabsContainerID = `tabs-container-${guid()}`\n    },\n    methods: {\n        handleOnKeynav(e) {\n            if (Object.keys(KEYCODES).some((k) => KEYCODES[k] === e.keyCode)) {\n                e.preventDefault()\n                e.stopPropagation()\n            }\n\n            if (e.keyCode === KEYCODES.UP || e.keyCode === KEYCODES.LEFT ) {\n                this.previousTab()\n            }\n\n            if (e.keyCode === KEYCODES.DOWN || e.keyCode === KEYCODES.RIGHT) {\n                this.nextTab()\n            }\n        },\n        nextTab() {\n            this.setTab(this.currentTab + 1, false, 1)\n        },\n        previousTab() {\n            this.setTab(this.currentTab - 1, false, -1)\n        },\n        setTab(index, force, direction) {\n            direction = direction || 0\n            index = index || 0\n\n            direction = direction === 0 ? 0 : (direction > 0 ? 1 : -1)\n\n            if (!force && index === this.currentTab) {\n                return\n            }\n\n            const tab = this.tabs[index]\n\n            if (!tab) {\n                this.$emit('input', this.currentTab)\n                return\n            }\n\n            if (tab.disabled) {\n                if (direction) {\n                    this.setTab(index + direction, force, direction)\n                }\n\n                return\n            }\n\n            this.tabs.forEach(_tab => {\n                if (_tab === tab) {\n                    this.$set(_tab, 'localActiveState', true)\n                    return\n                }\n\n                this.$set(_tab, 'localActiveState', false)\n            })\n\n            this.currentTab = index\n        },\n        updateTabs() {\n            this.tabs = this.$children.filter(child => child._isTab)\n            let tabIndex = null\n\n            this.tabs.forEach((tab, index) => {\n                if (tab.localActiveState && !tab.disabled) {\n                    tabIndex = index\n                }\n            })\n\n            if (tabIndex === null) {\n                if (this.currentTab >= this.tabs.length) {\n                    this.setTab(this.tabs.length - 1, true, -1)\n                    return\n                }\n\n                if (this.tabs[this.currentTab] && !this.tabs[this.currentTab].disabled) {\n                    tabIndex = this.currentTab\n                }\n\n                this.tabs.forEach((tab, index) => {\n                    if (!tab.disabled && tabIndex === null) {\n                        tabIndex = index\n                    }\n                })\n            }\n\n            this.setTab(tabIndex || 0, true, 0)\n        }\n    },\n    mounted() {\n        this.updateTabs()\n    }\n}\n</script>\n\n<style scoped>\n.d-tabs-vertical-nav:hover {\n    background: rgba(90, 97, 105, 0.06);\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-12a05a68_0", { source: ".d-tabs-vertical-nav[data-v-12a05a68]:hover{background:rgba(90,97,105,.06)}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$X = "data-v-44a67609";
+  var __vue_scope_id__$X = "data-v-12a05a68";
   /* module identifier */
   var __vue_module_identifier__$X = undefined;
   /* functional template */
@@ -17817,10 +16830,6 @@ __vue_render__$X._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/tabs/Tabs.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -17877,6 +16886,17 @@ __vue_render__$X._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -18025,67 +17045,23 @@ var script$Y = {
             var __vue_script__$Y = script$Y;
             
 /* template */
-var __vue_render__$Y = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "transition",
-    {
-      attrs: { mode: "out-in", name: "fade" },
-      on: {
-        beforeEnter: _vm.handleBeforeEnter,
-        afterEnter: _vm.handleAfterEnter,
-        afterLeave: _vm.handleAfterLeave
-      }
-    },
-    [
-      _c(
-        _vm.tag,
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.localActiveState,
-              expression: "localActiveState"
-            }
-          ],
-          ref: "panel",
-          tag: "component",
-          class: [
-            "tab-pane",
-            _vm.$parent && _vm.$parent.card && !_vm.noBody ? "card-body" : "",
-            _vm.show ? "show" : "",
-            _vm.disabled ? "disabled" : "",
-            _vm.localActiveState ? "active" : ""
-          ],
-          attrs: {
-            role: "tabpanel",
-            id: _vm.computedID,
-            "aria-hidden": _vm.localActiveState ? "false" : "true",
-            "aria-expanded": _vm.localActiveState ? "true" : "false",
-            "aria-labelledby": _vm.controlledBy || null
-          }
-        },
-        [_vm._t("default")],
-        2
-      )
-    ],
-    1
-  )
-};
+var __vue_render__$Y = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"mode":"out-in","name":"fade"},on:{"beforeEnter":_vm.handleBeforeEnter,"afterEnter":_vm.handleAfterEnter,"afterLeave":_vm.handleAfterLeave}},[_c(_vm.tag,{directives:[{name:"show",rawName:"v-show",value:(_vm.localActiveState),expression:"localActiveState"}],ref:"panel",tag:"component",class:[
+            'tab-pane',
+            (_vm.$parent && _vm.$parent.card && !_vm.noBody) ? 'card-body' : '',
+            _vm.show ? 'show' : '',
+            _vm.disabled ? 'disabled' : '',
+            _vm.localActiveState ? 'active' : ''
+        ],attrs:{"role":"tabpanel","id":_vm.computedID,"aria-hidden":_vm.localActiveState ? 'false' : 'true',"aria-expanded":_vm.localActiveState ? 'true' : 'false',"aria-labelledby":_vm.controlledBy || null}},[_vm._t("default")],2)],1)};
 var __vue_staticRenderFns__$Y = [];
-__vue_render__$Y._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$Y = function (inject) {
     if (!inject) { return }
-    inject("data-v-358f9cd2_0", { source: "\n.fade-enter-active[data-v-358f9cd2] {\n  transition: opacity .25s ease-in-out;\n}\n.fade-leave-active[data-v-358f9cd2] {\n  transition: opacity .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.fade-enter[data-v-358f9cd2],\n.fade-leave-to[data-v-358f9cd2] {\n  opacity: 0;\n}\n", map: {"version":3,"sources":["/Users/hisk/Projects/GitHub/shards-vue/src/components/tabs/Tab.vue"],"names":[],"mappings":";AAuHA;EACA,qCAAA;CACA;AAEA;EACA,0DAAA;CACA;AAEA;;EAEA,WAAA;CACA","file":"Tab.vue","sourcesContent":["<template>\n    <transition mode=\"out-in\" name=\"fade\"\n        @beforeEnter=\"handleBeforeEnter\"\n        @afterEnter=\"handleAfterEnter\"\n        @afterLeave=\"handleAfterLeave\">\n        <component :is=\"tag\"\n            ref=\"panel\"\n            v-show=\"localActiveState\"\n            role=\"tabpanel\"\n            :id=\"computedID\"\n            :aria-hidden=\"localActiveState ? 'false' : 'true'\"\n            :aria-expanded=\"localActiveState ? 'true' : 'false'\"\n            :aria-labelledby=\"controlledBy || null\"\n            :class=\"[\n                'tab-pane',\n                ($parent && $parent.card && !noBody) ? 'card-body' : '',\n                show ? 'show' : '',\n                disabled ? 'disabled' : '',\n                localActiveState ? 'active' : ''\n            ]\">\n            <slot />\n        </component>\n    </transition>\n</template>\n\n<script>\nimport { guid } from '../../utils';\n\nexport default {\n    name: 'd-tab',\n    data() {\n        return {\n            localActiveState: this.active && !this.disabled,\n            show: false\n        }\n    },\n    props: {\n        /**\n         * The element ID.\n         */\n        id: {\n            type: String,\n            default: null\n        },\n        /**\n         * The active state.\n         */\n        active: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * The element tag.\n         */\n        tag: {\n            type: String,\n            default: 'div'\n        },\n        /**\n         * The button ID.\n         */\n        buttonId: {\n            type: String,\n            default: ''\n        },\n        /**\n         * The title.\n         */\n        title: {\n            type: String,\n            default: ''\n        },\n        /**\n         * The disabled state.\n         */\n        disabled: {\n            type: Boolean,\n            default: false\n        },\n        /**\n         * Whether the card should display the body, or not.\n         */\n        noBody: {\n            type: Boolean,\n            default: false\n        }\n    },\n    computed: {\n        computedID() {\n            return this.id || `dr-tab-${guid()}`\n        },\n        controlledBy() {\n            return this.buttonId || `dr-tab-button-${guid()}`\n        },\n        computedFade() {\n            return this.$parent.fade\n        },\n        _isTab() {\n            return true\n        }\n    },\n    methods: {\n        handleBeforeEnter() {\n            this.show = false\n        },\n        handleAfterEnter() {\n            this.show = true\n        },\n        handleAfterLeave() {\n            this.show = false\n        }\n    },\n    mounted() {\n        this.show = this.localActiveState\n    }\n}\n</script>\n\n<style scoped>\n.fade-enter-active {\n  transition: opacity .25s ease-in-out;\n}\n\n.fade-leave-active {\n  transition: opacity .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n</style>\n"]}, media: undefined });
+    inject("data-v-4214beda_0", { source: ".fade-enter-active[data-v-4214beda]{transition:opacity .25s ease-in-out}.fade-leave-active[data-v-4214beda]{transition:opacity .25s cubic-bezier(1,.5,.8,1)}.fade-enter[data-v-4214beda],.fade-leave-to[data-v-4214beda]{opacity:0}", map: undefined, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$Y = "data-v-358f9cd2";
+  var __vue_scope_id__$Y = "data-v-4214beda";
   /* module identifier */
   var __vue_module_identifier__$Y = undefined;
   /* functional template */
@@ -18097,10 +17073,6 @@ __vue_render__$Y._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/tabs/Tab.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -18157,6 +17129,17 @@ __vue_render__$Y._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
@@ -18400,22 +17383,8 @@ var script$Z = {
             var __vue_script__$Z = script$Z;
             
 /* template */
-var __vue_render__$Z = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "div",
-    {
-      staticClass: "d-none",
-      staticStyle: { display: "none" },
-      attrs: { "aria-hiden": "true" }
-    },
-    [_c("div", { ref: "title" }, [_vm._t("default")], 2)]
-  )
-};
+var __vue_render__$Z = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"d-none",staticStyle:{"display":"none"},attrs:{"aria-hiden":"true"}},[_c('div',{ref:"title"},[_vm._t("default")],2)])};
 var __vue_staticRenderFns__$Z = [];
-__vue_render__$Z._withStripped = true;
 
   /* style */
   var __vue_inject_styles__$Z = undefined;
@@ -18432,10 +17401,6 @@ __vue_render__$Z._withStripped = true;
     createInjector, createInjectorSSR
   ) {
     var component = (typeof script === 'function' ? script.options : script) || {};
-
-    {
-      component.__file = "/Users/hisk/Projects/GitHub/shards-vue/src/components/tooltip/Tooltip.vue";
-    }
 
     if (!component.render) {
       component.render = template.render;
@@ -18468,6 +17433,17 @@ __vue_render__$Z._withStripped = true;
         var index = style.ids.length;
 
         style.ids.push(id);
+
+        if (css.map) {
+          // https://developer.chrome.com/devtools/docs/javascript-debugging
+          // this makes source maps inside style tags work properly in Chrome
+          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
+          // http://stackoverflow.com/a/26603875
+          code +=
+            '\n/*# sourceMappingURL=data:application/json;base64,' +
+            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
+            ' */';
+        }
 
         if (isOldIE) {
           style.element = style.element || document.querySelector('style[data-group=' + group + ']');
