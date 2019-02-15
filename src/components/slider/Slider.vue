@@ -92,7 +92,7 @@ export default {
 
         noUiSlider.create(this.$el, config)
 
-        this.$el.noUiSlider.on('slide', () => {
+        this.$el.noUiSlider.on('update', () => {
             const value = this.$el.noUiSlider.get()
             if (value !== this.value) {
                 this.$emit('input', value)
