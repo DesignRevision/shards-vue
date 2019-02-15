@@ -2,9 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### 1.0.8 - (2019-02-15)
+
+  * fix(d-slider): add nouislider keyboard support
+
 ### 1.0.7 - (2019-01-20)
 
-* fix(d-textarea): fix(d-textarea): dynamic height based on max-rows #12
+* fix(d-textarea): dynamic height based on max-rows #12
 
 ### 1.0.6 - (2018-11-20)
 
