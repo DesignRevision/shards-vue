@@ -1,6 +1,7 @@
 <template>
   <textarea
     ref="input"
+    v-model="localValue"
     :class="[
             plaintext ? 'form-control-plaintext' : 'form-control',
             plaintext ? 'w-100' : '',
@@ -19,7 +20,6 @@
     :wrap="wrap"
     :aria-required="required ? 'true' : null"
     :aria-invalid="computedAriaInvalid"
-    @input="handleInput"
   ></textarea>
 </template>
 
@@ -34,6 +34,13 @@ export default {
     };
   },
   props: {
+    /**
+     * The element value.
+     */
+    value: {
+      type: String,
+      default: ''
+    },
     /**
      * The element name.
      */
@@ -241,10 +248,5 @@ export default {
       }
     }
   },
-  methods: {
-    handleInput(e) {
-      this.localValue = e.target.value;
-    }
-  }
 };
 </script>
