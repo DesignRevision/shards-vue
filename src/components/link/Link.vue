@@ -11,7 +11,7 @@
             disabled ? 'disabled' : ''
         ]"
         :aria-disabled="computedAriaDisabled"
-        @click.native="handleClick">
+        @click="handleClick">
         <slot>Link</slot>
     </component>
 </template>
