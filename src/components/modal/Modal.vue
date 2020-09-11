@@ -56,11 +56,18 @@ export default {
         centered: {
             type: Boolean,
             default: false
-        }
+        },
+        /**
+         * No close on backdrop click.
+         */
+        noCloseOnBackdrop: {
+            type: Boolean,
+            default: false
+        },
     },
   methods: {
     away() {
-        if (this.noBackdrop) {
+        if (this.noBackdrop || this.noCloseOnBackdrop) {
             return;
         }
 
